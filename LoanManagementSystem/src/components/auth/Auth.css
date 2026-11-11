@@ -1,0 +1,96 @@
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f5f6fa;
+}
+
+.auth-page {
+    min-height: 100vh;
+    display: flex;
+}
+
+.auth-left {
+    width: 45%;
+    background: #14243a;
+    color: white;
+    padding: 55px 65px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.brand-logo,
+.mobile-logo {
+    font-size: 32px;
+    font-weight: 800;
+    letter-spacing: -1px;
+}
+
+.brand-logo span,
+.mobile-logo span {
+    color: #e7a94b;
+}
+
+.brand-content {
+    max-width: 480px;
+}
+
+.brand-tagline {
+    color: #e7a94b;
+    font-size: 12px;
+    letter-spacing: 3px;
+    font-weight: bold;
+}
+
+.brand-content h1 {
+    font-size: 48px;
+    line-height: 1.2;
+    margin: 22px 0;
+}
+
+.brand-content p {
+    color: #b9c5d4;
+    font-size: 16px;
+    line-height: 1.8;
+}
+
+.brand-footer {
+    color: #9eacbd;
+    font-size: 13px;
+}
+
+.auth-right {
+    width: 55%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 35px;
+    background: #f5f6fa;
+}
+
+.mobile-logo {
+    display: none;
+}
+
+@media (max-width: 850px) {
+    .auth-left {
+        display: none;
+    }
+
+    .auth-right {
+        width: 100%;
+        padding: 25px 18px;
+        flex-direction: column;
+    }
+
+    .mobile-logo {
+        display: block;
+        margin-bottom: 30px;
+    }
+}

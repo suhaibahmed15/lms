@@ -1,0 +1,619 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\Suhaib.Ahmed\\Pictures\\loan_Management_system\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{E7020CD8-EA96-4E39-A607-36CA24243EBF}|LMS.Infrastructure\\LMS.Infrastructure.csproj|c:\\users\\suhaib.ahmed\\pictures\\loan_management_system\\lms.infrastructure\\dependencyinjection.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E7020CD8-EA96-4E39-A607-36CA24243EBF}|LMS.Infrastructure\\LMS.Infrastructure.csproj|solutionrelative:lms.infrastructure\\dependencyinjection.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FBDC2C7D-5BC9-40EF-B161-1AA53BEEE8D9}|LMS.Application\\LMS.Application.csproj|c:\\users\\suhaib.ahmed\\pictures\\loan_management_system\\lms.application\\dependencyinjection.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FBDC2C7D-5BC9-40EF-B161-1AA53BEEE8D9}|LMS.Application\\LMS.Application.csproj|solutionrelative:lms.application\\dependencyinjection.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{77902F19-B4EA-43ED-8912-678FFFD44EAA}|LMS.API\\LMS.API.csproj|c:\\users\\suhaib.ahmed\\pictures\\loan_management_system\\lms.api\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{77902F19-B4EA-43ED-8912-678FFFD44EAA}|LMS.API\\LMS.API.csproj|solutionrelative:lms.api\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E7020CD8-EA96-4E39-A607-36CA24243EBF}|LMS.Infrastructure\\LMS.Infrastructure.csproj|c:\\users\\suhaib.ahmed\\pictures\\loan_management_system\\lms.infrastructure\\services\\jwttokengenerator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E7020CD8-EA96-4E39-A607-36CA24243EBF}|LMS.Infrastructure\\LMS.Infrastructure.csproj|solutionrelative:lms.infrastructure\\services\\jwttokengenerator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FBDC2C7D-5BC9-40EF-B161-1AA53BEEE8D9}|LMS.Application\\LMS.Application.csproj|c:\\users\\suhaib.ahmed\\pictures\\loan_management_system\\lms.application\\services\\authservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FBDC2C7D-5BC9-40EF-B161-1AA53BEEE8D9}|LMS.Application\\LMS.Application.csproj|solutionrelative:lms.application\\services\\authservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FBDC2C7D-5BC9-40EF-B161-1AA53BEEE8D9}|LMS.Application\\LMS.Application.csproj|c:\\users\\suhaib.ahmed\\pictures\\loan_management_system\\lms.application\\services\\interfaces\\iauthservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FBDC2C7D-5BC9-40EF-B161-1AA53BEEE8D9}|LMS.Application\\LMS.Application.csproj|solutionrelative:lms.application\\services\\interfaces\\iauthservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E7020CD8-EA96-4E39-A607-36CA24243EBF}|LMS.Infrastructure\\LMS.Infrastructure.csproj|c:\\users\\suhaib.ahmed\\pictures\\loan_management_system\\lms.infrastructure\\lms.infrastructure.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{E7020CD8-EA96-4E39-A607-36CA24243EBF}|LMS.Infrastructure\\LMS.Infrastructure.csproj|solutionrelative:lms.infrastructure\\lms.infrastructure.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FBDC2C7D-5BC9-40EF-B161-1AA53BEEE8D9}|LMS.Application\\LMS.Application.csproj|c:\\users\\suhaib.ahmed\\pictures\\loan_management_system\\lms.application\\dto\\auth\\registerrequestdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FBDC2C7D-5BC9-40EF-B161-1AA53BEEE8D9}|LMS.Application\\LMS.Application.csproj|solutionrelative:lms.application\\dto\\auth\\registerrequestdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FBDC2C7D-5BC9-40EF-B161-1AA53BEEE8D9}|LMS.Application\\LMS.Application.csproj|c:\\users\\suhaib.ahmed\\pictures\\loan_management_system\\lms.application\\dto\\auth\\authresponsedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FBDC2C7D-5BC9-40EF-B161-1AA53BEEE8D9}|LMS.Application\\LMS.Application.csproj|solutionrelative:lms.application\\dto\\auth\\authresponsedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E7020CD8-EA96-4E39-A607-36CA24243EBF}|LMS.Infrastructure\\LMS.Infrastructure.csproj|c:\\users\\suhaib.ahmed\\pictures\\loan_management_system\\lms.infrastructure\\dataaccess\\authrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E7020CD8-EA96-4E39-A607-36CA24243EBF}|LMS.Infrastructure\\LMS.Infrastructure.csproj|solutionrelative:lms.infrastructure\\dataaccess\\authrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FBDC2C7D-5BC9-40EF-B161-1AA53BEEE8D9}|LMS.Application\\LMS.Application.csproj|c:\\users\\suhaib.ahmed\\pictures\\loan_management_system\\lms.application\\repositories\\interfaces\\iauthrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FBDC2C7D-5BC9-40EF-B161-1AA53BEEE8D9}|LMS.Application\\LMS.Application.csproj|solutionrelative:lms.application\\repositories\\interfaces\\iauthrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{77902F19-B4EA-43ED-8912-678FFFD44EAA}|LMS.API\\LMS.API.csproj|c:\\users\\suhaib.ahmed\\pictures\\loan_management_system\\lms.api\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{77902F19-B4EA-43ED-8912-678FFFD44EAA}|LMS.API\\LMS.API.csproj|solutionrelative:lms.api\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FBDC2C7D-5BC9-40EF-B161-1AA53BEEE8D9}|LMS.Application\\LMS.Application.csproj|c:\\users\\suhaib.ahmed\\pictures\\loan_management_system\\lms.application\\services\\interfaces\\ijwttokengenerator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FBDC2C7D-5BC9-40EF-B161-1AA53BEEE8D9}|LMS.Application\\LMS.Application.csproj|solutionrelative:lms.application\\services\\interfaces\\ijwttokengenerator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FBDC2C7D-5BC9-40EF-B161-1AA53BEEE8D9}|LMS.Application\\LMS.Application.csproj|c:\\users\\suhaib.ahmed\\pictures\\loan_management_system\\lms.application\\dto\\auth\\loginrequestdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FBDC2C7D-5BC9-40EF-B161-1AA53BEEE8D9}|LMS.Application\\LMS.Application.csproj|solutionrelative:lms.application\\dto\\auth\\loginrequestdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FBDC2C7D-5BC9-40EF-B161-1AA53BEEE8D9}|LMS.Application\\LMS.Application.csproj|c:\\users\\suhaib.ahmed\\pictures\\loan_management_system\\lms.application\\lms.application.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{FBDC2C7D-5BC9-40EF-B161-1AA53BEEE8D9}|LMS.Application\\LMS.Application.csproj|solutionrelative:lms.application\\lms.application.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{77902F19-B4EA-43ED-8912-678FFFD44EAA}|LMS.API\\LMS.API.csproj|c:\\users\\suhaib.ahmed\\pictures\\loan_management_system\\lms.api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{77902F19-B4EA-43ED-8912-678FFFD44EAA}|LMS.API\\LMS.API.csproj|solutionrelative:lms.api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E7020CD8-EA96-4E39-A607-36CA24243EBF}|LMS.Infrastructure\\LMS.Infrastructure.csproj|c:\\users\\suhaib.ahmed\\pictures\\loan_management_system\\lms.infrastructure\\data\\seeddata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E7020CD8-EA96-4E39-A607-36CA24243EBF}|LMS.Infrastructure\\LMS.Infrastructure.csproj|solutionrelative:lms.infrastructure\\data\\seeddata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E7020CD8-EA96-4E39-A607-36CA24243EBF}|LMS.Infrastructure\\LMS.Infrastructure.csproj|c:\\users\\suhaib.ahmed\\pictures\\loan_management_system\\lms.infrastructure\\data\\applicationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E7020CD8-EA96-4E39-A607-36CA24243EBF}|LMS.Infrastructure\\LMS.Infrastructure.csproj|solutionrelative:lms.infrastructure\\data\\applicationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{55717EAB-E127-416B-8B6C-0F345E45EAA9}|LMS.Domain\\LMS.Domain.csproj|c:\\users\\suhaib.ahmed\\pictures\\loan_management_system\\lms.domain\\entities\\baseentity.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{55717EAB-E127-416B-8B6C-0F345E45EAA9}|LMS.Domain\\LMS.Domain.csproj|solutionrelative:lms.domain\\entities\\baseentity.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E7020CD8-EA96-4E39-A607-36CA24243EBF}|LMS.Infrastructure\\LMS.Infrastructure.csproj|c:\\users\\suhaib.ahmed\\pictures\\loan_management_system\\lms.infrastructure\\data\\configurations\\permissionconfiguration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E7020CD8-EA96-4E39-A607-36CA24243EBF}|LMS.Infrastructure\\LMS.Infrastructure.csproj|solutionrelative:lms.infrastructure\\data\\configurations\\permissionconfiguration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{55717EAB-E127-416B-8B6C-0F345E45EAA9}|LMS.Domain\\LMS.Domain.csproj|c:\\users\\suhaib.ahmed\\pictures\\loan_management_system\\lms.domain\\entities\\loanapproval.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{55717EAB-E127-416B-8B6C-0F345E45EAA9}|LMS.Domain\\LMS.Domain.csproj|solutionrelative:lms.domain\\entities\\loanapproval.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{55717EAB-E127-416B-8B6C-0F345E45EAA9}|LMS.Domain\\LMS.Domain.csproj|c:\\users\\suhaib.ahmed\\pictures\\loan_management_system\\lms.domain\\entities\\loanapplication.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{55717EAB-E127-416B-8B6C-0F345E45EAA9}|LMS.Domain\\LMS.Domain.csproj|solutionrelative:lms.domain\\entities\\loanapplication.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{55717EAB-E127-416B-8B6C-0F345E45EAA9}|LMS.Domain\\LMS.Domain.csproj|c:\\users\\suhaib.ahmed\\pictures\\loan_management_system\\lms.domain\\entities\\loan.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{55717EAB-E127-416B-8B6C-0F345E45EAA9}|LMS.Domain\\LMS.Domain.csproj|solutionrelative:lms.domain\\entities\\loan.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{55717EAB-E127-416B-8B6C-0F345E45EAA9}|LMS.Domain\\LMS.Domain.csproj|c:\\users\\suhaib.ahmed\\pictures\\loan_management_system\\lms.domain\\entities\\loantype.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{55717EAB-E127-416B-8B6C-0F345E45EAA9}|LMS.Domain\\LMS.Domain.csproj|solutionrelative:lms.domain\\entities\\loantype.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{55717EAB-E127-416B-8B6C-0F345E45EAA9}|LMS.Domain\\LMS.Domain.csproj|c:\\users\\suhaib.ahmed\\pictures\\loan_management_system\\lms.domain\\entities\\loanguarantor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{55717EAB-E127-416B-8B6C-0F345E45EAA9}|LMS.Domain\\LMS.Domain.csproj|solutionrelative:lms.domain\\entities\\loanguarantor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{55717EAB-E127-416B-8B6C-0F345E45EAA9}|LMS.Domain\\LMS.Domain.csproj|c:\\users\\suhaib.ahmed\\pictures\\loan_management_system\\lms.domain\\entities\\loandocument.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{55717EAB-E127-416B-8B6C-0F345E45EAA9}|LMS.Domain\\LMS.Domain.csproj|solutionrelative:lms.domain\\entities\\loandocument.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E7020CD8-EA96-4E39-A607-36CA24243EBF}|LMS.Infrastructure\\LMS.Infrastructure.csproj|c:\\users\\suhaib.ahmed\\pictures\\loan_management_system\\lms.infrastructure\\data\\configurations\\loanguarantorconfiguration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E7020CD8-EA96-4E39-A607-36CA24243EBF}|LMS.Infrastructure\\LMS.Infrastructure.csproj|solutionrelative:lms.infrastructure\\data\\configurations\\loanguarantorconfiguration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E7020CD8-EA96-4E39-A607-36CA24243EBF}|LMS.Infrastructure\\LMS.Infrastructure.csproj|c:\\users\\suhaib.ahmed\\pictures\\loan_management_system\\lms.infrastructure\\data\\configurations\\loandocumentconfiguration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E7020CD8-EA96-4E39-A607-36CA24243EBF}|LMS.Infrastructure\\LMS.Infrastructure.csproj|solutionrelative:lms.infrastructure\\data\\configurations\\loandocumentconfiguration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E7020CD8-EA96-4E39-A607-36CA24243EBF}|LMS.Infrastructure\\LMS.Infrastructure.csproj|c:\\users\\suhaib.ahmed\\pictures\\loan_management_system\\lms.infrastructure\\data\\configurations\\loanapprovalconfiguration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E7020CD8-EA96-4E39-A607-36CA24243EBF}|LMS.Infrastructure\\LMS.Infrastructure.csproj|solutionrelative:lms.infrastructure\\data\\configurations\\loanapprovalconfiguration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{55717EAB-E127-416B-8B6C-0F345E45EAA9}|LMS.Domain\\LMS.Domain.csproj|c:\\users\\suhaib.ahmed\\pictures\\loan_management_system\\lms.domain\\entities\\permission.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{55717EAB-E127-416B-8B6C-0F345E45EAA9}|LMS.Domain\\LMS.Domain.csproj|solutionrelative:lms.domain\\entities\\permission.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{55717EAB-E127-416B-8B6C-0F345E45EAA9}|LMS.Domain\\LMS.Domain.csproj|c:\\users\\suhaib.ahmed\\pictures\\loan_management_system\\lms.domain\\entities\\menu.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{55717EAB-E127-416B-8B6C-0F345E45EAA9}|LMS.Domain\\LMS.Domain.csproj|solutionrelative:lms.domain\\entities\\menu.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{55717EAB-E127-416B-8B6C-0F345E45EAA9}|LMS.Domain\\LMS.Domain.csproj|c:\\users\\suhaib.ahmed\\pictures\\loan_management_system\\lms.domain\\entities\\auditlog.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{55717EAB-E127-416B-8B6C-0F345E45EAA9}|LMS.Domain\\LMS.Domain.csproj|solutionrelative:lms.domain\\entities\\auditlog.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E7020CD8-EA96-4E39-A607-36CA24243EBF}|LMS.Infrastructure\\LMS.Infrastructure.csproj|c:\\users\\suhaib.ahmed\\pictures\\loan_management_system\\lms.infrastructure\\data\\configurations\\roleconfiguration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E7020CD8-EA96-4E39-A607-36CA24243EBF}|LMS.Infrastructure\\LMS.Infrastructure.csproj|solutionrelative:lms.infrastructure\\data\\configurations\\roleconfiguration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E7020CD8-EA96-4E39-A607-36CA24243EBF}|LMS.Infrastructure\\LMS.Infrastructure.csproj|c:\\users\\suhaib.ahmed\\pictures\\loan_management_system\\lms.infrastructure\\data\\configurations\\auditlogconfiguration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E7020CD8-EA96-4E39-A607-36CA24243EBF}|LMS.Infrastructure\\LMS.Infrastructure.csproj|solutionrelative:lms.infrastructure\\data\\configurations\\auditlogconfiguration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{55717EAB-E127-416B-8B6C-0F345E45EAA9}|LMS.Domain\\LMS.Domain.csproj|c:\\users\\suhaib.ahmed\\pictures\\loan_management_system\\lms.domain\\entities\\repaymentschedule.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{55717EAB-E127-416B-8B6C-0F345E45EAA9}|LMS.Domain\\LMS.Domain.csproj|solutionrelative:lms.domain\\entities\\repaymentschedule.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 2,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "AuthController.cs",
+              "DocumentMoniker": "C:\\Users\\Suhaib.Ahmed\\Pictures\\loan_Management_system\\LMS.API\\Controllers\\AuthController.cs",
+              "RelativeDocumentMoniker": "LMS.API\\Controllers\\AuthController.cs",
+              "ToolTip": "C:\\Users\\Suhaib.Ahmed\\Pictures\\loan_Management_system\\LMS.API\\Controllers\\AuthController.cs",
+              "RelativeToolTip": "LMS.API\\Controllers\\AuthController.cs",
+              "ViewState": "AgIAADYAAAAAAAAAAAAhwEoAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-11-11T06:55:07.165Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "JwtTokenGenerator.cs",
+              "DocumentMoniker": "C:\\Users\\Suhaib.Ahmed\\Pictures\\loan_Management_system\\LMS.Infrastructure\\Services\\JwtTokenGenerator.cs",
+              "RelativeDocumentMoniker": "LMS.Infrastructure\\Services\\JwtTokenGenerator.cs",
+              "ToolTip": "C:\\Users\\Suhaib.Ahmed\\Pictures\\loan_Management_system\\LMS.Infrastructure\\Services\\JwtTokenGenerator.cs",
+              "RelativeToolTip": "LMS.Infrastructure\\Services\\JwtTokenGenerator.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAALAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-11-11T06:17:33.958Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "DependencyInjection.cs",
+              "DocumentMoniker": "C:\\Users\\Suhaib.Ahmed\\Pictures\\loan_Management_system\\LMS.Infrastructure\\DependencyInjection.cs",
+              "RelativeDocumentMoniker": "LMS.Infrastructure\\DependencyInjection.cs",
+              "ToolTip": "C:\\Users\\Suhaib.Ahmed\\Pictures\\loan_Management_system\\LMS.Infrastructure\\DependencyInjection.cs",
+              "RelativeToolTip": "LMS.Infrastructure\\DependencyInjection.cs",
+              "ViewState": "AgIAAAkAAAAAAAAAAAAAAA0AAAA3AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-11-11T05:43:35.614Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "DependencyInjection.cs",
+              "DocumentMoniker": "C:\\Users\\Suhaib.Ahmed\\Pictures\\loan_Management_system\\LMS.Application\\DependencyInjection.cs",
+              "RelativeDocumentMoniker": "LMS.Application\\DependencyInjection.cs",
+              "ToolTip": "C:\\Users\\Suhaib.Ahmed\\Pictures\\loan_Management_system\\LMS.Application\\DependencyInjection.cs",
+              "RelativeToolTip": "LMS.Application\\DependencyInjection.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAA4AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-11-11T06:44:43.5Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "AuthService.cs",
+              "DocumentMoniker": "C:\\Users\\Suhaib.Ahmed\\Pictures\\loan_Management_system\\LMS.Application\\Services\\AuthService.cs",
+              "RelativeDocumentMoniker": "LMS.Application\\Services\\AuthService.cs",
+              "ToolTip": "C:\\Users\\Suhaib.Ahmed\\Pictures\\loan_Management_system\\LMS.Application\\Services\\AuthService.cs",
+              "RelativeToolTip": "LMS.Application\\Services\\AuthService.cs",
+              "ViewState": "AgIAAGoAAAAAAAAAAAAwwHgAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-11-11T06:36:06.995Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "IAuthService.cs",
+              "DocumentMoniker": "C:\\Users\\Suhaib.Ahmed\\Pictures\\loan_Management_system\\LMS.Application\\Services\\Interfaces\\IAuthService.cs",
+              "RelativeDocumentMoniker": "LMS.Application\\Services\\Interfaces\\IAuthService.cs",
+              "ToolTip": "C:\\Users\\Suhaib.Ahmed\\Pictures\\loan_Management_system\\LMS.Application\\Services\\Interfaces\\IAuthService.cs",
+              "RelativeToolTip": "LMS.Application\\Services\\Interfaces\\IAuthService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAUwBAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-11-11T05:59:24.549Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "LMS.Infrastructure",
+              "DocumentMoniker": "C:\\Users\\Suhaib.Ahmed\\Pictures\\loan_Management_system\\LMS.Infrastructure\\LMS.Infrastructure.csproj",
+              "RelativeDocumentMoniker": "LMS.Infrastructure\\LMS.Infrastructure.csproj",
+              "ToolTip": "C:\\Users\\Suhaib.Ahmed\\Pictures\\loan_Management_system\\LMS.Infrastructure\\LMS.Infrastructure.csproj",
+              "RelativeToolTip": "LMS.Infrastructure\\LMS.Infrastructure.csproj",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAMAAAAlAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2026-11-11T06:17:06.018Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "RegisterRequestDto.cs",
+              "DocumentMoniker": "C:\\Users\\Suhaib.Ahmed\\Pictures\\loan_Management_system\\LMS.Application\\DTO\\Auth\\RegisterRequestDto.cs",
+              "RelativeDocumentMoniker": "LMS.Application\\DTO\\Auth\\RegisterRequestDto.cs",
+              "ToolTip": "C:\\Users\\Suhaib.Ahmed\\Pictures\\loan_Management_system\\LMS.Application\\DTO\\Auth\\RegisterRequestDto.cs",
+              "RelativeToolTip": "LMS.Application\\DTO\\Auth\\RegisterRequestDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-11-11T05:57:29.062Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "AuthResponseDto.cs",
+              "DocumentMoniker": "C:\\Users\\Suhaib.Ahmed\\Pictures\\loan_Management_system\\LMS.Application\\DTO\\Auth\\AuthResponseDto.cs",
+              "RelativeDocumentMoniker": "LMS.Application\\DTO\\Auth\\AuthResponseDto.cs",
+              "ToolTip": "C:\\Users\\Suhaib.Ahmed\\Pictures\\loan_Management_system\\LMS.Application\\DTO\\Auth\\AuthResponseDto.cs",
+              "RelativeToolTip": "LMS.Application\\DTO\\Auth\\AuthResponseDto.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAuwAgAAAAYAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-11-11T05:57:48.46Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "AuthRepository.cs",
+              "DocumentMoniker": "C:\\Users\\Suhaib.Ahmed\\Pictures\\loan_Management_system\\LMS.Infrastructure\\DataAccess\\AuthRepository.cs",
+              "RelativeDocumentMoniker": "LMS.Infrastructure\\DataAccess\\AuthRepository.cs",
+              "ToolTip": "C:\\Users\\Suhaib.Ahmed\\Pictures\\loan_Management_system\\LMS.Infrastructure\\DataAccess\\AuthRepository.cs",
+              "RelativeToolTip": "LMS.Infrastructure\\DataAccess\\AuthRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAtAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-11-11T06:17:24.156Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "C:\\Users\\Suhaib.Ahmed\\Pictures\\loan_Management_system\\LMS.API\\appsettings.json",
+              "RelativeDocumentMoniker": "LMS.API\\appsettings.json",
+              "ToolTip": "C:\\Users\\Suhaib.Ahmed\\Pictures\\loan_Management_system\\LMS.API\\appsettings.json",
+              "RelativeToolTip": "LMS.API\\appsettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2026-11-11T04:32:22.183Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "IAuthRepository.cs",
+              "DocumentMoniker": "C:\\Users\\Suhaib.Ahmed\\Pictures\\loan_Management_system\\LMS.Application\\Repositories\\Interfaces\\IAuthRepository.cs",
+              "RelativeDocumentMoniker": "LMS.Application\\Repositories\\Interfaces\\IAuthRepository.cs",
+              "ToolTip": "C:\\Users\\Suhaib.Ahmed\\Pictures\\loan_Management_system\\LMS.Application\\Repositories\\Interfaces\\IAuthRepository.cs",
+              "RelativeToolTip": "LMS.Application\\Repositories\\Interfaces\\IAuthRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAMAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-11-11T06:10:54.488Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "IJwtTokenGenerator.cs",
+              "DocumentMoniker": "C:\\Users\\Suhaib.Ahmed\\Pictures\\loan_Management_system\\LMS.Application\\Services\\Interfaces\\IJwtTokenGenerator.cs",
+              "RelativeDocumentMoniker": "LMS.Application\\Services\\Interfaces\\IJwtTokenGenerator.cs",
+              "ToolTip": "C:\\Users\\Suhaib.Ahmed\\Pictures\\loan_Management_system\\LMS.Application\\Services\\Interfaces\\IJwtTokenGenerator.cs",
+              "RelativeToolTip": "LMS.Application\\Services\\Interfaces\\IJwtTokenGenerator.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-11-11T06:11:20.289Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "LoginRequestDto.cs",
+              "DocumentMoniker": "C:\\Users\\Suhaib.Ahmed\\Pictures\\loan_Management_system\\LMS.Application\\DTO\\Auth\\LoginRequestDto.cs",
+              "RelativeDocumentMoniker": "LMS.Application\\DTO\\Auth\\LoginRequestDto.cs",
+              "ToolTip": "C:\\Users\\Suhaib.Ahmed\\Pictures\\loan_Management_system\\LMS.Application\\DTO\\Auth\\LoginRequestDto.cs",
+              "RelativeToolTip": "LMS.Application\\DTO\\Auth\\LoginRequestDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-11-11T05:57:38.391Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "LMS.Application",
+              "DocumentMoniker": "C:\\Users\\Suhaib.Ahmed\\Pictures\\loan_Management_system\\LMS.Application\\LMS.Application.csproj",
+              "RelativeDocumentMoniker": "LMS.Application\\LMS.Application.csproj",
+              "ToolTip": "C:\\Users\\Suhaib.Ahmed\\Pictures\\loan_Management_system\\LMS.Application\\LMS.Application.csproj",
+              "RelativeToolTip": "LMS.Application\\LMS.Application.csproj",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2026-11-11T05:56:48.548Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\Suhaib.Ahmed\\Pictures\\loan_Management_system\\LMS.API\\Program.cs",
+              "RelativeDocumentMoniker": "LMS.API\\Program.cs",
+              "ToolTip": "C:\\Users\\Suhaib.Ahmed\\Pictures\\loan_Management_system\\LMS.API\\Program.cs",
+              "RelativeToolTip": "LMS.API\\Program.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-11-11T05:44:09.147Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "SeedData.cs",
+              "DocumentMoniker": "C:\\Users\\Suhaib.Ahmed\\Pictures\\loan_Management_system\\LMS.Infrastructure\\Data\\SeedData.cs",
+              "RelativeDocumentMoniker": "LMS.Infrastructure\\Data\\SeedData.cs",
+              "ToolTip": "C:\\Users\\Suhaib.Ahmed\\Pictures\\loan_Management_system\\LMS.Infrastructure\\Data\\SeedData.cs",
+              "RelativeToolTip": "LMS.Infrastructure\\Data\\SeedData.cs",
+              "ViewState": "AgIAADsAAAAAAAAAAAAgwFMAAAAQAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-11-11T05:41:41.478Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 18,
+              "Title": "BaseEntity.cs",
+              "DocumentMoniker": "C:\\Users\\Suhaib.Ahmed\\Pictures\\loan_Management_system\\LMS.Domain\\Entities\\BaseEntity.cs",
+              "RelativeDocumentMoniker": "LMS.Domain\\Entities\\BaseEntity.cs",
+              "ToolTip": "C:\\Users\\Suhaib.Ahmed\\Pictures\\loan_Management_system\\LMS.Domain\\Entities\\BaseEntity.cs",
+              "RelativeToolTip": "LMS.Domain\\Entities\\BaseEntity.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAsAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-11-11T04:49:00.559Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 19,
+              "Title": "PermissionConfiguration.cs",
+              "DocumentMoniker": "C:\\Users\\Suhaib.Ahmed\\Pictures\\loan_Management_system\\LMS.Infrastructure\\Data\\Configurations\\PermissionConfiguration.cs",
+              "RelativeDocumentMoniker": "LMS.Infrastructure\\Data\\Configurations\\PermissionConfiguration.cs",
+              "ToolTip": "C:\\Users\\Suhaib.Ahmed\\Pictures\\loan_Management_system\\LMS.Infrastructure\\Data\\Configurations\\PermissionConfiguration.cs",
+              "RelativeToolTip": "LMS.Infrastructure\\Data\\Configurations\\PermissionConfiguration.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAfAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-11-11T05:05:39.31Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "ApplicationDbContext.cs",
+              "DocumentMoniker": "C:\\Users\\Suhaib.Ahmed\\Pictures\\loan_Management_system\\LMS.Infrastructure\\Data\\ApplicationDbContext.cs",
+              "RelativeDocumentMoniker": "LMS.Infrastructure\\Data\\ApplicationDbContext.cs",
+              "ToolTip": "C:\\Users\\Suhaib.Ahmed\\Pictures\\loan_Management_system\\LMS.Infrastructure\\Data\\ApplicationDbContext.cs",
+              "RelativeToolTip": "LMS.Infrastructure\\Data\\ApplicationDbContext.cs",
+              "ViewState": "AgIAABoAAAAAAAAAAAAAwDIAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-11-11T04:51:24.109Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 20,
+              "Title": "LoanApproval.cs",
+              "DocumentMoniker": "C:\\Users\\Suhaib.Ahmed\\Pictures\\loan_Management_system\\LMS.Domain\\Entities\\LoanApproval.cs",
+              "RelativeDocumentMoniker": "LMS.Domain\\Entities\\LoanApproval.cs",
+              "ToolTip": "C:\\Users\\Suhaib.Ahmed\\Pictures\\loan_Management_system\\LMS.Domain\\Entities\\LoanApproval.cs",
+              "RelativeToolTip": "LMS.Domain\\Entities\\LoanApproval.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAsAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-11-11T05:12:31.842Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 21,
+              "Title": "LoanApplication.cs",
+              "DocumentMoniker": "C:\\Users\\Suhaib.Ahmed\\Pictures\\loan_Management_system\\LMS.Domain\\Entities\\LoanApplication.cs",
+              "RelativeDocumentMoniker": "LMS.Domain\\Entities\\LoanApplication.cs",
+              "ToolTip": "C:\\Users\\Suhaib.Ahmed\\Pictures\\loan_Management_system\\LMS.Domain\\Entities\\LoanApplication.cs",
+              "RelativeToolTip": "LMS.Domain\\Entities\\LoanApplication.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAMAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-11-11T05:11:15.11Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 22,
+              "Title": "Loan.cs",
+              "DocumentMoniker": "C:\\Users\\Suhaib.Ahmed\\Pictures\\loan_Management_system\\LMS.Domain\\Entities\\Loan.cs",
+              "RelativeDocumentMoniker": "LMS.Domain\\Entities\\Loan.cs",
+              "ToolTip": "C:\\Users\\Suhaib.Ahmed\\Pictures\\loan_Management_system\\LMS.Domain\\Entities\\Loan.cs",
+              "RelativeToolTip": "LMS.Domain\\Entities\\Loan.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-11-11T05:09:21.438Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 23,
+              "Title": "LoanType.cs",
+              "DocumentMoniker": "C:\\Users\\Suhaib.Ahmed\\Pictures\\loan_Management_system\\LMS.Domain\\Entities\\LoanType.cs",
+              "RelativeDocumentMoniker": "LMS.Domain\\Entities\\LoanType.cs",
+              "ToolTip": "C:\\Users\\Suhaib.Ahmed\\Pictures\\loan_Management_system\\LMS.Domain\\Entities\\LoanType.cs",
+              "RelativeToolTip": "LMS.Domain\\Entities\\LoanType.cs",
+              "ViewState": "AgIAAAIAAAAAAAAAAAAxwAMAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-11-11T05:13:46.304Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 24,
+              "Title": "LoanGuarantor.cs",
+              "DocumentMoniker": "C:\\Users\\Suhaib.Ahmed\\Pictures\\loan_Management_system\\LMS.Domain\\Entities\\LoanGuarantor.cs",
+              "RelativeDocumentMoniker": "LMS.Domain\\Entities\\LoanGuarantor.cs",
+              "ToolTip": "C:\\Users\\Suhaib.Ahmed\\Pictures\\loan_Management_system\\LMS.Domain\\Entities\\LoanGuarantor.cs",
+              "RelativeToolTip": "LMS.Domain\\Entities\\LoanGuarantor.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAATAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-11-11T05:13:25.538Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 25,
+              "Title": "LoanDocument.cs",
+              "DocumentMoniker": "C:\\Users\\Suhaib.Ahmed\\Pictures\\loan_Management_system\\LMS.Domain\\Entities\\LoanDocument.cs",
+              "RelativeDocumentMoniker": "LMS.Domain\\Entities\\LoanDocument.cs",
+              "ToolTip": "C:\\Users\\Suhaib.Ahmed\\Pictures\\loan_Management_system\\LMS.Domain\\Entities\\LoanDocument.cs",
+              "RelativeToolTip": "LMS.Domain\\Entities\\LoanDocument.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAiAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-11-11T05:13:10.849Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 26,
+              "Title": "LoanGuarantorConfiguration.cs",
+              "DocumentMoniker": "C:\\Users\\Suhaib.Ahmed\\Pictures\\loan_Management_system\\LMS.Infrastructure\\Data\\Configurations\\LoanGuarantorConfiguration.cs",
+              "RelativeDocumentMoniker": "LMS.Infrastructure\\Data\\Configurations\\LoanGuarantorConfiguration.cs",
+              "ToolTip": "C:\\Users\\Suhaib.Ahmed\\Pictures\\loan_Management_system\\LMS.Infrastructure\\Data\\Configurations\\LoanGuarantorConfiguration.cs",
+              "RelativeToolTip": "LMS.Infrastructure\\Data\\Configurations\\LoanGuarantorConfiguration.cs",
+              "ViewState": "AgIAAB0AAAAAAAAAAAAcwC0AAAAiAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-11-11T05:26:38.863Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 27,
+              "Title": "LoanDocumentConfiguration.cs",
+              "DocumentMoniker": "C:\\Users\\Suhaib.Ahmed\\Pictures\\loan_Management_system\\LMS.Infrastructure\\Data\\Configurations\\LoanDocumentConfiguration.cs",
+              "RelativeDocumentMoniker": "LMS.Infrastructure\\Data\\Configurations\\LoanDocumentConfiguration.cs",
+              "ToolTip": "C:\\Users\\Suhaib.Ahmed\\Pictures\\loan_Management_system\\LMS.Infrastructure\\Data\\Configurations\\LoanDocumentConfiguration.cs",
+              "RelativeToolTip": "LMS.Infrastructure\\Data\\Configurations\\LoanDocumentConfiguration.cs",
+              "ViewState": "AgIAABwAAAAAAAAAAAAcwCkAAAAiAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-11-11T05:25:54.243Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 28,
+              "Title": "LoanApprovalConfiguration.cs",
+              "DocumentMoniker": "C:\\Users\\Suhaib.Ahmed\\Pictures\\loan_Management_system\\LMS.Infrastructure\\Data\\Configurations\\LoanApprovalConfiguration.cs",
+              "RelativeDocumentMoniker": "LMS.Infrastructure\\Data\\Configurations\\LoanApprovalConfiguration.cs",
+              "ToolTip": "C:\\Users\\Suhaib.Ahmed\\Pictures\\loan_Management_system\\LMS.Infrastructure\\Data\\Configurations\\LoanApprovalConfiguration.cs",
+              "RelativeToolTip": "LMS.Infrastructure\\Data\\Configurations\\LoanApprovalConfiguration.cs",
+              "ViewState": "AgIAAA8AAAAAAAAAAAAcwBwAAAAiAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-11-11T05:24:56.859Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 29,
+              "Title": "Permission.cs",
+              "DocumentMoniker": "C:\\Users\\Suhaib.Ahmed\\Pictures\\loan_Management_system\\LMS.Domain\\Entities\\Permission.cs",
+              "RelativeDocumentMoniker": "LMS.Domain\\Entities\\Permission.cs",
+              "ToolTip": "C:\\Users\\Suhaib.Ahmed\\Pictures\\loan_Management_system\\LMS.Domain\\Entities\\Permission.cs",
+              "RelativeToolTip": "LMS.Domain\\Entities\\Permission.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAADAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-11-11T05:09:30.91Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 30,
+              "Title": "Menu.cs",
+              "DocumentMoniker": "C:\\Users\\Suhaib.Ahmed\\Pictures\\loan_Management_system\\LMS.Domain\\Entities\\Menu.cs",
+              "RelativeDocumentMoniker": "LMS.Domain\\Entities\\Menu.cs",
+              "ToolTip": "C:\\Users\\Suhaib.Ahmed\\Pictures\\loan_Management_system\\LMS.Domain\\Entities\\Menu.cs",
+              "RelativeToolTip": "LMS.Domain\\Entities\\Menu.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-11-11T05:14:06.715Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 31,
+              "Title": "AuditLog.cs",
+              "DocumentMoniker": "C:\\Users\\Suhaib.Ahmed\\Pictures\\loan_Management_system\\LMS.Domain\\Entities\\AuditLog.cs",
+              "RelativeDocumentMoniker": "LMS.Domain\\Entities\\AuditLog.cs",
+              "ToolTip": "C:\\Users\\Suhaib.Ahmed\\Pictures\\loan_Management_system\\LMS.Domain\\Entities\\AuditLog.cs",
+              "RelativeToolTip": "LMS.Domain\\Entities\\AuditLog.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAMAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-11-11T05:09:17.045Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 32,
+              "Title": "RoleConfiguration.cs",
+              "DocumentMoniker": "C:\\Users\\Suhaib.Ahmed\\Pictures\\loan_Management_system\\LMS.Infrastructure\\Data\\Configurations\\RoleConfiguration.cs",
+              "RelativeDocumentMoniker": "LMS.Infrastructure\\Data\\Configurations\\RoleConfiguration.cs",
+              "ToolTip": "C:\\Users\\Suhaib.Ahmed\\Pictures\\loan_Management_system\\LMS.Infrastructure\\Data\\Configurations\\RoleConfiguration.cs",
+              "RelativeToolTip": "LMS.Infrastructure\\Data\\Configurations\\RoleConfiguration.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAZAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-11-11T05:07:56.251Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{3ae79031-e1bc-11d0-8f78-00a0c9110057}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 33,
+              "Title": "AuditLogConfiguration.cs",
+              "DocumentMoniker": "C:\\Users\\Suhaib.Ahmed\\Pictures\\loan_Management_system\\LMS.Infrastructure\\Data\\Configurations\\AuditLogConfiguration.cs",
+              "RelativeDocumentMoniker": "LMS.Infrastructure\\Data\\Configurations\\AuditLogConfiguration.cs",
+              "ToolTip": "C:\\Users\\Suhaib.Ahmed\\Pictures\\loan_Management_system\\LMS.Infrastructure\\Data\\Configurations\\AuditLogConfiguration.cs",
+              "RelativeToolTip": "LMS.Infrastructure\\Data\\Configurations\\AuditLogConfiguration.cs",
+              "ViewState": "AgIAAAgAAAAAAAAAAAAAwAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-11-11T04:51:36.585Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 34,
+              "Title": "RepaymentSchedule.cs",
+              "DocumentMoniker": "C:\\Users\\Suhaib.Ahmed\\Pictures\\loan_Management_system\\LMS.Domain\\Entities\\RepaymentSchedule.cs",
+              "RelativeDocumentMoniker": "LMS.Domain\\Entities\\RepaymentSchedule.cs",
+              "ToolTip": "C:\\Users\\Suhaib.Ahmed\\Pictures\\loan_Management_system\\LMS.Domain\\Entities\\RepaymentSchedule.cs",
+              "RelativeToolTip": "LMS.Domain\\Entities\\RepaymentSchedule.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-11-11T04:32:14.793Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
