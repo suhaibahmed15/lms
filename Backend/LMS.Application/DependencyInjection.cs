@@ -12,7 +12,6 @@ public static class DependencyInjection
     {
         // Register application services here as each module is implemented.
         services.AddScoped<IAuthService, AuthService>();
-        services.AddScoped<IRoleService, RoleService>();
         return services;
     }
 }
