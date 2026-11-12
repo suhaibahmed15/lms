@@ -4,10 +4,9 @@ using LMS.Application.Repositories.Interfaces;
 using LMS.Application.Services.Interfaces;
 using LMS.Domain.Entities;
 
-
 namespace LMS.Infrastructure.BusinessLogic;
 
-public class RoleService : IRoleService 
+public class RoleService : IRoleService
 {
     private readonly IRoleRepository _roleRepository;
 
@@ -67,7 +66,7 @@ public class RoleService : IRoleService
         return MapToResponse(role);
     }
 
-    // Update an existing role.
+    // Update an existing role (Partial Update).
     public async Task<RoleResponseDto?> UpdateAsync(
         int id,
         UpdateRoleDto dto)
@@ -77,25 +76,47 @@ public class RoleService : IRoleService
         if (role == null)
             return null;
 
-        var name = dto.Name.Trim();
-        var key = dto.Key.Trim().ToUpperInvariant();
+        // Update Name only if provided.
+        if (dto.Name != null)
+        {
+            var name = dto.Name.Trim();
 
-        if (string.IsNullOrWhiteSpace(name))
-            throw new ArgumentException("Role name is required.");
+            if (string.IsNullOrWhiteSpace(name))
+                throw new ArgumentException("Role name cannot be empty.");
 
-        if (string.IsNullOrWhiteSpace(key))
-            throw new ArgumentException("Role key is required.");
+            if (await _roleRepository.ExistsByNameAsync(name, id))
+                throw new InvalidOperationException(
+                    "Role name already exists.");
 
-        if (await _roleRepository.ExistsByNameAsync(name, id))
-            throw new InvalidOperationException("Role name already exists.");
+            role.Name = name;
+        }
 
-        if (await _roleRepository.ExistsByKeyAsync(key, id))
-            throw new InvalidOperationException("Role key already exists.");
+        // Update Key only if provided.
+        if (dto.Key != null)
+        {
+            var key = dto.Key.Trim().ToUpperInvariant();
 
-        role.Name = name;
-        role.Key = key;
-        role.Description = dto.Description?.Trim();
-        role.IsActive = dto.IsActive;
+            if (string.IsNullOrWhiteSpace(key))
+                throw new ArgumentException("Role key cannot be empty.");
+
+            if (await _roleRepository.ExistsByKeyAsync(key, id))
+                throw new InvalidOperationException(
+                    "Role key already exists.");
+
+            role.Key = key;
+        }
+
+        // Update Description only if provided.
+        if (dto.Description != null)
+        {
+            role.Description = dto.Description.Trim();
+        }
+
+        // Update IsActive only if provided.
+        if (dto.IsActive.HasValue)
+        {
+            role.IsActive = dto.IsActive.Value;
+        }
 
         await _roleRepository.UpdateAsync(role);
         await _roleRepository.SaveChangesAsync();

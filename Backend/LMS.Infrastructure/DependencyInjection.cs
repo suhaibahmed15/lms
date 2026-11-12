@@ -4,9 +4,11 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using LMS.Application.Repositories.Interfaces;
 using LMS.Application.Services.Interfaces;
-using LMS.Infrastructure.DataAccess;
 using LMS.Infrastructure.Services;
+using LMS.Infrastructure.DataAccess;
 using LMS.Infrastructure.BusinessLogic;
+using LMS.Domain.Entities;
+using Microsoft.AspNetCore.Identity;
 
 namespace LMS.Infrastructure;
 
@@ -23,6 +25,11 @@ public static class DependencyInjection
         services.AddDbContext<ApplicationDbContext>(options =>
             options.UseSqlServer(connectionString));
 
+        services.AddScoped<IStatusRepository, StatusRepository>();
+        services.AddScoped<IStatusService, StatusService>();
+        services.AddScoped<IUserRepository, UserRepository>();
+        services.AddScoped<IUserService, UserService>();
+        services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
         services.AddScoped<IRoleRepository, RoleRepository>();
         services.AddScoped<IRoleService, RoleService>();
         services.AddScoped<IAuthRepository, AuthRepository>();
