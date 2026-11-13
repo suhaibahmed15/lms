@@ -1361,7 +1361,7 @@ namespace LMS.Infrastructure.Migrations
                     b.Property<DateTime>("AssignedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("AssignedByUserId")
+                    b.Property<int?>("AssignedByUserId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("CreatedAt")
@@ -1686,8 +1686,7 @@ namespace LMS.Infrastructure.Migrations
                     b.HasOne("LMS.Domain.Entities.User", "AssignedByUser")
                         .WithMany("AssignedUserPermissions")
                         .HasForeignKey("AssignedByUserId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("LMS.Domain.Entities.Permission", "Permission")
                         .WithMany("UserPermissions")

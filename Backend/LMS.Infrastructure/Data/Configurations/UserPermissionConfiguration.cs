@@ -1,3 +1,4 @@
+
 using LMS.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -38,9 +39,11 @@ public class UserPermissionConfiguration : IEntityTypeConfiguration<UserPermissi
             .HasForeignKey(x => x.PermissionId)
             .OnDelete(DeleteBehavior.Restrict);
 
+        // AssignedByUser is optional
         builder.HasOne(x => x.AssignedByUser)
             .WithMany(u => u.AssignedUserPermissions)
             .HasForeignKey(x => x.AssignedByUserId)
+            .IsRequired(false)
             .OnDelete(DeleteBehavior.Restrict);
 
         builder.HasOne(x => x.RevokedByUser)
@@ -51,4 +54,3 @@ public class UserPermissionConfiguration : IEntityTypeConfiguration<UserPermissi
         builder.HasQueryFilter(x => !x.IsDeleted);
     }
 }
-

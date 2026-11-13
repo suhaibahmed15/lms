@@ -3,144 +3,144 @@
   "WorkspaceRootPath": "C:\\Users\\Suhaib.Ahmed\\Pictures\\loan_Management_system\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{E7020CD8-EA96-4E39-A607-36CA24243EBF}|LMS.Infrastructure\\LMS.Infrastructure.csproj|c:\\users\\suhaib.ahmed\\pictures\\loan_management_system\\lms.infrastructure\\dependencyinjection.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{E7020CD8-EA96-4E39-A607-36CA24243EBF}|LMS.Infrastructure\\LMS.Infrastructure.csproj|solutionrelative:lms.infrastructure\\dependencyinjection.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{FBDC2C7D-5BC9-40EF-B161-1AA53BEEE8D9}|LMS.Application\\LMS.Application.csproj|c:\\users\\suhaib.ahmed\\pictures\\loan_management_system\\lms.application\\dependencyinjection.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{FBDC2C7D-5BC9-40EF-B161-1AA53BEEE8D9}|LMS.Application\\LMS.Application.csproj|solutionrelative:lms.application\\dependencyinjection.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{77902F19-B4EA-43ED-8912-678FFFD44EAA}|LMS.API\\LMS.API.csproj|c:\\users\\suhaib.ahmed\\pictures\\loan_management_system\\lms.api\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{77902F19-B4EA-43ED-8912-678FFFD44EAA}|LMS.API\\LMS.API.csproj|solutionrelative:lms.api\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{E7020CD8-EA96-4E39-A607-36CA24243EBF}|LMS.Infrastructure\\LMS.Infrastructure.csproj|c:\\users\\suhaib.ahmed\\pictures\\loan_management_system\\lms.infrastructure\\services\\jwttokengenerator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{E7020CD8-EA96-4E39-A607-36CA24243EBF}|LMS.Infrastructure\\LMS.Infrastructure.csproj|solutionrelative:lms.infrastructure\\services\\jwttokengenerator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{FBDC2C7D-5BC9-40EF-B161-1AA53BEEE8D9}|LMS.Application\\LMS.Application.csproj|c:\\users\\suhaib.ahmed\\pictures\\loan_management_system\\lms.application\\services\\authservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{FBDC2C7D-5BC9-40EF-B161-1AA53BEEE8D9}|LMS.Application\\LMS.Application.csproj|solutionrelative:lms.application\\services\\authservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{FBDC2C7D-5BC9-40EF-B161-1AA53BEEE8D9}|LMS.Application\\LMS.Application.csproj|c:\\users\\suhaib.ahmed\\pictures\\loan_management_system\\lms.application\\services\\interfaces\\iauthservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{FBDC2C7D-5BC9-40EF-B161-1AA53BEEE8D9}|LMS.Application\\LMS.Application.csproj|solutionrelative:lms.application\\services\\interfaces\\iauthservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Suhaib.Ahmed\\Pictures\\loan_Management_system\\LMS.Infrastructure\\DependencyInjection.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:LMS.Infrastructure\\DependencyInjection.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{E7020CD8-EA96-4E39-A607-36CA24243EBF}|LMS.Infrastructure\\LMS.Infrastructure.csproj|c:\\users\\suhaib.ahmed\\pictures\\loan_management_system\\lms.infrastructure\\lms.infrastructure.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
       "RelativeMoniker": "D:0:0:{E7020CD8-EA96-4E39-A607-36CA24243EBF}|LMS.Infrastructure\\LMS.Infrastructure.csproj|solutionrelative:lms.infrastructure\\lms.infrastructure.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{FBDC2C7D-5BC9-40EF-B161-1AA53BEEE8D9}|LMS.Application\\LMS.Application.csproj|c:\\users\\suhaib.ahmed\\pictures\\loan_management_system\\lms.application\\dto\\auth\\registerrequestdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{FBDC2C7D-5BC9-40EF-B161-1AA53BEEE8D9}|LMS.Application\\LMS.Application.csproj|solutionrelative:lms.application\\dto\\auth\\registerrequestdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{FBDC2C7D-5BC9-40EF-B161-1AA53BEEE8D9}|LMS.Application\\LMS.Application.csproj|c:\\users\\suhaib.ahmed\\pictures\\loan_management_system\\lms.application\\dto\\auth\\authresponsedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{FBDC2C7D-5BC9-40EF-B161-1AA53BEEE8D9}|LMS.Application\\LMS.Application.csproj|solutionrelative:lms.application\\dto\\auth\\authresponsedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{E7020CD8-EA96-4E39-A607-36CA24243EBF}|LMS.Infrastructure\\LMS.Infrastructure.csproj|c:\\users\\suhaib.ahmed\\pictures\\loan_management_system\\lms.infrastructure\\dataaccess\\authrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{E7020CD8-EA96-4E39-A607-36CA24243EBF}|LMS.Infrastructure\\LMS.Infrastructure.csproj|solutionrelative:lms.infrastructure\\dataaccess\\authrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{FBDC2C7D-5BC9-40EF-B161-1AA53BEEE8D9}|LMS.Application\\LMS.Application.csproj|c:\\users\\suhaib.ahmed\\pictures\\loan_management_system\\lms.application\\repositories\\interfaces\\iauthrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{FBDC2C7D-5BC9-40EF-B161-1AA53BEEE8D9}|LMS.Application\\LMS.Application.csproj|solutionrelative:lms.application\\repositories\\interfaces\\iauthrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{77902F19-B4EA-43ED-8912-678FFFD44EAA}|LMS.API\\LMS.API.csproj|c:\\users\\suhaib.ahmed\\pictures\\loan_management_system\\lms.api\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
-      "RelativeMoniker": "D:0:0:{77902F19-B4EA-43ED-8912-678FFFD44EAA}|LMS.API\\LMS.API.csproj|solutionrelative:lms.api\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{FBDC2C7D-5BC9-40EF-B161-1AA53BEEE8D9}|LMS.Application\\LMS.Application.csproj|c:\\users\\suhaib.ahmed\\pictures\\loan_management_system\\lms.application\\services\\interfaces\\ijwttokengenerator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{FBDC2C7D-5BC9-40EF-B161-1AA53BEEE8D9}|LMS.Application\\LMS.Application.csproj|solutionrelative:lms.application\\services\\interfaces\\ijwttokengenerator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{FBDC2C7D-5BC9-40EF-B161-1AA53BEEE8D9}|LMS.Application\\LMS.Application.csproj|c:\\users\\suhaib.ahmed\\pictures\\loan_management_system\\lms.application\\dto\\auth\\loginrequestdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{FBDC2C7D-5BC9-40EF-B161-1AA53BEEE8D9}|LMS.Application\\LMS.Application.csproj|solutionrelative:lms.application\\dto\\auth\\loginrequestdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{FBDC2C7D-5BC9-40EF-B161-1AA53BEEE8D9}|LMS.Application\\LMS.Application.csproj|c:\\users\\suhaib.ahmed\\pictures\\loan_management_system\\lms.application\\lms.application.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
       "RelativeMoniker": "D:0:0:{FBDC2C7D-5BC9-40EF-B161-1AA53BEEE8D9}|LMS.Application\\LMS.Application.csproj|solutionrelative:lms.application\\lms.application.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{77902F19-B4EA-43ED-8912-678FFFD44EAA}|LMS.API\\LMS.API.csproj|c:\\users\\suhaib.ahmed\\pictures\\loan_management_system\\lms.api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{77902F19-B4EA-43ED-8912-678FFFD44EAA}|LMS.API\\LMS.API.csproj|solutionrelative:lms.api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Suhaib.Ahmed\\Pictures\\loan_Management_system\\LMS.API\\Controllers\\AuthController.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:LMS.API\\Controllers\\AuthController.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{E7020CD8-EA96-4E39-A607-36CA24243EBF}|LMS.Infrastructure\\LMS.Infrastructure.csproj|c:\\users\\suhaib.ahmed\\pictures\\loan_management_system\\lms.infrastructure\\data\\seeddata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{E7020CD8-EA96-4E39-A607-36CA24243EBF}|LMS.Infrastructure\\LMS.Infrastructure.csproj|solutionrelative:lms.infrastructure\\data\\seeddata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Suhaib.Ahmed\\Pictures\\loan_Management_system\\LMS.Infrastructure\\Services\\JwtTokenGenerator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:LMS.Infrastructure\\Services\\JwtTokenGenerator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{E7020CD8-EA96-4E39-A607-36CA24243EBF}|LMS.Infrastructure\\LMS.Infrastructure.csproj|c:\\users\\suhaib.ahmed\\pictures\\loan_management_system\\lms.infrastructure\\data\\applicationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{E7020CD8-EA96-4E39-A607-36CA24243EBF}|LMS.Infrastructure\\LMS.Infrastructure.csproj|solutionrelative:lms.infrastructure\\data\\applicationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Suhaib.Ahmed\\Pictures\\loan_Management_system\\LMS.Application\\DependencyInjection.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:LMS.Application\\DependencyInjection.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{55717EAB-E127-416B-8B6C-0F345E45EAA9}|LMS.Domain\\LMS.Domain.csproj|c:\\users\\suhaib.ahmed\\pictures\\loan_management_system\\lms.domain\\entities\\baseentity.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{55717EAB-E127-416B-8B6C-0F345E45EAA9}|LMS.Domain\\LMS.Domain.csproj|solutionrelative:lms.domain\\entities\\baseentity.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Suhaib.Ahmed\\Pictures\\loan_Management_system\\LMS.Application\\Services\\AuthService.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:LMS.Application\\Services\\AuthService.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{E7020CD8-EA96-4E39-A607-36CA24243EBF}|LMS.Infrastructure\\LMS.Infrastructure.csproj|c:\\users\\suhaib.ahmed\\pictures\\loan_management_system\\lms.infrastructure\\data\\configurations\\permissionconfiguration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{E7020CD8-EA96-4E39-A607-36CA24243EBF}|LMS.Infrastructure\\LMS.Infrastructure.csproj|solutionrelative:lms.infrastructure\\data\\configurations\\permissionconfiguration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Suhaib.Ahmed\\Pictures\\loan_Management_system\\LMS.Application\\Services\\Interfaces\\IAuthService.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:LMS.Application\\Services\\Interfaces\\IAuthService.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{55717EAB-E127-416B-8B6C-0F345E45EAA9}|LMS.Domain\\LMS.Domain.csproj|c:\\users\\suhaib.ahmed\\pictures\\loan_management_system\\lms.domain\\entities\\loanapproval.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{55717EAB-E127-416B-8B6C-0F345E45EAA9}|LMS.Domain\\LMS.Domain.csproj|solutionrelative:lms.domain\\entities\\loanapproval.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Suhaib.Ahmed\\Pictures\\loan_Management_system\\LMS.Application\\DTO\\Auth\\RegisterRequestDto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:LMS.Application\\DTO\\Auth\\RegisterRequestDto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{55717EAB-E127-416B-8B6C-0F345E45EAA9}|LMS.Domain\\LMS.Domain.csproj|c:\\users\\suhaib.ahmed\\pictures\\loan_management_system\\lms.domain\\entities\\loanapplication.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{55717EAB-E127-416B-8B6C-0F345E45EAA9}|LMS.Domain\\LMS.Domain.csproj|solutionrelative:lms.domain\\entities\\loanapplication.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Suhaib.Ahmed\\Pictures\\loan_Management_system\\LMS.Application\\DTO\\Auth\\AuthResponseDto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:LMS.Application\\DTO\\Auth\\AuthResponseDto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{55717EAB-E127-416B-8B6C-0F345E45EAA9}|LMS.Domain\\LMS.Domain.csproj|c:\\users\\suhaib.ahmed\\pictures\\loan_management_system\\lms.domain\\entities\\loan.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{55717EAB-E127-416B-8B6C-0F345E45EAA9}|LMS.Domain\\LMS.Domain.csproj|solutionrelative:lms.domain\\entities\\loan.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Suhaib.Ahmed\\Pictures\\loan_Management_system\\LMS.Infrastructure\\DataAccess\\AuthRepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:LMS.Infrastructure\\DataAccess\\AuthRepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{55717EAB-E127-416B-8B6C-0F345E45EAA9}|LMS.Domain\\LMS.Domain.csproj|c:\\users\\suhaib.ahmed\\pictures\\loan_management_system\\lms.domain\\entities\\loantype.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{55717EAB-E127-416B-8B6C-0F345E45EAA9}|LMS.Domain\\LMS.Domain.csproj|solutionrelative:lms.domain\\entities\\loantype.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Suhaib.Ahmed\\Pictures\\loan_Management_system\\LMS.API\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:LMS.API\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{55717EAB-E127-416B-8B6C-0F345E45EAA9}|LMS.Domain\\LMS.Domain.csproj|c:\\users\\suhaib.ahmed\\pictures\\loan_management_system\\lms.domain\\entities\\loanguarantor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{55717EAB-E127-416B-8B6C-0F345E45EAA9}|LMS.Domain\\LMS.Domain.csproj|solutionrelative:lms.domain\\entities\\loanguarantor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Suhaib.Ahmed\\Pictures\\loan_Management_system\\LMS.Application\\Repositories\\Interfaces\\IAuthRepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:LMS.Application\\Repositories\\Interfaces\\IAuthRepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{55717EAB-E127-416B-8B6C-0F345E45EAA9}|LMS.Domain\\LMS.Domain.csproj|c:\\users\\suhaib.ahmed\\pictures\\loan_management_system\\lms.domain\\entities\\loandocument.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{55717EAB-E127-416B-8B6C-0F345E45EAA9}|LMS.Domain\\LMS.Domain.csproj|solutionrelative:lms.domain\\entities\\loandocument.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Suhaib.Ahmed\\Pictures\\loan_Management_system\\LMS.Application\\Services\\Interfaces\\IJwtTokenGenerator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:LMS.Application\\Services\\Interfaces\\IJwtTokenGenerator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{E7020CD8-EA96-4E39-A607-36CA24243EBF}|LMS.Infrastructure\\LMS.Infrastructure.csproj|c:\\users\\suhaib.ahmed\\pictures\\loan_management_system\\lms.infrastructure\\data\\configurations\\loanguarantorconfiguration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{E7020CD8-EA96-4E39-A607-36CA24243EBF}|LMS.Infrastructure\\LMS.Infrastructure.csproj|solutionrelative:lms.infrastructure\\data\\configurations\\loanguarantorconfiguration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Suhaib.Ahmed\\Pictures\\loan_Management_system\\LMS.Application\\DTO\\Auth\\LoginRequestDto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:LMS.Application\\DTO\\Auth\\LoginRequestDto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{E7020CD8-EA96-4E39-A607-36CA24243EBF}|LMS.Infrastructure\\LMS.Infrastructure.csproj|c:\\users\\suhaib.ahmed\\pictures\\loan_management_system\\lms.infrastructure\\data\\configurations\\loandocumentconfiguration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{E7020CD8-EA96-4E39-A607-36CA24243EBF}|LMS.Infrastructure\\LMS.Infrastructure.csproj|solutionrelative:lms.infrastructure\\data\\configurations\\loandocumentconfiguration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Suhaib.Ahmed\\Pictures\\loan_Management_system\\LMS.API\\Program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:LMS.API\\Program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{E7020CD8-EA96-4E39-A607-36CA24243EBF}|LMS.Infrastructure\\LMS.Infrastructure.csproj|c:\\users\\suhaib.ahmed\\pictures\\loan_management_system\\lms.infrastructure\\data\\configurations\\loanapprovalconfiguration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{E7020CD8-EA96-4E39-A607-36CA24243EBF}|LMS.Infrastructure\\LMS.Infrastructure.csproj|solutionrelative:lms.infrastructure\\data\\configurations\\loanapprovalconfiguration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Suhaib.Ahmed\\Pictures\\loan_Management_system\\LMS.Infrastructure\\Data\\SeedData.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:LMS.Infrastructure\\Data\\SeedData.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{55717EAB-E127-416B-8B6C-0F345E45EAA9}|LMS.Domain\\LMS.Domain.csproj|c:\\users\\suhaib.ahmed\\pictures\\loan_management_system\\lms.domain\\entities\\permission.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{55717EAB-E127-416B-8B6C-0F345E45EAA9}|LMS.Domain\\LMS.Domain.csproj|solutionrelative:lms.domain\\entities\\permission.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Suhaib.Ahmed\\Pictures\\loan_Management_system\\LMS.Domain\\Entities\\BaseEntity.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:LMS.Domain\\Entities\\BaseEntity.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{55717EAB-E127-416B-8B6C-0F345E45EAA9}|LMS.Domain\\LMS.Domain.csproj|c:\\users\\suhaib.ahmed\\pictures\\loan_management_system\\lms.domain\\entities\\menu.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{55717EAB-E127-416B-8B6C-0F345E45EAA9}|LMS.Domain\\LMS.Domain.csproj|solutionrelative:lms.domain\\entities\\menu.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Suhaib.Ahmed\\Pictures\\loan_Management_system\\LMS.Infrastructure\\Data\\Configurations\\PermissionConfiguration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:LMS.Infrastructure\\Data\\Configurations\\PermissionConfiguration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{55717EAB-E127-416B-8B6C-0F345E45EAA9}|LMS.Domain\\LMS.Domain.csproj|c:\\users\\suhaib.ahmed\\pictures\\loan_management_system\\lms.domain\\entities\\auditlog.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{55717EAB-E127-416B-8B6C-0F345E45EAA9}|LMS.Domain\\LMS.Domain.csproj|solutionrelative:lms.domain\\entities\\auditlog.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Suhaib.Ahmed\\Pictures\\loan_Management_system\\LMS.Infrastructure\\Data\\ApplicationDbContext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:LMS.Infrastructure\\Data\\ApplicationDbContext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{E7020CD8-EA96-4E39-A607-36CA24243EBF}|LMS.Infrastructure\\LMS.Infrastructure.csproj|c:\\users\\suhaib.ahmed\\pictures\\loan_management_system\\lms.infrastructure\\data\\configurations\\roleconfiguration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{E7020CD8-EA96-4E39-A607-36CA24243EBF}|LMS.Infrastructure\\LMS.Infrastructure.csproj|solutionrelative:lms.infrastructure\\data\\configurations\\roleconfiguration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Suhaib.Ahmed\\Pictures\\loan_Management_system\\LMS.Domain\\Entities\\LoanApproval.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:LMS.Domain\\Entities\\LoanApproval.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{E7020CD8-EA96-4E39-A607-36CA24243EBF}|LMS.Infrastructure\\LMS.Infrastructure.csproj|c:\\users\\suhaib.ahmed\\pictures\\loan_management_system\\lms.infrastructure\\data\\configurations\\auditlogconfiguration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{E7020CD8-EA96-4E39-A607-36CA24243EBF}|LMS.Infrastructure\\LMS.Infrastructure.csproj|solutionrelative:lms.infrastructure\\data\\configurations\\auditlogconfiguration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Suhaib.Ahmed\\Pictures\\loan_Management_system\\LMS.Domain\\Entities\\LoanApplication.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:LMS.Domain\\Entities\\LoanApplication.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{55717EAB-E127-416B-8B6C-0F345E45EAA9}|LMS.Domain\\LMS.Domain.csproj|c:\\users\\suhaib.ahmed\\pictures\\loan_management_system\\lms.domain\\entities\\repaymentschedule.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{55717EAB-E127-416B-8B6C-0F345E45EAA9}|LMS.Domain\\LMS.Domain.csproj|solutionrelative:lms.domain\\entities\\repaymentschedule.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Suhaib.Ahmed\\Pictures\\loan_Management_system\\LMS.Domain\\Entities\\Loan.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:LMS.Domain\\Entities\\Loan.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Suhaib.Ahmed\\Pictures\\loan_Management_system\\LMS.Domain\\Entities\\LoanType.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:LMS.Domain\\Entities\\LoanType.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Suhaib.Ahmed\\Pictures\\loan_Management_system\\LMS.Domain\\Entities\\LoanGuarantor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:LMS.Domain\\Entities\\LoanGuarantor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Suhaib.Ahmed\\Pictures\\loan_Management_system\\LMS.Domain\\Entities\\LoanDocument.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:LMS.Domain\\Entities\\LoanDocument.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Suhaib.Ahmed\\Pictures\\loan_Management_system\\LMS.Infrastructure\\Data\\Configurations\\LoanGuarantorConfiguration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:LMS.Infrastructure\\Data\\Configurations\\LoanGuarantorConfiguration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Suhaib.Ahmed\\Pictures\\loan_Management_system\\LMS.Infrastructure\\Data\\Configurations\\LoanDocumentConfiguration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:LMS.Infrastructure\\Data\\Configurations\\LoanDocumentConfiguration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Suhaib.Ahmed\\Pictures\\loan_Management_system\\LMS.Infrastructure\\Data\\Configurations\\LoanApprovalConfiguration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:LMS.Infrastructure\\Data\\Configurations\\LoanApprovalConfiguration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Suhaib.Ahmed\\Pictures\\loan_Management_system\\LMS.Domain\\Entities\\Permission.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:LMS.Domain\\Entities\\Permission.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Suhaib.Ahmed\\Pictures\\loan_Management_system\\LMS.Domain\\Entities\\Menu.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:LMS.Domain\\Entities\\Menu.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Suhaib.Ahmed\\Pictures\\loan_Management_system\\LMS.Domain\\Entities\\AuditLog.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:LMS.Domain\\Entities\\AuditLog.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Suhaib.Ahmed\\Pictures\\loan_Management_system\\LMS.Infrastructure\\Data\\Configurations\\RoleConfiguration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:LMS.Infrastructure\\Data\\Configurations\\RoleConfiguration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Suhaib.Ahmed\\Pictures\\loan_Management_system\\LMS.Infrastructure\\Data\\Configurations\\AuditLogConfiguration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:LMS.Infrastructure\\Data\\Configurations\\AuditLogConfiguration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Suhaib.Ahmed\\Pictures\\loan_Management_system\\LMS.Domain\\Entities\\RepaymentSchedule.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:LMS.Domain\\Entities\\RepaymentSchedule.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -158,7 +158,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": "AuthController.cs",
               "DocumentMoniker": "C:\\Users\\Suhaib.Ahmed\\Pictures\\loan_Management_system\\LMS.API\\Controllers\\AuthController.cs",
               "RelativeDocumentMoniker": "LMS.API\\Controllers\\AuthController.cs",
@@ -166,12 +166,11 @@
               "RelativeToolTip": "LMS.API\\Controllers\\AuthController.cs",
               "ViewState": "AgIAADYAAAAAAAAAAAAhwEoAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-11-11T06:55:07.165Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-11-11T06:55:07.165Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 4,
               "Title": "JwtTokenGenerator.cs",
               "DocumentMoniker": "C:\\Users\\Suhaib.Ahmed\\Pictures\\loan_Management_system\\LMS.Infrastructure\\Services\\JwtTokenGenerator.cs",
               "RelativeDocumentMoniker": "LMS.Infrastructure\\Services\\JwtTokenGenerator.cs",
@@ -179,8 +178,7 @@
               "RelativeToolTip": "LMS.Infrastructure\\Services\\JwtTokenGenerator.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAALAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-11-11T06:17:33.958Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-11-11T06:17:33.958Z"
             },
             {
               "$type": "Document",
@@ -190,14 +188,12 @@
               "RelativeDocumentMoniker": "LMS.Infrastructure\\DependencyInjection.cs",
               "ToolTip": "C:\\Users\\Suhaib.Ahmed\\Pictures\\loan_Management_system\\LMS.Infrastructure\\DependencyInjection.cs",
               "RelativeToolTip": "LMS.Infrastructure\\DependencyInjection.cs",
-              "ViewState": "AgIAAAsAAAAAAAAAAAA3wA0AAAA3AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-11-11T05:43:35.614Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-11-11T05:43:35.614Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 5,
               "Title": "DependencyInjection.cs",
               "DocumentMoniker": "C:\\Users\\Suhaib.Ahmed\\Pictures\\loan_Management_system\\LMS.Application\\DependencyInjection.cs",
               "RelativeDocumentMoniker": "LMS.Application\\DependencyInjection.cs",
@@ -205,12 +201,11 @@
               "RelativeToolTip": "LMS.Application\\DependencyInjection.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAA4AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-11-11T06:44:43.5Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-11-11T06:44:43.5Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 6,
               "Title": "AuthService.cs",
               "DocumentMoniker": "C:\\Users\\Suhaib.Ahmed\\Pictures\\loan_Management_system\\LMS.Application\\Services\\AuthService.cs",
               "RelativeDocumentMoniker": "LMS.Application\\Services\\AuthService.cs",
@@ -218,12 +213,11 @@
               "RelativeToolTip": "LMS.Application\\Services\\AuthService.cs",
               "ViewState": "AgIAAGoAAAAAAAAAAAAwwHgAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-11-11T06:36:06.995Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-11-11T06:36:06.995Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 7,
               "Title": "IAuthService.cs",
               "DocumentMoniker": "C:\\Users\\Suhaib.Ahmed\\Pictures\\loan_Management_system\\LMS.Application\\Services\\Interfaces\\IAuthService.cs",
               "RelativeDocumentMoniker": "LMS.Application\\Services\\Interfaces\\IAuthService.cs",
@@ -231,12 +225,11 @@
               "RelativeToolTip": "LMS.Application\\Services\\Interfaces\\IAuthService.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAUwBAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-11-11T05:59:24.549Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-11-11T05:59:24.549Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 1,
               "Title": "LMS.Infrastructure",
               "DocumentMoniker": "C:\\Users\\Suhaib.Ahmed\\Pictures\\loan_Management_system\\LMS.Infrastructure\\LMS.Infrastructure.csproj",
               "RelativeDocumentMoniker": "LMS.Infrastructure\\LMS.Infrastructure.csproj",
@@ -244,12 +237,11 @@
               "RelativeToolTip": "LMS.Infrastructure\\LMS.Infrastructure.csproj",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAMAAAAlAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
-              "WhenOpened": "2026-11-11T06:17:06.018Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-11-11T06:17:06.018Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 8,
               "Title": "RegisterRequestDto.cs",
               "DocumentMoniker": "C:\\Users\\Suhaib.Ahmed\\Pictures\\loan_Management_system\\LMS.Application\\DTO\\Auth\\RegisterRequestDto.cs",
               "RelativeDocumentMoniker": "LMS.Application\\DTO\\Auth\\RegisterRequestDto.cs",
@@ -257,12 +249,11 @@
               "RelativeToolTip": "LMS.Application\\DTO\\Auth\\RegisterRequestDto.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-11-11T05:57:29.062Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-11-11T05:57:29.062Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 9,
               "Title": "AuthResponseDto.cs",
               "DocumentMoniker": "C:\\Users\\Suhaib.Ahmed\\Pictures\\loan_Management_system\\LMS.Application\\DTO\\Auth\\AuthResponseDto.cs",
               "RelativeDocumentMoniker": "LMS.Application\\DTO\\Auth\\AuthResponseDto.cs",
@@ -270,12 +261,11 @@
               "RelativeToolTip": "LMS.Application\\DTO\\Auth\\AuthResponseDto.cs",
               "ViewState": "AgIAAAMAAAAAAAAAAAAuwAgAAAAYAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-11-11T05:57:48.46Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-11-11T05:57:48.46Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 10,
               "Title": "AuthRepository.cs",
               "DocumentMoniker": "C:\\Users\\Suhaib.Ahmed\\Pictures\\loan_Management_system\\LMS.Infrastructure\\DataAccess\\AuthRepository.cs",
               "RelativeDocumentMoniker": "LMS.Infrastructure\\DataAccess\\AuthRepository.cs",
@@ -283,8 +273,7 @@
               "RelativeToolTip": "LMS.Infrastructure\\DataAccess\\AuthRepository.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAtAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-11-11T06:17:24.156Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-11-11T06:17:24.156Z"
             },
             {
               "$type": "Document",
@@ -296,12 +285,11 @@
               "RelativeToolTip": "LMS.API\\appsettings.json",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2026-11-11T04:32:22.183Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-11-11T04:32:22.183Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 12,
               "Title": "IAuthRepository.cs",
               "DocumentMoniker": "C:\\Users\\Suhaib.Ahmed\\Pictures\\loan_Management_system\\LMS.Application\\Repositories\\Interfaces\\IAuthRepository.cs",
               "RelativeDocumentMoniker": "LMS.Application\\Repositories\\Interfaces\\IAuthRepository.cs",
@@ -309,12 +297,11 @@
               "RelativeToolTip": "LMS.Application\\Repositories\\Interfaces\\IAuthRepository.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAMAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-11-11T06:10:54.488Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-11-11T06:10:54.488Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 13,
               "Title": "IJwtTokenGenerator.cs",
               "DocumentMoniker": "C:\\Users\\Suhaib.Ahmed\\Pictures\\loan_Management_system\\LMS.Application\\Services\\Interfaces\\IJwtTokenGenerator.cs",
               "RelativeDocumentMoniker": "LMS.Application\\Services\\Interfaces\\IJwtTokenGenerator.cs",
@@ -322,12 +309,11 @@
               "RelativeToolTip": "LMS.Application\\Services\\Interfaces\\IJwtTokenGenerator.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-11-11T06:11:20.289Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-11-11T06:11:20.289Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 14,
               "Title": "LoginRequestDto.cs",
               "DocumentMoniker": "C:\\Users\\Suhaib.Ahmed\\Pictures\\loan_Management_system\\LMS.Application\\DTO\\Auth\\LoginRequestDto.cs",
               "RelativeDocumentMoniker": "LMS.Application\\DTO\\Auth\\LoginRequestDto.cs",
@@ -335,12 +321,11 @@
               "RelativeToolTip": "LMS.Application\\DTO\\Auth\\LoginRequestDto.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-11-11T05:57:38.391Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-11-11T05:57:38.391Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 2,
               "Title": "LMS.Application",
               "DocumentMoniker": "C:\\Users\\Suhaib.Ahmed\\Pictures\\loan_Management_system\\LMS.Application\\LMS.Application.csproj",
               "RelativeDocumentMoniker": "LMS.Application\\LMS.Application.csproj",
@@ -348,8 +333,7 @@
               "RelativeToolTip": "LMS.Application\\LMS.Application.csproj",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
-              "WhenOpened": "2026-11-11T05:56:48.548Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-11-11T05:56:48.548Z"
             },
             {
               "$type": "Document",
@@ -361,8 +345,7 @@
               "RelativeToolTip": "LMS.API\\Program.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-11-11T05:44:09.147Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-11-11T05:44:09.147Z"
             },
             {
               "$type": "Document",
@@ -374,12 +357,11 @@
               "RelativeToolTip": "LMS.Infrastructure\\Data\\SeedData.cs",
               "ViewState": "AgIAADsAAAAAAAAAAAAgwFMAAAAQAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-11-11T05:41:41.478Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-11-11T05:41:41.478Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 18,
+              "DocumentIndex": 17,
               "Title": "BaseEntity.cs",
               "DocumentMoniker": "C:\\Users\\Suhaib.Ahmed\\Pictures\\loan_Management_system\\LMS.Domain\\Entities\\BaseEntity.cs",
               "RelativeDocumentMoniker": "LMS.Domain\\Entities\\BaseEntity.cs",
@@ -387,12 +369,11 @@
               "RelativeToolTip": "LMS.Domain\\Entities\\BaseEntity.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAsAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-11-11T04:49:00.559Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-11-11T04:49:00.559Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 19,
+              "DocumentIndex": 18,
               "Title": "PermissionConfiguration.cs",
               "DocumentMoniker": "C:\\Users\\Suhaib.Ahmed\\Pictures\\loan_Management_system\\LMS.Infrastructure\\Data\\Configurations\\PermissionConfiguration.cs",
               "RelativeDocumentMoniker": "LMS.Infrastructure\\Data\\Configurations\\PermissionConfiguration.cs",
@@ -400,12 +381,11 @@
               "RelativeToolTip": "LMS.Infrastructure\\Data\\Configurations\\PermissionConfiguration.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAfAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-11-11T05:05:39.31Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-11-11T05:05:39.31Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 17,
+              "DocumentIndex": 19,
               "Title": "ApplicationDbContext.cs",
               "DocumentMoniker": "C:\\Users\\Suhaib.Ahmed\\Pictures\\loan_Management_system\\LMS.Infrastructure\\Data\\ApplicationDbContext.cs",
               "RelativeDocumentMoniker": "LMS.Infrastructure\\Data\\ApplicationDbContext.cs",
@@ -413,8 +393,7 @@
               "RelativeToolTip": "LMS.Infrastructure\\Data\\ApplicationDbContext.cs",
               "ViewState": "AgIAABoAAAAAAAAAAAAAwDIAAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-11-11T04:51:24.109Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-11-11T04:51:24.109Z"
             },
             {
               "$type": "Document",
@@ -426,8 +405,7 @@
               "RelativeToolTip": "LMS.Domain\\Entities\\LoanApproval.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAsAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-11-11T05:12:31.842Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-11-11T05:12:31.842Z"
             },
             {
               "$type": "Document",
@@ -439,8 +417,7 @@
               "RelativeToolTip": "LMS.Domain\\Entities\\LoanApplication.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAMAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-11-11T05:11:15.11Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-11-11T05:11:15.11Z"
             },
             {
               "$type": "Document",
@@ -452,8 +429,7 @@
               "RelativeToolTip": "LMS.Domain\\Entities\\Loan.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-11-11T05:09:21.438Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-11-11T05:09:21.438Z"
             },
             {
               "$type": "Document",
@@ -465,8 +441,7 @@
               "RelativeToolTip": "LMS.Domain\\Entities\\LoanType.cs",
               "ViewState": "AgIAAAIAAAAAAAAAAAAxwAMAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-11-11T05:13:46.304Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-11-11T05:13:46.304Z"
             },
             {
               "$type": "Document",
@@ -478,8 +453,7 @@
               "RelativeToolTip": "LMS.Domain\\Entities\\LoanGuarantor.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAATAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-11-11T05:13:25.538Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-11-11T05:13:25.538Z"
             },
             {
               "$type": "Document",
@@ -491,8 +465,7 @@
               "RelativeToolTip": "LMS.Domain\\Entities\\LoanDocument.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAiAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-11-11T05:13:10.849Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-11-11T05:13:10.849Z"
             },
             {
               "$type": "Document",
@@ -504,8 +477,7 @@
               "RelativeToolTip": "LMS.Infrastructure\\Data\\Configurations\\LoanGuarantorConfiguration.cs",
               "ViewState": "AgIAAB0AAAAAAAAAAAAcwC0AAAAiAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-11-11T05:26:38.863Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-11-11T05:26:38.863Z"
             },
             {
               "$type": "Document",
@@ -517,8 +489,7 @@
               "RelativeToolTip": "LMS.Infrastructure\\Data\\Configurations\\LoanDocumentConfiguration.cs",
               "ViewState": "AgIAABwAAAAAAAAAAAAcwCkAAAAiAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-11-11T05:25:54.243Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-11-11T05:25:54.243Z"
             },
             {
               "$type": "Document",
@@ -530,8 +501,7 @@
               "RelativeToolTip": "LMS.Infrastructure\\Data\\Configurations\\LoanApprovalConfiguration.cs",
               "ViewState": "AgIAAA8AAAAAAAAAAAAcwBwAAAAiAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-11-11T05:24:56.859Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-11-11T05:24:56.859Z"
             },
             {
               "$type": "Document",
@@ -543,8 +513,7 @@
               "RelativeToolTip": "LMS.Domain\\Entities\\Permission.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAADAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-11-11T05:09:30.91Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-11-11T05:09:30.91Z"
             },
             {
               "$type": "Document",
@@ -556,8 +525,7 @@
               "RelativeToolTip": "LMS.Domain\\Entities\\Menu.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-11-11T05:14:06.715Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-11-11T05:14:06.715Z"
             },
             {
               "$type": "Document",
@@ -569,8 +537,7 @@
               "RelativeToolTip": "LMS.Domain\\Entities\\AuditLog.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAMAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-11-11T05:09:17.045Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-11-11T05:09:17.045Z"
             },
             {
               "$type": "Document",
@@ -582,8 +549,7 @@
               "RelativeToolTip": "LMS.Infrastructure\\Data\\Configurations\\RoleConfiguration.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAZAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-11-11T05:07:56.251Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-11-11T05:07:56.251Z"
             },
             {
               "$type": "Document",
@@ -595,8 +561,7 @@
               "RelativeToolTip": "LMS.Infrastructure\\Data\\Configurations\\AuditLogConfiguration.cs",
               "ViewState": "AgIAAAgAAAAAAAAAAAAAwAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-11-11T04:51:36.585Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-11-11T04:51:36.585Z"
             },
             {
               "$type": "Document",
@@ -608,8 +573,7 @@
               "RelativeToolTip": "LMS.Domain\\Entities\\RepaymentSchedule.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-11-11T04:32:14.793Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-11-11T04:32:14.793Z"
             }
           ]
         }

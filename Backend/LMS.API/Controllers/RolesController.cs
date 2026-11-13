@@ -174,11 +174,13 @@
 
 using LMS.Application.DTO.Roles;
 using LMS.Application.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LMS.API.Controllers;
 
 [ApiController]
+[Authorize]
 [Route("api/[controller]")]
 public class RolesController : ControllerBase
 {
@@ -188,7 +190,7 @@ public class RolesController : ControllerBase
     {
         _roleService = roleService;
     }
-
+    //[Authorize(Roles ="1")]
     // GET: api/roles
     [HttpGet]
     public async Task<IActionResult> GetAll()
