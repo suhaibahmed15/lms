@@ -1,3 +1,4 @@
+
 using LMS.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -32,6 +33,12 @@ public class PermissionConfiguration : IEntityTypeConfiguration<Permission>
         builder.Property(x => x.IsDeleted)
             .HasDefaultValue(false);
 
+        // Permission to Menu relationship
+        builder.HasOne(x => x.Menu)
+            .WithMany()
+            .HasForeignKey(x => x.MenuId)
+            .OnDelete(DeleteBehavior.Restrict);
+
         builder.HasIndex(x => x.Key)
             .IsUnique()
             .HasFilter("[IsDeleted] = 0");
@@ -39,4 +46,3 @@ public class PermissionConfiguration : IEntityTypeConfiguration<Permission>
         builder.HasQueryFilter(x => !x.IsDeleted);
     }
 }
-

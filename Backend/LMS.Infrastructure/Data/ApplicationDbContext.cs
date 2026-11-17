@@ -27,6 +27,10 @@ public class ApplicationDbContext : DbContext
     public DbSet<Permission> Permissions => Set<Permission>();
     public DbSet<RolePermission> RolePermissions => Set<RolePermission>();
     public DbSet<UserPermission> UserPermissions => Set<UserPermission>();
+    public DbSet<UserMenu> UserMenus => Set<UserMenu>();
+
+    public DbSet<LoanApplicationAssignment> LoanApplicationAssignments
+    => Set<LoanApplicationAssignment>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

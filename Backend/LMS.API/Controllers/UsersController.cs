@@ -1,14 +1,13 @@
 ﻿
 using LMS.Application.DTO.Users;
 using LMS.Application.Services.Interfaces;
-//using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LMS.API.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-//[Authorize]
 public class UsersController : ControllerBase
 {
     private readonly IUserService _userService;
@@ -19,6 +18,7 @@ public class UsersController : ControllerBase
     }
 
     // GET: api/users
+    [Authorize(Policy = "Permission:USER_VIEW")]
     [HttpGet]
     public async Task<IActionResult> GetAll()
     {
@@ -32,6 +32,7 @@ public class UsersController : ControllerBase
     }
 
     // GET: api/users/{id}
+    [Authorize(Policy = "Permission:USER_VIEW")]
     [HttpGet("{id:int}")]
     public async Task<IActionResult> GetById(int id)
     {
@@ -53,6 +54,7 @@ public class UsersController : ControllerBase
     }
 
     // POST: api/users
+    [Authorize(Policy = "Permission:USER_CREATE")]
     [HttpPost]
     public async Task<IActionResult> Create(
         [FromBody] CreateUserDto request)
@@ -88,6 +90,7 @@ public class UsersController : ControllerBase
 
     // POST: api/users/{id}
     // Partial update: only provided fields will change.
+    [Authorize(Policy = "Permission:USER_UPDATE")]
     [HttpPost("{id:int}")]
     public async Task<IActionResult> Update(
         int id,
@@ -128,6 +131,8 @@ public class UsersController : ControllerBase
     }
 
     // DELETE: api/users/{id}
+    // Only Admin can delete users.
+    [Authorize(Roles = "ADMIN")]
     [HttpDelete("{id:int}")]
     public async Task<IActionResult> Delete(int id)
     {

@@ -1,177 +1,5 @@
-//using LMS.Application.DTO.Roles;
-//using LMS.Application.Services.Interfaces;
-//using Microsoft.AspNetCore.Mvc;
 
-//namespace LMS.API.Controllers;
-
-//[ApiController]
-//[Route("api/[controller]")]
-//public class RolesController : ControllerBase
-//{
-//    private readonly IRoleService _roleService;
-
-//    public RolesController(IRoleService roleService)
-//    {
-//        _roleService = roleService;
-//    }
-
-//    // GET: api/roles
-//    [HttpGet]
-//    public async Task<IActionResult> GetAll()
-//    {
-//        var roles = await _roleService.GetAllAsync();
-
-//        return Ok(new
-//        {
-//            message = "Roles retrieved successfully.",
-//            data = roles
-//        });
-//    }
-
-//    // GET: api/roles/{id}
-//    [HttpGet("{id:int}")]
-//    public async Task<IActionResult> GetById(int id)
-//    {
-//        var role = await _roleService.GetByIdAsync(id);
-
-//        if (role == null)
-//        {
-//            return NotFound(new
-//            {
-//                message = "Role not found."
-//            });
-//        }
-
-//        return Ok(new
-//        {
-//            message = "Role retrieved successfully.",
-//            data = role
-//        });
-//    }
-
-//    // POST: api/roles
-//    [HttpPost]
-//    public async Task<IActionResult> Create([FromBody] CreateRoleDto request)
-//    {
-//        try
-//        {
-//            var createdRole = await _roleService.CreateAsync(request);
-
-//            return CreatedAtAction(
-//                nameof(GetById),
-//                new { id = createdRole.Id },
-//                new
-//                {
-//                    message = "Role created successfully.",
-//                    data = createdRole
-//                });
-//        }
-//        catch (ArgumentException ex)
-//        {
-//            return BadRequest(new
-//            {
-//                message = ex.Message
-//            });
-//        }
-//        catch (InvalidOperationException ex)
-//        {
-//            return Conflict(new
-//            {
-//                message = ex.Message
-//            });
-//        }
-//    }
-
-//    // PUT: api/roles/{id}
-//    [HttpPut("{id:int}")]
-//    public async Task<IActionResult> Update(int id, [FromBody] UpdateRoleDto request)
-//    {
-//        try
-//        {
-//            var updatedRole = await _roleService.UpdateAsync(id, request);
-
-//            if (updatedRole == null)
-//            {
-//                return NotFound(new
-//                {
-//                    message = "Role not found."
-//                });
-//            }
-
-//            return Ok(new
-//            {
-//                message = "Role updated successfully.",
-//                data = updatedRole
-//            });
-//        }
-//        catch (ArgumentException ex)
-//        {
-//            return BadRequest(new
-//            {
-//                message = ex.Message
-//            });
-//        }
-//        catch (InvalidOperationException ex)
-//        {
-//            return Conflict(new
-//            {
-//                message = ex.Message
-//            });
-//        }
-//    }
-
-//    // PATCH: api/roles/{id}/status
-//    [HttpPatch("{id:int}/status")]
-//    public async Task<IActionResult> ChangeStatus(int id, [FromBody] ChangeRoleStatusDto request)
-//    {
-//        var updated = await _roleService.ChangeStatusAsync(id, request.IsActive);
-
-//        if (updated == null)
-//        {
-//            return NotFound(new
-//            {
-//                message = "Role not found."
-//            });
-//        }
-
-//        return Ok(new
-//        {
-//            message = "Role status updated successfully."
-//        });
-//    }
-
-//    // DELETE: api/roles/{id}
-//    [HttpDelete("{id:int}")]
-//    public async Task<IActionResult> Delete(int id)
-//    {
-//        try
-//        {
-//            var deleted = await _roleService.DeleteAsync(id);
-
-//            if (!deleted)
-//            {
-//                return NotFound(new
-//                {
-//                    message = "Role not found."
-//                });
-//            }
-
-//            return Ok(new
-//            {
-//                message = "Role deleted successfully."
-//            });
-//        }
-//        catch (InvalidOperationException ex)
-//        {
-//            return Conflict(new
-//            {
-//                message = ex.Message
-//            });
-//        }
-//    }
-//}
-
-
+using System.Security.Claims;
 using LMS.Application.DTO.Roles;
 using LMS.Application.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
@@ -190,8 +18,47 @@ public class RolesController : ControllerBase
     {
         _roleService = roleService;
     }
-    //[Authorize(Roles ="1")]
+
+    // GET: api/roles/my-role
+    // An authenticated user can only see their own role.
+    [HttpGet("my-role")]
+    public async Task<IActionResult> GetMyRole()
+    {
+        var userIdValue = User.FindFirstValue(
+            ClaimTypes.NameIdentifier);
+
+        if (!int.TryParse(userIdValue, out int userId))
+        {
+            return Unauthorized(new
+            {
+                message = "Unable to identify the authenticated user."
+            });
+        }
+
+        var role = await _roleService.GetMyRoleAsync(userId);
+
+        if (role == null)
+        {
+            return NotFound(new
+            {
+                message = "Your assigned role was not found."
+            });
+        }
+
+        return Ok(new
+        {
+            message = "Your role retrieved successfully.",
+            data = new
+            {
+                id = role.Id,
+                name = role.Name,
+                key = role.Key
+            }
+        });
+    }
+
     // GET: api/roles
+    [Authorize(Policy = "Permission:ROLE_MANAGE")]
     [HttpGet]
     public async Task<IActionResult> GetAll()
     {
@@ -205,6 +72,7 @@ public class RolesController : ControllerBase
     }
 
     // GET: api/roles/{id}
+    [Authorize(Policy = "Permission:ROLE_MANAGE")]
     [HttpGet("{id:int}")]
     public async Task<IActionResult> GetById(int id)
     {
@@ -226,8 +94,10 @@ public class RolesController : ControllerBase
     }
 
     // POST: api/roles
+    [Authorize(Policy = "Permission:ROLE_MANAGE")]
     [HttpPost]
-    public async Task<IActionResult> Create([FromBody] CreateRoleDto request)
+    public async Task<IActionResult> Create(
+        [FromBody] CreateRoleDto request)
     {
         try
         {
@@ -244,22 +114,17 @@ public class RolesController : ControllerBase
         }
         catch (ArgumentException ex)
         {
-            return BadRequest(new
-            {
-                message = ex.Message
-            });
+            return BadRequest(new { message = ex.Message });
         }
         catch (InvalidOperationException ex)
         {
-            return Conflict(new
-            {
-                message = ex.Message
-            });
+            return Conflict(new { message = ex.Message });
         }
     }
 
-    // POST: api/roles/{id}
-    [HttpPost("{id:int}")]
+    // PUT: api/roles/{id}
+    [Authorize(Policy = "Permission:ROLE_MANAGE")]
+    [HttpPut("{id:int}")]
     public async Task<IActionResult> Update(
         int id,
         [FromBody] UpdateRoleDto request)
@@ -284,22 +149,17 @@ public class RolesController : ControllerBase
         }
         catch (ArgumentException ex)
         {
-            return BadRequest(new
-            {
-                message = ex.Message
-            });
+            return BadRequest(new { message = ex.Message });
         }
         catch (InvalidOperationException ex)
         {
-            return Conflict(new
-            {
-                message = ex.Message
-            });
+            return Conflict(new { message = ex.Message });
         }
     }
-   
 
     // DELETE: api/roles/{id}
+    // Only Admin can delete roles.
+    [Authorize(Roles = "ADMIN")]
     [HttpDelete("{id:int}")]
     public async Task<IActionResult> Delete(int id)
     {
@@ -322,10 +182,7 @@ public class RolesController : ControllerBase
         }
         catch (InvalidOperationException ex)
         {
-            return Conflict(new
-            {
-                message = ex.Message
-            });
+            return Conflict(new { message = ex.Message });
         }
     }
 }

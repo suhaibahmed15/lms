@@ -32,6 +32,22 @@ public class RoleRepository : IRoleRepository
             .FirstOrDefaultAsync(r => r.Id == id && !r.IsDeleted);
     }
 
+    // Get role assigned to a specific user.
+    public async Task<Role?> GetRoleByUserIdAsync(int userId)
+    {
+        return await (
+            from user in _context.Users
+            join role in _context.Roles
+                on user.RoleId equals role.Id
+            where user.Id == userId
+                  && !user.IsDeleted
+                  && !role.IsDeleted
+            select role
+        )
+        .AsNoTracking()
+        .FirstOrDefaultAsync();
+    }
+
     // Check whether role name already exists.
     public async Task<bool> ExistsByNameAsync(string name)
     {

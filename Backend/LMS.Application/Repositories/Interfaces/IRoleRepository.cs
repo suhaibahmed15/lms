@@ -1,4 +1,5 @@
-﻿using LMS.Domain.Entities;
+﻿
+using LMS.Domain.Entities;
 
 namespace LMS.Application.Repositories.Interfaces;
 
@@ -7,6 +8,9 @@ public interface IRoleRepository
     Task<List<Role>> GetAllAsync();
 
     Task<Role?> GetByIdAsync(int id);
+
+    // Get the role assigned to a specific user.
+    Task<Role?> GetRoleByUserIdAsync(int userId);
 
     Task<bool> ExistsByNameAsync(string name);
 

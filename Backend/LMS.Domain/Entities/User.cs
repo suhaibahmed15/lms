@@ -23,5 +23,16 @@ public class User : BaseEntity
     public ICollection<UserPermission> AssignedUserPermissions { get; set; } = new List<UserPermission>();
     public ICollection<UserPermission> RevokedUserPermissions { get; set; } = new List<UserPermission>();
     public ICollection<AuditLog> AuditLogs { get; set; } = new List<AuditLog>();
+
+    public ICollection<LoanApplication> AssignedLoanApplications { get; set; } = new List<LoanApplication>();
+
+
+    public ICollection<LoanApplicationAssignment> ReceivedLoanAssignments { get; set; }
+    = new List<LoanApplicationAssignment>();
+
+    public ICollection<LoanApplicationAssignment> CreatedLoanAssignments { get; set; }
+        = new List<LoanApplicationAssignment>();
+
+    public ICollection<UserMenu> UserMenus { get; set; } = new List<UserMenu>();
 }
 

@@ -1,11 +1,13 @@
     namespace LMS.Domain.Entities;
 
-    public class RoleMenu : BaseEntity
-    {
-        public int RoleId { get; set; }
-        public int MenuId { get; set; }
+public class RoleMenu : BaseEntity
+{
+    public int RoleId { get; set; }
+    public int MenuId { get; set; }
 
-        public Role Role { get; set; } = null!;
-        public Menu Menu { get; set; } = null!;
-    }
+    public Role Role { get; set; } = null!;
+    public Menu Menu { get; set; } = null!;
+
+    public ICollection<UserMenu> UserMenus { get; set; } = new List<UserMenu>();
+}
 

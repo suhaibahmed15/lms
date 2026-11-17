@@ -34,6 +34,17 @@ public class RoleService : IRoleService
         return MapToResponse(role);
     }
 
+    // Get current user's assigned role.
+    public async Task<RoleResponseDto?> GetMyRoleAsync(int userId)
+    {
+        var role = await _roleRepository.GetRoleByUserIdAsync(userId);
+
+        if (role == null)
+            return null;
+
+        return MapToResponse(role);
+    }
+
     // Create a new role.
     public async Task<RoleResponseDto> CreateAsync(CreateRoleDto dto)
     {
@@ -66,7 +77,7 @@ public class RoleService : IRoleService
         return MapToResponse(role);
     }
 
-    // Update an existing role (Partial Update).
+    // Update an existing role.
     public async Task<RoleResponseDto?> UpdateAsync(
         int id,
         UpdateRoleDto dto)
@@ -76,7 +87,6 @@ public class RoleService : IRoleService
         if (role == null)
             return null;
 
-        // Update Name only if provided.
         if (dto.Name != null)
         {
             var name = dto.Name.Trim();
@@ -91,7 +101,6 @@ public class RoleService : IRoleService
             role.Name = name;
         }
 
-        // Update Key only if provided.
         if (dto.Key != null)
         {
             var key = dto.Key.Trim().ToUpperInvariant();
@@ -106,13 +115,11 @@ public class RoleService : IRoleService
             role.Key = key;
         }
 
-        // Update Description only if provided.
         if (dto.Description != null)
         {
             role.Description = dto.Description.Trim();
         }
 
-        // Update IsActive only if provided.
         if (dto.IsActive.HasValue)
         {
             role.IsActive = dto.IsActive.Value;

@@ -1,3 +1,4 @@
+
 using LMS.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -35,21 +36,32 @@ public class LoanApplicationConfiguration : IEntityTypeConfiguration<LoanApplica
             .IsUnique()
             .HasFilter("[IsDeleted] = 0");
 
+        // Applicant relationship
         builder.HasOne(x => x.ApplicantUser)
             .WithMany(u => u.LoanApplications)
             .HasForeignKey(x => x.ApplicantUserId)
             .OnDelete(DeleteBehavior.Restrict);
 
+        // Reviewer relationship
         builder.HasOne(x => x.ReviewedByUser)
             .WithMany(u => u.ReviewedLoanApplications)
             .HasForeignKey(x => x.ReviewedByUserId)
             .OnDelete(DeleteBehavior.Restrict);
 
+        // Assigned Loan Officer relationship
+        builder.HasOne(x => x.AssignedToUser)
+            .WithMany(u => u.AssignedLoanApplications)
+            .HasForeignKey(x => x.AssignedToUserId)
+            .IsRequired(false)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        // Loan Type relationship
         builder.HasOne(x => x.LoanType)
             .WithMany(lt => lt.LoanApplications)
             .HasForeignKey(x => x.LoanTypeId)
             .OnDelete(DeleteBehavior.Restrict);
 
+        // Status relationship
         builder.HasOne(x => x.Status)
             .WithMany(s => s.LoanApplications)
             .HasForeignKey(x => x.StatusId)
@@ -58,4 +70,3 @@ public class LoanApplicationConfiguration : IEntityTypeConfiguration<LoanApplica
         builder.HasQueryFilter(x => !x.IsDeleted);
     }
 }
-

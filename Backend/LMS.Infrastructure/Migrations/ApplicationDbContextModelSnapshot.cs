@@ -181,6 +181,9 @@ namespace LMS.Infrastructure.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
+                    b.Property<int?>("AssignedToUserId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
@@ -235,6 +238,8 @@ namespace LMS.Infrastructure.Migrations
                         .IsUnique()
                         .HasFilter("[IsDeleted] = 0");
 
+                    b.HasIndex("AssignedToUserId");
+
                     b.HasIndex("LoanTypeId");
 
                     b.HasIndex("ReviewedByUserId");
@@ -242,6 +247,54 @@ namespace LMS.Infrastructure.Migrations
                     b.HasIndex("StatusId");
 
                     b.ToTable("LoanApplications", (string)null);
+                });
+
+            modelBuilder.Entity("LMS.Domain.Entities.LoanApplicationAssignment", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("AssignedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("AssignedByUserId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("AssignedToUserId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("CreatedBy")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsDeleted")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false);
+
+                    b.Property<int>("LoanApplicationId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("UpdatedBy")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AssignedByUserId");
+
+                    b.HasIndex("AssignedToUserId");
+
+                    b.HasIndex("LoanApplicationId");
+
+                    b.ToTable("LoanApplicationAssignments", (string)null);
                 });
 
             modelBuilder.Entity("LMS.Domain.Entities.LoanApproval", b =>
@@ -627,6 +680,9 @@ namespace LMS.Infrastructure.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
+                    b.Property<int?>("MenuId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(150)
@@ -643,6 +699,8 @@ namespace LMS.Infrastructure.Migrations
                     b.HasIndex("Key")
                         .IsUnique()
                         .HasFilter("[IsDeleted] = 0");
+
+                    b.HasIndex("MenuId");
 
                     b.ToTable("Permissions", (string)null);
                 });
@@ -1350,6 +1408,53 @@ namespace LMS.Infrastructure.Migrations
                     b.ToTable("Users", (string)null);
                 });
 
+            modelBuilder.Entity("LMS.Domain.Entities.UserMenu", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("CreatedBy")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("MenuId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("RoleMenuId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("UpdatedBy")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MenuId");
+
+                    b.HasIndex("RoleMenuId");
+
+                    b.HasIndex("UserId", "MenuId")
+                        .IsUnique();
+
+                    b.ToTable("UserMenus");
+                });
+
             modelBuilder.Entity("LMS.Domain.Entities.UserPermission", b =>
                 {
                     b.Property<int>("Id")
@@ -1465,6 +1570,11 @@ namespace LMS.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.HasOne("LMS.Domain.Entities.User", "AssignedToUser")
+                        .WithMany("AssignedLoanApplications")
+                        .HasForeignKey("AssignedToUserId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
                     b.HasOne("LMS.Domain.Entities.LoanType", "LoanType")
                         .WithMany("LoanApplications")
                         .HasForeignKey("LoanTypeId")
@@ -1484,11 +1594,40 @@ namespace LMS.Infrastructure.Migrations
 
                     b.Navigation("ApplicantUser");
 
+                    b.Navigation("AssignedToUser");
+
                     b.Navigation("LoanType");
 
                     b.Navigation("ReviewedByUser");
 
                     b.Navigation("Status");
+                });
+
+            modelBuilder.Entity("LMS.Domain.Entities.LoanApplicationAssignment", b =>
+                {
+                    b.HasOne("LMS.Domain.Entities.User", "AssignedByUser")
+                        .WithMany("CreatedLoanAssignments")
+                        .HasForeignKey("AssignedByUserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("LMS.Domain.Entities.User", "AssignedToUser")
+                        .WithMany("ReceivedLoanAssignments")
+                        .HasForeignKey("AssignedToUserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("LMS.Domain.Entities.LoanApplication", "LoanApplication")
+                        .WithMany("Assignments")
+                        .HasForeignKey("LoanApplicationId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("AssignedByUser");
+
+                    b.Navigation("AssignedToUser");
+
+                    b.Navigation("LoanApplication");
                 });
 
             modelBuilder.Entity("LMS.Domain.Entities.LoanApproval", b =>
@@ -1578,6 +1717,16 @@ namespace LMS.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("ParentMenu");
+                });
+
+            modelBuilder.Entity("LMS.Domain.Entities.Permission", b =>
+                {
+                    b.HasOne("LMS.Domain.Entities.Menu", "Menu")
+                        .WithMany()
+                        .HasForeignKey("MenuId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.Navigation("Menu");
                 });
 
             modelBuilder.Entity("LMS.Domain.Entities.Repayment", b =>
@@ -1681,6 +1830,29 @@ namespace LMS.Infrastructure.Migrations
                     b.Navigation("Role");
                 });
 
+            modelBuilder.Entity("LMS.Domain.Entities.UserMenu", b =>
+                {
+                    b.HasOne("LMS.Domain.Entities.Menu", "Menu")
+                        .WithMany("UserMenus")
+                        .HasForeignKey("MenuId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("LMS.Domain.Entities.RoleMenu", null)
+                        .WithMany("UserMenus")
+                        .HasForeignKey("RoleMenuId");
+
+                    b.HasOne("LMS.Domain.Entities.User", "User")
+                        .WithMany("UserMenus")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Menu");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("LMS.Domain.Entities.UserPermission", b =>
                 {
                     b.HasOne("LMS.Domain.Entities.User", "AssignedByUser")
@@ -1725,6 +1897,8 @@ namespace LMS.Infrastructure.Migrations
                 {
                     b.Navigation("Approvals");
 
+                    b.Navigation("Assignments");
+
                     b.Navigation("Documents");
 
                     b.Navigation("Guarantors");
@@ -1742,6 +1916,8 @@ namespace LMS.Infrastructure.Migrations
                     b.Navigation("ChildMenus");
 
                     b.Navigation("RoleMenus");
+
+                    b.Navigation("UserMenus");
                 });
 
             modelBuilder.Entity("LMS.Domain.Entities.Permission", b =>
@@ -1765,6 +1941,11 @@ namespace LMS.Infrastructure.Migrations
                     b.Navigation("Users");
                 });
 
+            modelBuilder.Entity("LMS.Domain.Entities.RoleMenu", b =>
+                {
+                    b.Navigation("UserMenus");
+                });
+
             modelBuilder.Entity("LMS.Domain.Entities.Status", b =>
                 {
                     b.Navigation("LoanApplications");
@@ -1782,17 +1963,23 @@ namespace LMS.Infrastructure.Migrations
 
             modelBuilder.Entity("LMS.Domain.Entities.User", b =>
                 {
+                    b.Navigation("AssignedLoanApplications");
+
                     b.Navigation("AssignedUserPermissions");
 
                     b.Navigation("AuditLogs");
 
                     b.Navigation("BorrowerLoans");
 
+                    b.Navigation("CreatedLoanAssignments");
+
                     b.Navigation("DisbursedLoans");
 
                     b.Navigation("LoanApplications");
 
                     b.Navigation("LoanApprovals");
+
+                    b.Navigation("ReceivedLoanAssignments");
 
                     b.Navigation("RecordedRepayments");
 
@@ -1801,6 +1988,8 @@ namespace LMS.Infrastructure.Migrations
                     b.Navigation("RevokedUserPermissions");
 
                     b.Navigation("UploadedLoanDocuments");
+
+                    b.Navigation("UserMenus");
 
                     b.Navigation("UserPermissions");
 

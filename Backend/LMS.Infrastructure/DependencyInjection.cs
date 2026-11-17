@@ -1,19 +1,17 @@
-using LMS.Infrastructure.Data;
-using LMS.Infrastructure.Services;
-using LMS.Infrastructure.DataAccess;
-
-using LMS.Infrastructure.BusinessLogic;
-using LMS.Application.Services.Interfaces;
 using LMS.Application.Repositories.Interfaces;
-
+using LMS.Application.Services.BusinessLogic;
+using LMS.Application.Services.Interfaces;
 using LMS.Domain.Entities;
-
-using Microsoft.EntityFrameworkCore;
-
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Configuration;
-
+using LMS.Infrastructure.Authorization;
+using LMS.Infrastructure.BusinessLogic;
+using LMS.Infrastructure.Data;
+using LMS.Infrastructure.DataAccess;
+using LMS.Infrastructure.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace LMS.Infrastructure;
 
@@ -29,6 +27,18 @@ public static class DependencyInjection
 
         services.AddDbContext<ApplicationDbContext>(options =>
             options.UseSqlServer(connectionString));
+        services.AddSingleton<IAuthorizationPolicyProvider, PermissionPolicyProvider>();
+        services.AddScoped<IAuthorizationHandler, PermissionAuthorizationHandler>();
+        services.AddScoped<IUserMenuRepository, UserMenuRepository>();
+        services.AddScoped<IUserMenuService, UserMenuService>();
+
+        services.AddScoped<ILoanApplicationRepository, LoanApplicationRepository>();
+        services.AddScoped<ILoanApplicationService, LoanApplicationService>();
+
+
+        services.AddScoped<IDashboardRepository, DashboardRepository>();
+        services.AddScoped<IDashboardService, DashboardService>();
+
         services.AddScoped<IUserPermissionRepository, UserPermissionRepository>();
         services.AddScoped<IUserPermissionService, UserPermissionService>();
 

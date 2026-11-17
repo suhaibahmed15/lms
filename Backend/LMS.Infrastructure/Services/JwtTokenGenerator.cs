@@ -32,16 +32,14 @@ public class JwtTokenGenerator : IJwtTokenGenerator
             jwtSettings["ExpiryMinutes"] ?? "60");
 
         var claims = new List<Claim>
-        {
-            // User Information
-            new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-            new Claim(ClaimTypes.Name, user.FullName),
-            new Claim(ClaimTypes.Email, user.Email),
+{
+    new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+    new Claim(ClaimTypes.Name, user.FullName),
+    new Claim(ClaimTypes.Email, user.Email),
 
-            // Role Information
-            new Claim("RoleId", user.RoleId.ToString()),
-            //new Claim(ClaimTypes.Role, user.Role.Name)
-        };
+    new Claim("RoleId", user.RoleId.ToString()),
+    new Claim(ClaimTypes.Role, user.Role.Key)
+};
 
         var securityKey = new SymmetricSecurityKey(
             Encoding.UTF8.GetBytes(key));

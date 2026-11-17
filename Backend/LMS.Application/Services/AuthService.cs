@@ -1,6 +1,5 @@
 ﻿
 using LMS.Application.DTO.Auth;
-
 using LMS.Application.Repositories.Interfaces;
 using LMS.Application.Services.Interfaces;
 using LMS.Domain.Entities;
@@ -27,6 +26,7 @@ public class AuthService : IAuthService
         _passwordHasher = new PasswordHasher<User>();
     }
 
+    // Customer Registration
     public async Task<AuthResponseDto> RegisterAsync(
         RegisterRequestDto request)
     {
@@ -47,23 +47,24 @@ public class AuthService : IAuthService
 
         var email = request.Email.Trim().ToLowerInvariant();
 
+        // Check existing email
         var existingUser = await _authRepository
             .GetUserByEmailAsync(email);
 
         if (existingUser != null)
             throw new Exception("Email is already registered.");
 
-        var roleKey = _configuration[
-            "Authentication:DefaultRegistrationRoleKey"];
-
-        if (string.IsNullOrWhiteSpace(roleKey))
-            throw new Exception("Default registration role is not configured.");
-
-        var role = await _authRepository.GetRoleByKeyAsync(roleKey);
+        // Automatically get CUSTOMER role
+        var role = await _authRepository
+            .GetRoleByKeyAsync("CUSTOMER");
 
         if (role == null)
-            throw new Exception("Default registration role was not found.");
+            throw new Exception("CUSTOMER role was not found.");
 
+        if (!role.IsActive || role.IsDeleted)
+            throw new Exception("CUSTOMER role is inactive.");
+
+        // Create customer
         var user = new User
         {
             FullName = request.FullName.Trim(),
@@ -74,6 +75,7 @@ public class AuthService : IAuthService
             CreatedAt = DateTime.UtcNow
         };
 
+        // Hash password
         user.PasswordHash = _passwordHasher.HashPassword(
             user,
             request.Password);
@@ -81,22 +83,31 @@ public class AuthService : IAuthService
         await _authRepository.AddUserAsync(user);
         await _authRepository.SaveChangesAsync();
 
+        // Attach role for response and JWT
         user.Role = role;
 
         return CreateAuthResponse(user);
     }
 
+    // User Login
     public async Task<AuthResponseDto> LoginAsync(
         LoginRequestDto request)
     {
+        if (string.IsNullOrWhiteSpace(request.Email) ||
+            string.IsNullOrWhiteSpace(request.Password))
+        {
+            throw new Exception("Email and password are required.");
+        }
+
         var email = request.Email.Trim().ToLowerInvariant();
 
-        var user = await _authRepository.GetUserByEmailAsync(email);
+        var user = await _authRepository
+            .GetUserByEmailAsync(email);
 
         if (user == null)
             throw new Exception("Invalid email or password.");
 
-        if (!user.IsActive)
+        if (!user.IsActive || user.IsDeleted)
             throw new Exception("Your account is inactive.");
 
         var passwordResult = _passwordHasher.VerifyHashedPassword(
@@ -110,6 +121,7 @@ public class AuthService : IAuthService
         return CreateAuthResponse(user);
     }
 
+    // Generate Authentication Response
     private AuthResponseDto CreateAuthResponse(User user)
     {
         var token = _jwtTokenGenerator.GenerateToken(user);
@@ -124,8 +136,7 @@ public class AuthService : IAuthService
             UserId = user.Id,
             FullName = user.FullName,
             Email = user.Email,
-            RoleId = user.RoleId,
-            //RoleName = user.Role.Name
+            RoleId = user.RoleId
         };
     }
 }
