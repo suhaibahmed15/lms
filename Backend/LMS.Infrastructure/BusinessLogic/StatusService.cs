@@ -1,18 +1,23 @@
-﻿
+
 using LMS.Application.DTO.Statuses;
 using LMS.Application.Repositories.Interfaces;
 using LMS.Application.Services.Interfaces;
 using LMS.Domain.Entities;
+using Microsoft.AspNetCore.Http;
 
 namespace LMS.Infrastructure.BusinessLogic;
 
 public class StatusService : IStatusService
 {
     private readonly IStatusRepository _statusRepository;
+    private readonly IHttpContextAccessor _httpContextAccessor;
 
-    public StatusService(IStatusRepository statusRepository)
+    public StatusService(
+        IStatusRepository statusRepository,
+        IHttpContextAccessor httpContextAccessor)
     {
         _statusRepository = statusRepository;
+        _httpContextAccessor = httpContextAccessor;
     }
 
     // Get all statuses.
@@ -21,6 +26,34 @@ public class StatusService : IStatusService
         var statuses = await _statusRepository.GetAllAsync();
 
         return statuses.Select(MapToResponse).ToList();
+    }
+
+    public async Task<object> GetPagedAsync()
+    {
+        var query = _httpContextAccessor.HttpContext?.Request.Query;
+
+        var pageNumber = int.TryParse(query?["pageNumber"], out var p) && p > 0 ? p : 1;
+        var pageSize = int.TryParse(query?["pageSize"], out var s) && s > 0 ? Math.Min(s, 100) : 10;
+        var search = query?["search"].ToString();
+        var sortBy = query?["sortBy"].ToString();
+        var sortDirection = string.Equals(query?["sortDirection"].ToString(), "desc", StringComparison.OrdinalIgnoreCase) ? "desc" : "asc";
+        var category = query?["category"].ToString();
+        bool? isActive = bool.TryParse(query?["isActive"], out var active) ? active : null;
+
+        var (items, totalRecords) = await _statusRepository.GetPagedAsync(
+            pageNumber, pageSize, search, sortBy, sortDirection, category, isActive);
+
+        var totalPages = totalRecords == 0 ? 0 : (int)Math.Ceiling(totalRecords / (double)pageSize);
+
+        return new
+        {
+            message = "Statuses retrieved successfully.",
+            data = items.Select(MapToResponse).ToList(),
+            totalRecords,
+            pageNumber,
+            pageSize,
+            totalPages
+        };
     }
 
     // Get status by ID.

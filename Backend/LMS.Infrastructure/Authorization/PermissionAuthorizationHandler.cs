@@ -1,4 +1,3 @@
-﻿
 using LMS.Application.Authorization;
 using LMS.Infrastructure.Data;
 using Microsoft.AspNetCore.Authorization;
@@ -23,22 +22,24 @@ public class PermissionAuthorizationHandler
         PermissionRequirement requirement)
     {
         // Step 1: Get logged-in user ID from JWT
-        var userIdValue = context.User.FindFirstValue(
-            ClaimTypes.NameIdentifier);
+        var userIdValue = context.User.FindFirstValue("UserId")
+            ?? context.User.FindFirstValue(ClaimTypes.NameIdentifier);
 
         if (!int.TryParse(userIdValue, out var userId))
         {
             return;
         }
 
-        // Step 2: Get active user with role
+        // Step 2: Get active user with active role
         var user = await _context.Users
             .AsNoTracking()
             .Include(u => u.Role)
             .FirstOrDefaultAsync(u =>
                 u.Id == userId &&
                 u.IsActive &&
-                !u.IsDeleted);
+                !u.IsDeleted &&
+                u.Role.IsActive &&
+                !u.Role.IsDeleted);
 
         if (user == null)
         {
@@ -55,15 +56,26 @@ public class PermissionAuthorizationHandler
             return;
         }
 
-        // Step 4: Check active individual permission
+        var requestedKey = requirement.PermissionKey;
+        var isViewPermission = requestedKey.EndsWith("_VIEW", StringComparison.OrdinalIgnoreCase);
+        var impliedManageKey = GetImpliedManageKey(requestedKey);
+
+        var acceptedKeys = impliedManageKey != null
+            ? new[] { requestedKey, impliedManageKey }
+            : new[] { requestedKey };
+
+        // Step 4: Check active non-revoked individual permission
         var hasActiveUserPermission =
-            await _context.UserPermissions.AnyAsync(up =>
-                up.UserId == userId &&
-                up.IsActive &&
-                !up.IsDeleted &&
-                up.Permission.Key == requirement.PermissionKey &&
-                up.Permission.IsActive &&
-                !up.Permission.IsDeleted);
+            await _context.UserPermissions
+                .AsNoTracking()
+                .AnyAsync(up =>
+                    up.UserId == userId &&
+                    up.IsActive &&
+                    !up.IsDeleted &&
+                    up.RevokedAt == null &&
+                    acceptedKeys.Contains(up.Permission.Key) &&
+                    up.Permission.IsActive &&
+                    !up.Permission.IsDeleted);
 
         if (hasActiveUserPermission)
         {
@@ -71,16 +83,47 @@ public class PermissionAuthorizationHandler
             return;
         }
 
-        // Step 5: Check whether this user explicitly revoked
+        // Step 5: Assigning a menu in UserMenus grants VIEW-ONLY (*_VIEW) access to that menu's page by default.
+        // Non-view permissions (CREATE, UPDATE, DELETE, MANAGE) are never granted by UserMenus alone.
+        if (isViewPermission)
+        {
+            var mappedMenuKey = GetMappedMenuKeyForView(requestedKey);
+
+            var hasActiveUserMenuView =
+                await _context.UserMenus
+                    .AsNoTracking()
+                    .AnyAsync(um =>
+                        um.UserId == userId &&
+                        um.IsActive &&
+                        !um.IsDeleted &&
+                        um.Menu.IsActive &&
+                        !um.Menu.IsDeleted &&
+                        (_context.Permissions.Any(p =>
+                            p.MenuId == um.MenuId &&
+                            p.Key == requestedKey &&
+                            p.IsActive &&
+                            !p.IsDeleted) ||
+                         (mappedMenuKey != null && um.Menu.Key == mappedMenuKey)));
+
+            if (hasActiveUserMenuView)
+            {
+                context.Succeed(requirement);
+                return;
+            }
+        }
+
+        // Step 6: Check whether this user explicitly revoked
         // the requested permission and has not received it again.
         var hasRevokedUserPermission =
-            await _context.UserPermissions.AnyAsync(up =>
-                up.UserId == userId &&
-                !up.IsActive &&
-                !up.IsDeleted &&
-                up.Permission.Key == requirement.PermissionKey &&
-                up.Permission.IsActive &&
-                !up.Permission.IsDeleted);
+            await _context.UserPermissions
+                .AsNoTracking()
+                .AnyAsync(up =>
+                    up.UserId == userId &&
+                    (!up.IsActive || up.RevokedAt != null) &&
+                    !up.IsDeleted &&
+                    acceptedKeys.Contains(up.Permission.Key) &&
+                    up.Permission.IsActive &&
+                    !up.Permission.IsDeleted);
 
         if (hasRevokedUserPermission)
         {
@@ -88,18 +131,52 @@ public class PermissionAuthorizationHandler
             return;
         }
 
-        // Step 6: Check role-based permission
+        // Step 7: Check role-based permission
         var hasRolePermission =
-            await _context.RolePermissions.AnyAsync(rp =>
-                rp.RoleId == user.RoleId &&
-                !rp.IsDeleted &&
-                rp.Permission.Key == requirement.PermissionKey &&
-                rp.Permission.IsActive &&
-                !rp.Permission.IsDeleted);
+            await _context.RolePermissions
+                .AsNoTracking()
+                .AnyAsync(rp =>
+                    rp.RoleId == user.RoleId &&
+                    !rp.IsDeleted &&
+                    acceptedKeys.Contains(rp.Permission.Key) &&
+                    rp.Permission.IsActive &&
+                    !rp.Permission.IsDeleted);
 
         if (hasRolePermission)
         {
             context.Succeed(requirement);
         }
+    }
+
+    private static string? GetImpliedManageKey(string permissionKey)
+    {
+        return permissionKey.ToUpperInvariant() switch
+        {
+            "ROLE_VIEW" => "ROLE_MANAGE",
+            "MENU_VIEW" => "MENU_MANAGE",
+            "ROLE_MENU_VIEW" => "MENU_MANAGE",
+            "USER_MENU_VIEW" => "MENU_MANAGE",
+            "PERMISSION_VIEW" => "PERMISSION_MANAGE",
+            "ROLE_PERMISSION_VIEW" => "PERMISSION_MANAGE",
+            "USER_PERMISSION_VIEW" => "PERMISSION_MANAGE",
+            "STATUS_VIEW" => "STATUS_MANAGE",
+            _ => null
+        };
+    }
+
+    private static string? GetMappedMenuKeyForView(string permissionKey)
+    {
+        return permissionKey.ToUpperInvariant() switch
+        {
+            "ROLE_VIEW" => "ROLES",
+            "MENU_VIEW" => "MENUS",
+            "ROLE_MENU_VIEW" => "ROLE_MENUS",
+            "USER_MENU_VIEW" => "USER_MENUS",
+            "PERMISSION_VIEW" => "PERMISSIONS",
+            "ROLE_PERMISSION_VIEW" => "ROLE_PERMISSIONS",
+            "USER_PERMISSION_VIEW" => "USER_PERMISSIONS",
+            "STATUS_VIEW" => "STATUSES",
+            _ => null
+        };
     }
 }

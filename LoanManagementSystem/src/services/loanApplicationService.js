@@ -2,8 +2,8 @@
 import api from "./api";
 
 // Get All Loan Applications
-export const getAllLoanApplications = async () => {
-    const response = await api.get("/LoanApplications");
+export const getAllLoanApplications = async (params = {}) => {
+    const response = await api.get("/LoanApplications", { params });
 
     return response.data;
 };

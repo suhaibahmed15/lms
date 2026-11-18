@@ -1,9 +1,9 @@
 
 import api from "./api";
 
-// Get All Menus
-export const getAllMenus = async () => {
-    const response = await api.get("/Menus");
+// Get All Menus (supports pagination, search, sorting, filtering)
+export const getAllMenus = async (params = {}) => {
+    const response = await api.get("/Menus", { params });
     return response.data;
 };
 
@@ -32,8 +32,8 @@ export const deleteMenu = async (id) => {
 };
 
 // Get All Role Menu Assignments
-export const getAllRoleMenus = async () => {
-    const response = await api.get("/RoleMenus");
+export const getAllRoleMenus = async (params = {}) => {
+    const response = await api.get("/RoleMenus", { params });
     return response.data;
 };
 
@@ -50,14 +50,14 @@ export const getMenusByUser = async (userId) => {
 };
 
 // Get All Individual User Menu Assignments
-export const getAllUserMenuAssignments = async () => {
-    const response = await api.get("/UserMenus");
+export const getAllUserMenuAssignments = async (params = {}) => {
+    const response = await api.get("/UserMenus", { params });
     return response.data;
 };
 
 // Get Individual Menus Assigned To A User
-export const getUserMenuAssignments = async (userId) => {
-    const response = await api.get(`/UserMenus/user/${userId}`);
+export const getUserMenuAssignments = async (userId, params = {}) => {
+    const response = await api.get(`/UserMenus/user/${userId}`, { params });
     return response.data;
 };
 
@@ -70,5 +70,17 @@ export const assignUserMenu = async (menuData) => {
 // Remove Menu From User
 export const removeUserMenu = async (id) => {
     const response = await api.delete(`/UserMenus/${id}`);
+    return response.data;
+};
+
+// Assign Menu To Role
+export const assignRoleMenu = async (roleMenuData) => {
+    const response = await api.post("/RoleMenus", roleMenuData);
+    return response.data;
+};
+
+// Remove Menu From Role
+export const removeRoleMenu = async (id) => {
+    const response = await api.delete(`/RoleMenus/${id}`);
     return response.data;
 };

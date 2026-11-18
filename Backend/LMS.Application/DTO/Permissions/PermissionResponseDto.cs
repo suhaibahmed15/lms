@@ -1,4 +1,4 @@
-﻿
+
 namespace LMS.Application.DTO.Permissions;
 
 public class PermissionResponseDto

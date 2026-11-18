@@ -1,4 +1,4 @@
-
+import { useEffect, useMemo, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import {
     Wallet,
@@ -20,7 +20,16 @@ import {
     CheckCircle,
     Landmark,
     ClipboardCheck,
-    CalendarCheck
+    CalendarCheck,
+    LayoutList,
+    KeyRound,
+    Layers,
+    List,
+    History,
+    Menu,
+    ChevronDown,
+    ChevronRight,
+    X
 } from "lucide-react";
 
 const getMenuIcon = (iconName) => {
@@ -31,6 +40,7 @@ const getMenuIcon = (iconName) => {
         users: Users,
         settings: Settings,
         shield: ShieldCheck,
+        "shield-check": ShieldCheck,
         help: CircleHelp,
         folder: Folder,
         creditcard: CreditCard,
@@ -41,6 +51,13 @@ const getMenuIcon = (iconName) => {
         "file-check": FileCheck,
         "calendar-days": CalendarDays,
         "list-check": ListChecks,
+        "list-checks": ListChecks,
+        list: List,
+        "layout-list": LayoutList,
+        "key-round": KeyRound,
+        key: KeyRound,
+        layers: Layers,
+        history: History,
         "user-check": UserCheck,
         "check-circle": CheckCircle,
         landmark: Landmark,
@@ -49,14 +66,87 @@ const getMenuIcon = (iconName) => {
         "wallet-cards": Wallet
     };
 
-    const IconComponent = icons[iconName?.toLowerCase()];
+    const IconComponent = icons[iconName?.toLowerCase()] || Menu;
 
-    return IconComponent ? <IconComponent size={19} /> : null;
+    return <IconComponent size={18} />;
 };
 
 function Sidebar({ menus = [], onClose }) {
     const navigate = useNavigate();
     const location = useLocation();
+
+    const activeMenus = useMemo(
+        () =>
+            menus
+                .filter(
+                    (menu) =>
+                        menu.isActive &&
+                        menu.key?.toUpperCase() !== "AUDIT_LOGS"
+                )
+                .sort((a, b) => a.displayOrder - b.displayOrder),
+        [menus]
+    );
+
+    const routableMenus = useMemo(
+        () => activeMenus.filter((menu) => Boolean(menu.route && menu.route.trim())),
+        [activeMenus]
+    );
+
+    const parentMenus = useMemo(() => {
+        const roots = activeMenus
+            .filter((menu) => menu.parentMenuId == null)
+            .sort((a, b) => a.displayOrder - b.displayOrder);
+
+        // Keep only parent menus that either have at least one active accessible child
+        // OR are independently accessible with their own route.
+        return roots.filter((parent) => {
+            const hasChildren = routableMenus.some(
+                (child) => child.parentMenuId === parent.id
+            );
+            const hasOwnRoute = Boolean(parent.route && parent.route.trim());
+            return hasChildren || hasOwnRoute;
+        });
+    }, [activeMenus, routableMenus]);
+
+    const getChildMenus = (parentId) => {
+        return routableMenus
+            .filter((menu) => menu.parentMenuId === parentId)
+            .sort((a, b) => a.displayOrder - b.displayOrder);
+    };
+
+    // Orphan child menus whose parent is not included in activeMenus
+    const orphanMenus = useMemo(() => {
+        return routableMenus
+            .filter(
+                (menu) =>
+                    menu.parentMenuId != null &&
+                    !activeMenus.some((parent) => parent.id === menu.parentMenuId)
+            )
+            .sort((a, b) => a.displayOrder - b.displayOrder);
+    }, [activeMenus, routableMenus]);
+
+    const [expandedParents, setExpandedParents] = useState({});
+
+    // Automatically expand the parent containing the currently active route
+    useEffect(() => {
+        const activeChild = routableMenus.find(
+            (menu) => menu.parentMenuId != null && menu.route === location.pathname
+        );
+
+        if (activeChild?.parentMenuId != null) {
+            setExpandedParents((prev) => ({
+                ...prev,
+                [activeChild.parentMenuId]: true
+            }));
+        }
+    }, [location.pathname, routableMenus]);
+
+    const toggleParent = (parentId) => {
+        setExpandedParents((prev) => ({
+            ...prev,
+            [parentId]: !prev[parentId]
+        }));
+    };
 
     const handleNavigation = (route) => {
         if (!route) return;
@@ -68,157 +158,219 @@ function Sidebar({ menus = [], onClose }) {
         }
     };
 
-    const activeMenus = menus.filter(
-        (menu) => menu.isActive && menu.route
-    );
-
-    const parentMenus = menus
-        .filter((menu) => menu.parentMenuId == null)
-        .sort((a, b) => a.displayOrder - b.displayOrder);
-
-    const getChildMenus = (parentId) => {
-        return activeMenus
-            .filter((menu) => menu.parentMenuId === parentId)
-            .sort((a, b) => a.displayOrder - b.displayOrder);
-    };
-
-    // Find child menus whose parent is not included in the user's menus.
-    const orphanMenus = activeMenus
-        .filter(
-            (menu) =>
-                menu.parentMenuId != null &&
-                !menus.some((parent) => parent.id === menu.parentMenuId)
-        )
-        .sort((a, b) => a.displayOrder - b.displayOrder);
-
     return (
-        <aside className="flex h-full w-64 flex-col border-r border-gray-200 bg-white">
+        <aside className="flex h-screen w-64 flex-col border-r border-white/10 bg-[#0d0d0d] text-zinc-100 shadow-2xl shadow-black/50">
+            {/* Brand Header */}
+            <div className="flex h-20 shrink-0 items-center justify-between border-b border-white/10 px-5">
+                <div className="flex items-center gap-3">
+                    <div className="flex h-10 w-10 items-center justify-center rounded-xl border border-orange-400/30 bg-orange-500/15 text-orange-400 shadow-lg shadow-orange-500/10">
+                        <ShieldCheck size={22} />
+                    </div>
 
-            <div className="flex h-20 items-center border-b border-gray-200 px-6">
-                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-700 text-xl font-bold text-white">
-                    L
+                    <div>
+                        <h2 className="text-base font-extrabold tracking-wider text-white">
+                            LMS <span className="text-orange-500">CAPITAL</span>
+                        </h2>
+
+                        <p className="text-[11px] tracking-wide text-zinc-400">
+                            Loan Management
+                        </p>
+                    </div>
                 </div>
 
-                <div className="ml-3">
-                    <h2 className="text-lg font-bold text-gray-900">
-                        LoanFlow
-                    </h2>
-
-                    <p className="text-xs text-gray-500">
-                        Management System
-                    </p>
-                </div>
+                {onClose && (
+                    <button
+                        type="button"
+                        onClick={onClose}
+                        className="rounded-lg p-1.5 text-zinc-400 transition hover:bg-white/10 hover:text-white lg:hidden"
+                        aria-label="Close sidebar"
+                    >
+                        <X size={18} />
+                    </button>
+                )}
             </div>
 
-            <nav className="flex-1 space-y-5 overflow-y-auto px-4 py-6">
-
-                <p className="px-3 text-xs font-semibold uppercase tracking-wider text-gray-400">
-                    Main Menu
+            {/* Scrollable Navigation */}
+            <nav className="flex-1 space-y-2 overflow-y-auto px-3 py-5">
+                <p className="mb-3 px-3 text-[11px] font-semibold uppercase tracking-[2px] text-zinc-500">
+                    Navigation
                 </p>
 
                 {parentMenus.map((parent) => {
                     const childMenus = getChildMenus(parent.id);
+                    const hasChildren = childMenus.length > 0;
+                    const isExpanded = Boolean(expandedParents[parent.id]);
+                    const hasActiveChild = childMenus.some(
+                        (child) => location.pathname === child.route
+                    );
+                    const isParentDirectlyActive =
+                        !hasChildren && Boolean(parent.route) && location.pathname === parent.route;
 
+                    // Parent without children -> direct navigation button
+                    if (!hasChildren && parent.route) {
+                        return (
+                            <button
+                                key={parent.id}
+                                type="button"
+                                onClick={() => handleNavigation(parent.route)}
+                                className={`flex w-full items-center gap-3 rounded-xl px-3.5 py-3 text-left text-sm font-medium transition ${
+                                    isParentDirectlyActive
+                                        ? "bg-gradient-to-r from-orange-600 to-orange-500 text-white shadow-lg shadow-orange-500/20"
+                                        : "text-zinc-300 hover:bg-white/[0.06] hover:text-white"
+                                }`}
+                            >
+                                <span
+                                    className={
+                                        isParentDirectlyActive
+                                            ? "text-white"
+                                            : "text-orange-400/80"
+                                    }
+                                >
+                                    {getMenuIcon(parent.icon)}
+                                </span>
+
+                                <span className="truncate">{parent.name}</span>
+                            </button>
+                        );
+                    }
+
+                    // Parent with children -> collapsible group
                     return (
-                        <div key={parent.id}>
-
-                            <div className="flex items-center gap-3 px-3 py-2 text-sm font-semibold text-gray-800">
-                                {parent.icon && (
-                                    <span className="text-gray-600">
-                                        {getMenuIcon(parent.icon)}
-                                    </span>
-                                )}
-
-                                <span>{parent.name}</span>
-                            </div>
-
-                            <div className="mt-1 space-y-1">
-
-                                {childMenus.map((child) => {
-                                    const isActive =
-                                        location.pathname === child.route;
-
-                                    return (
-                                        <button
-                                            key={child.id}
-                                            type="button"
-                                            onClick={() =>
-                                                handleNavigation(child.route)
-                                            }
-                                            className={`flex w-full items-center gap-3 rounded-xl py-3 pl-10 pr-4 text-left text-sm font-medium transition ${
-                                                isActive
-                                                    ? "bg-emerald-700 text-white shadow-sm"
-                                                    : "text-gray-600 hover:bg-emerald-50 hover:text-emerald-800"
-                                            }`}
-                                        >
-                                            {getMenuIcon(child.icon)}
-
-                                            <span>{child.name}</span>
-                                        </button>
-                                    );
-                                })}
-
-                                {childMenus.length === 0 && parent.route && (
-                                    <button
-                                        type="button"
-                                        onClick={() =>
-                                            handleNavigation(parent.route)
+                        <div key={parent.id} className="space-y-1">
+                            <button
+                                type="button"
+                                onClick={() => toggleParent(parent.id)}
+                                aria-expanded={isExpanded}
+                                className={`flex w-full items-center justify-between gap-2 rounded-xl px-3.5 py-3 text-left text-sm font-semibold transition ${
+                                    hasActiveChild
+                                        ? "border border-orange-500/25 bg-orange-500/10 text-orange-300"
+                                        : "text-zinc-200 hover:bg-white/[0.06] hover:text-white"
+                                }`}
+                            >
+                                <span className="flex min-w-0 items-center gap-3">
+                                    <span
+                                        className={
+                                            hasActiveChild
+                                                ? "text-orange-400"
+                                                : "text-zinc-400"
                                         }
-                                        className="flex w-full items-center gap-3 rounded-xl px-4 py-3 text-left text-sm font-medium text-gray-600 hover:bg-emerald-50 hover:text-emerald-800"
                                     >
                                         {getMenuIcon(parent.icon)}
-                                        <span>{parent.name}</span>
-                                    </button>
-                                )}
+                                    </span>
 
-                            </div>
+                                    <span className="truncate">{parent.name}</span>
+                                </span>
+
+                                <span
+                                    className={`shrink-0 transition-transform duration-200 ${
+                                        hasActiveChild ? "text-orange-400" : "text-zinc-500"
+                                    }`}
+                                >
+                                    {isExpanded ? (
+                                        <ChevronDown size={16} />
+                                    ) : (
+                                        <ChevronRight size={16} />
+                                    )}
+                                </span>
+                            </button>
+
+                            {isExpanded && (
+                                <div className="ml-3 space-y-1 border-l border-white/10 pl-3 pt-0.5">
+                                    {childMenus.map((child) => {
+                                        const isActive =
+                                            location.pathname === child.route;
+
+                                        return (
+                                            <button
+                                                key={child.id}
+                                                type="button"
+                                                onClick={() =>
+                                                    handleNavigation(child.route)
+                                                }
+                                                className={`flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-left text-sm font-medium transition ${
+                                                    isActive
+                                                        ? "bg-gradient-to-r from-orange-600 to-orange-500 text-white shadow-md shadow-orange-500/20"
+                                                        : "text-zinc-400 hover:bg-white/[0.06] hover:text-zinc-100"
+                                                }`}
+                                            >
+                                                <span
+                                                    className={
+                                                        isActive
+                                                            ? "text-white"
+                                                            : "text-zinc-500"
+                                                    }
+                                                >
+                                                    {getMenuIcon(child.icon)}
+                                                </span>
+
+                                                <span className="truncate">
+                                                    {child.name}
+                                                </span>
+                                            </button>
+                                        );
+                                    })}
+                                </div>
+                            )}
                         </div>
                     );
                 })}
 
                 {/* Individually assigned menus without their parent */}
                 {orphanMenus.length > 0 && (
-                    <div>
-                        <p className="px-3 py-2 text-xs font-semibold uppercase tracking-wider text-gray-400">
+                    <div className="pt-3">
+                        <p className="mb-2 px-3 text-[11px] font-semibold uppercase tracking-[2px] text-zinc-500">
                             Additional Menus
                         </p>
 
                         <div className="space-y-1">
-                            {orphanMenus.map((menu) => (
-                                <button
-                                    key={menu.id}
-                                    type="button"
-                                    onClick={() =>
-                                        handleNavigation(menu.route)
-                                    }
-                                    className={`flex w-full items-center gap-3 rounded-xl px-4 py-3 text-left text-sm font-medium ${
-                                        location.pathname === menu.route
-                                            ? "bg-emerald-700 text-white"
-                                            : "text-gray-600 hover:bg-emerald-50 hover:text-emerald-800"
-                                    }`}
-                                >
-                                    {getMenuIcon(menu.icon)}
-                                    <span>{menu.name}</span>
-                                </button>
-                            ))}
+                            {orphanMenus.map((menu) => {
+                                const isActive = location.pathname === menu.route;
+
+                                return (
+                                    <button
+                                        key={menu.id}
+                                        type="button"
+                                        onClick={() =>
+                                            handleNavigation(menu.route)
+                                        }
+                                        className={`flex w-full items-center gap-3 rounded-xl px-3.5 py-2.5 text-left text-sm font-medium transition ${
+                                            isActive
+                                                ? "bg-gradient-to-r from-orange-600 to-orange-500 text-white shadow-md shadow-orange-500/20"
+                                                : "text-zinc-300 hover:bg-white/[0.06] hover:text-white"
+                                        }`}
+                                    >
+                                        <span
+                                            className={
+                                                isActive
+                                                    ? "text-white"
+                                                    : "text-orange-400/80"
+                                            }
+                                        >
+                                            {getMenuIcon(menu.icon)}
+                                        </span>
+                                        <span className="truncate">
+                                            {menu.name}
+                                        </span>
+                                    </button>
+                                );
+                            })}
                         </div>
                     </div>
                 )}
 
-                {activeMenus.length === 0 && (
-                    <p className="px-3 py-4 text-sm text-gray-400">
+                {parentMenus.length === 0 && orphanMenus.length === 0 && (
+                    <p className="px-3 py-4 text-sm text-zinc-500">
                         No menus assigned.
                     </p>
                 )}
-
             </nav>
 
-            <div className="border-t border-gray-200 p-4">
-                <p className="text-center text-xs text-gray-400">
-                    LoanFlow Management System
+            {/* Footer */}
+            <div className="shrink-0 border-t border-white/10 p-4">
+                <p className="text-center text-xs text-zinc-500">
+                    © {new Date().getFullYear()} LMS Capital
                 </p>
             </div>
-
         </aside>
     );
 }

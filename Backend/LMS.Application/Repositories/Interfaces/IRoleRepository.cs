@@ -1,4 +1,4 @@
-﻿
+
 using LMS.Domain.Entities;
 
 namespace LMS.Application.Repositories.Interfaces;
@@ -6,6 +6,14 @@ namespace LMS.Application.Repositories.Interfaces;
 public interface IRoleRepository
 {
     Task<List<Role>> GetAllAsync();
+
+    Task<(List<Role> Items, int TotalRecords, int ActiveCount, int InactiveCount)> GetPagedAsync(
+        int pageNumber,
+        int pageSize,
+        string? search,
+        string? sortBy,
+        string? sortDirection,
+        bool? isActive);
 
     Task<Role?> GetByIdAsync(int id);
 

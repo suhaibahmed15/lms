@@ -1,4 +1,4 @@
-﻿
+
 using LMS.Application.DTO.LoanApplications;
 
 namespace LMS.Application.Services.Interfaces;
@@ -10,4 +10,6 @@ public interface ILoanApplicationService
 
     // Get loan applications according to logged-in user's role
     Task<List<LoanApplicationResponseDto>> GetAllAsync(int userId);
+
+    Task<object> GetPagedAsync(int userId);
 }

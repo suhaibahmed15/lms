@@ -1,4 +1,4 @@
-﻿
+
 using LMS.Application.DTO.Roles;
 
 namespace LMS.Application.Services.Interfaces;
@@ -6,6 +6,8 @@ namespace LMS.Application.Services.Interfaces;
 public interface IRoleService
 {
     Task<List<RoleResponseDto>> GetAllAsync();
+
+    Task<object> GetPagedAsync();
 
     Task<RoleResponseDto?> GetByIdAsync(int id);
 

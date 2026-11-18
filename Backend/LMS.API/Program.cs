@@ -51,6 +51,7 @@ builder.Services
             IssuerSigningKey = new SymmetricSecurityKey(
                 Encoding.UTF8.GetBytes(jwtKey)),
 
+            NameClaimType = "Username",
             ClockSkew = TimeSpan.Zero
         };
     });

@@ -1,4 +1,4 @@
-﻿
+
 using LMS.Domain.Entities;
 
 namespace LMS.Application.Repositories.Interfaces;
@@ -12,6 +12,18 @@ public interface ILoanApplicationRepository
     Task<Status?> GetStatusByKeyAsync(string statusKey);
 
     Task<List<LoanApplication>> GetAllAsync();
+
+    Task<(List<LoanApplication> Items, int TotalRecords)> GetPagedForUserAsync(
+        int userId,
+        string roleKey,
+        int pageNumber,
+        int pageSize,
+        string? search,
+        string? sortBy,
+        string? sortDirection,
+        int? statusId,
+        int? loanTypeId);
+
     Task AddAsync(LoanApplication application);
 
     Task SaveChangesAsync();

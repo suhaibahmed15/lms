@@ -1,4 +1,4 @@
-﻿
+
 using LMS.Application.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -23,10 +23,11 @@ public class DashboardController : ControllerBase
     [Authorize(Policy = "Permission:DASHBOARD_VIEW")]
     public async Task<IActionResult> GetSummary()
     {
-        var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+        var userIdValue = User.FindFirstValue("UserId")
+            ?? User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-        if (userIdClaim == null ||
-            !int.TryParse(userIdClaim.Value, out var userId))
+        if (string.IsNullOrWhiteSpace(userIdValue) ||
+            !int.TryParse(userIdValue, out var userId))
         {
             return Unauthorized(new
             {

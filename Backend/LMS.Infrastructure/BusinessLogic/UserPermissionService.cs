@@ -1,27 +1,33 @@
-﻿
+
 using LMS.Application.DTO.UserPermissions;
 using LMS.Application.Repositories.Interfaces;
 using LMS.Application.Services.Interfaces;
 using LMS.Domain.Entities;
+using Microsoft.AspNetCore.Http;
 
 namespace LMS.Infrastructure.BusinessLogic;
 
 public class UserPermissionService : IUserPermissionService
 {
     private readonly IUserPermissionRepository _repository;
+    private readonly IHttpContextAccessor _httpContextAccessor;
 
-    public UserPermissionService(IUserPermissionRepository repository)
+    public UserPermissionService(
+        IUserPermissionRepository repository,
+        IHttpContextAccessor httpContextAccessor)
     {
         _repository = repository;
+        _httpContextAccessor = httpContextAccessor;
     }
 
     // Assign permission to a user
     public async Task<UserPermissionResponseDto> AssignPermissionAsync(
-        CreateUserPermissionDto dto)
+        CreateUserPermissionDto dto,
+        int? actorUserId = null)
     {
-        // Check whether user exists
+        // Check whether user exists and is active
         if (!await _repository.UserExistsAsync(dto.UserId))
-            throw new Exception("User not found.");
+            throw new Exception("User not found or inactive.");
 
         // Check whether permission exists
         if (!await _repository.PermissionExistsAsync(dto.PermissionId))
@@ -31,10 +37,12 @@ public class UserPermissionService : IUserPermissionService
         if (!await _repository.PermissionIsActiveAsync(dto.PermissionId))
             throw new Exception("This permission is inactive.");
 
+        var effectiveAssignedByUserId = actorUserId ?? dto.AssignedByUserId;
+
         // Check whether assigning user exists, if provided
-        if (dto.AssignedByUserId.HasValue)
+        if (effectiveAssignedByUserId.HasValue)
         {
-            if (!await _repository.UserExistsAsync(dto.AssignedByUserId.Value))
+            if (!await _repository.UserExistsAsync(effectiveAssignedByUserId.Value))
                 throw new Exception("Assigned by user not found.");
         }
 
@@ -48,23 +56,48 @@ public class UserPermissionService : IUserPermissionService
 
         var currentDate = DateTime.UtcNow;
 
-        // Self-assignment means AssignedByUserId will be NULL
-        int? assignedByUserId =
-    dto.UserId == dto.AssignedByUserId
-        ? null
-        : dto.AssignedByUserId;
+        // If this permission was previously revoked for this user, reactivate the latest record
+        // and clean up any older duplicate revoked rows to prevent stale records.
+        var revokedAssignments = await _repository.GetRevokedAssignmentsAsync(
+            dto.UserId, dto.PermissionId);
+
+        if (revokedAssignments.Count > 0)
+        {
+            var latestRevoked = revokedAssignments[0];
+            latestRevoked.IsActive = true;
+            latestRevoked.AssignedByUserId = effectiveAssignedByUserId;
+            latestRevoked.AssignedAt = currentDate;
+            latestRevoked.RevokedByUserId = null;
+            latestRevoked.RevokedAt = null;
+            latestRevoked.UpdatedAt = currentDate;
+            latestRevoked.UpdatedBy = effectiveAssignedByUserId;
+
+            _repository.Update(latestRevoked);
+
+            for (var i = 1; i < revokedAssignments.Count; i++)
+            {
+                revokedAssignments[i].IsDeleted = true;
+                revokedAssignments[i].UpdatedAt = currentDate;
+                revokedAssignments[i].UpdatedBy = effectiveAssignedByUserId;
+                _repository.Update(revokedAssignments[i]);
+            }
+
+            await _repository.SaveChangesAsync();
+
+            var reactivated = await _repository.GetByIdAsync(latestRevoked.Id);
+            return MapToResponse(reactivated!);
+        }
 
         // Create new user permission assignment
         var userPermission = new UserPermission
         {
             UserId = dto.UserId,
             PermissionId = dto.PermissionId,
-            AssignedByUserId = assignedByUserId,
-
+            AssignedByUserId = effectiveAssignedByUserId,
             AssignedAt = currentDate,
             IsActive = true,
             CreatedAt = currentDate,
-            CreatedBy = assignedByUserId,
+            CreatedBy = effectiveAssignedByUserId,
             IsDeleted = false
         };
 
@@ -86,14 +119,46 @@ public class UserPermissionService : IUserPermissionService
         return permissions.Select(MapToResponse).ToList();
     }
 
+    public async Task<object> GetPagedAsync()
+    {
+        var query = _httpContextAccessor.HttpContext?.Request.Query;
+
+        var pageNumber = int.TryParse(query?["pageNumber"], out var p) && p > 0 ? p : 1;
+        var pageSize = int.TryParse(query?["pageSize"], out var s) && s > 0 ? Math.Min(s, 100) : 10;
+        var search = query?["search"].ToString();
+        var sortBy = query?["sortBy"].ToString();
+        var sortDirection = string.Equals(query?["sortDirection"].ToString(), "asc", StringComparison.OrdinalIgnoreCase) ? "asc" : "desc";
+        int? userId = int.TryParse(query?["userId"], out var uId) ? uId : null;
+        int? permissionId = int.TryParse(query?["permissionId"], out var permId) ? permId : null;
+        bool? isActive = bool.TryParse(query?["isActive"], out var active) ? active : null;
+
+        var (items, totalRecords, activeCount, revokedCount) = await _repository.GetPagedAsync(
+            pageNumber, pageSize, search, sortBy, sortDirection, userId, permissionId, isActive);
+
+        var totalPages = totalRecords == 0 ? 0 : (int)Math.Ceiling(totalRecords / (double)pageSize);
+
+        return new
+        {
+            message = "User permissions retrieved successfully.",
+            data = items.Select(MapToResponse).ToList(),
+            totalRecords,
+            pageNumber,
+            pageSize,
+            totalPages,
+            activeCount,
+            revokedCount
+        };
+    }
+
     // Get permissions assigned to a specific user
     public async Task<List<UserPermissionResponseDto>> GetByUserIdAsync(
-        int userId)
+        int userId,
+        bool activeOnly = true)
     {
         if (!await _repository.UserExistsAsync(userId))
             throw new Exception("User not found.");
 
-        var permissions = await _repository.GetByUserIdAsync(userId);
+        var permissions = await _repository.GetByUserIdAsync(userId, activeOnly);
 
         return permissions.Select(MapToResponse).ToList();
     }

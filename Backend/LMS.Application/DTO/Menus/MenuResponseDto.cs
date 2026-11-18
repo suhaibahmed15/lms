@@ -1,4 +1,4 @@
-﻿namespace LMS.Application.DTO.Menus;
+namespace LMS.Application.DTO.Menus;
 
 public class MenuResponseDto
 {

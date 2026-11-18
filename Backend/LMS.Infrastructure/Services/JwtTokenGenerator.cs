@@ -1,4 +1,4 @@
-﻿
+
 using LMS.Application.Services.Interfaces;
 using LMS.Domain.Entities;
 using Microsoft.Extensions.Configuration;
@@ -32,14 +32,12 @@ public class JwtTokenGenerator : IJwtTokenGenerator
             jwtSettings["ExpiryMinutes"] ?? "60");
 
         var claims = new List<Claim>
-{
-    new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-    new Claim(ClaimTypes.Name, user.FullName),
-    new Claim(ClaimTypes.Email, user.Email),
-
-    new Claim("RoleId", user.RoleId.ToString()),
-    new Claim(ClaimTypes.Role, user.Role.Key)
-};
+        {
+            new Claim("UserId", user.Id.ToString()),
+            new Claim("RoleId", user.RoleId.ToString()),
+            new Claim("Username", user.FullName),
+            new Claim("Email", user.Email)
+        };
 
         var securityKey = new SymmetricSecurityKey(
             Encoding.UTF8.GetBytes(key));

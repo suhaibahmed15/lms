@@ -1,10 +1,12 @@
-﻿using LMS.Application.DTO.RoleMenus;
+using LMS.Application.DTO.RoleMenus;
 using LMS.Application.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LMS.API.Controllers;
 
 [ApiController]
+[Authorize]
 [Route("api/[controller]")]
 public class RoleMenusController : ControllerBase
 {
@@ -18,6 +20,7 @@ public class RoleMenusController : ControllerBase
     // POST: api/RoleMenus
     // Assign menu to role
     [HttpPost]
+    [Authorize(Policy = "Permission:MENU_MANAGE")]
     public async Task<IActionResult> AssignMenu(
         [FromBody] CreateRoleMenuDto dto)
     {
@@ -39,9 +42,10 @@ public class RoleMenusController : ControllerBase
     // GET: api/RoleMenus
     // Get all role-menu assignments
     [HttpGet]
+    [Authorize(Policy = "Permission:ROLE_MENU_VIEW")]
     public async Task<IActionResult> GetAll()
     {
-        var result = await _roleMenuService.GetAllAsync();
+        var result = await _roleMenuService.GetPagedAsync();
 
         return Ok(result);
     }
@@ -49,6 +53,7 @@ public class RoleMenusController : ControllerBase
     // GET: api/RoleMenus/role/1
     // Get menus assigned to a specific role
     [HttpGet("role/{roleId}")]
+    [Authorize(Policy = "Permission:ROLE_MENU_VIEW")]
     public async Task<IActionResult> GetMenusByRoleId(int roleId)
     {
         try
@@ -67,6 +72,7 @@ public class RoleMenusController : ControllerBase
     // DELETE: api/RoleMenus/1
     // Soft-delete role-menu assignment
     [HttpDelete("{id}")]
+    [Authorize(Policy = "Permission:MENU_MANAGE")]
     public async Task<IActionResult> Delete(int id)
     {
         var result = await _roleMenuService.DeleteAsync(id);

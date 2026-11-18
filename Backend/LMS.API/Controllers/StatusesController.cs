@@ -1,13 +1,14 @@
-﻿
+
 using LMS.Application.DTO.Statuses;
 using LMS.Application.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LMS.API.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-//[Authorize]
+[Authorize]
 public class StatusesController : ControllerBase
 {
     private readonly IStatusService _statusService;
@@ -21,13 +22,9 @@ public class StatusesController : ControllerBase
     [HttpGet]
     public async Task<IActionResult> GetAll()
     {
-        var statuses = await _statusService.GetAllAsync();
+        var result = await _statusService.GetPagedAsync();
 
-        return Ok(new
-        {
-            message = "Statuses retrieved successfully.",
-            data = statuses
-        });
+        return Ok(result);
     }
 
     // GET: api/statuses/{id}
@@ -53,6 +50,7 @@ public class StatusesController : ControllerBase
 
     // POST: api/statuses
     [HttpPost]
+    [Authorize(Policy = "Permission:STATUS_MANAGE")]
     public async Task<IActionResult> Create(
         [FromBody] CreateStatusDto request)
     {
@@ -89,6 +87,7 @@ public class StatusesController : ControllerBase
     // POST: api/statuses/{id}
     // Partial update: only provided fields will change.
     [HttpPost("{id:int}")]
+    [Authorize(Policy = "Permission:STATUS_MANAGE")]
     public async Task<IActionResult> Update(
         int id,
         [FromBody] UpdateStatusDto request)
@@ -131,6 +130,7 @@ public class StatusesController : ControllerBase
     // POST: api/statuses/{id}/status
     // Activate or deactivate a status.
     [HttpPost("{id:int}/status")]
+    [Authorize(Policy = "Permission:STATUS_MANAGE")]
     public async Task<IActionResult> ChangeStatus(
         int id,
         [FromBody] ChangeStatusActiveDto request)
@@ -157,6 +157,7 @@ public class StatusesController : ControllerBase
 
     // DELETE: api/statuses/{id}
     [HttpDelete("{id:int}")]
+    [Authorize(Policy = "Permission:STATUS_MANAGE")]
     public async Task<IActionResult> Delete(int id)
     {
         var deleted = await _statusService.DeleteAsync(id);

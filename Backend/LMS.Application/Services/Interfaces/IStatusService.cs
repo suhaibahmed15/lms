@@ -1,4 +1,4 @@
-﻿using LMS.Application.DTO.Statuses;
+using LMS.Application.DTO.Statuses;
 
 namespace LMS.Application.Services.Interfaces
 {
@@ -6,6 +6,8 @@ namespace LMS.Application.Services.Interfaces
     {
 
         Task<List<StatusResponseDto>> GetAllAsync();
+
+        Task<object> GetPagedAsync();
 
         Task<StatusResponseDto?> GetByIdAsync(int id);
 

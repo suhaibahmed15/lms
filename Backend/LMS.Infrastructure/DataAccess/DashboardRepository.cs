@@ -1,4 +1,4 @@
-﻿
+
 using LMS.Application.DTO.Dashboard;
 using LMS.Application.Repositories.Interfaces;
 using LMS.Infrastructure.Data;
@@ -68,7 +68,7 @@ public class DashboardRepository : IDashboardRepository
         }
 
         // LOAN OFFICER: Currently assigned applications
-        else if (roleKey == "LOAN_OFFICER")
+        else if (roleKey == "LOAN_OFFICER" || roleKey == "OFFICER")
         {
             applicationsQuery = applicationsQuery
                 .Where(a => a.AssignedToUserId == userId);

@@ -1,7 +1,7 @@
 
 import React, { useState } from "react";
 import api from "../../services/api";
-import GamingAuthLayout from "../ui/UIAuthLayout";
+import UIAuthLayout from "../ui/UIAuthLayout";
 import {
     User,
     Phone,

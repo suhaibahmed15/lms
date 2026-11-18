@@ -1,4 +1,4 @@
-﻿
+
 using LMS.Application.DTO.Users;
 
 namespace LMS.Application.Services.Interfaces;
@@ -6,6 +6,8 @@ namespace LMS.Application.Services.Interfaces;
 public interface IUserService
 {
     Task<List<UserResponseDto>> GetAllAsync();
+
+    Task<object> GetPagedAsync();
 
     Task<UserResponseDto?> GetByIdAsync(int id);
 

@@ -1,18 +1,23 @@
-﻿
+
 using LMS.Application.DTO.LoanApplications;
 using LMS.Application.Repositories.Interfaces;
 using LMS.Application.Services.Interfaces;
 using LMS.Domain.Entities;
+using Microsoft.AspNetCore.Http;
 
 namespace LMS.Infrastructure.BusinessLogic;
 
 public class LoanApplicationService : ILoanApplicationService
 {
     private readonly ILoanApplicationRepository _repository;
+    private readonly IHttpContextAccessor _httpContextAccessor;
 
-    public LoanApplicationService(ILoanApplicationRepository repository)
+    public LoanApplicationService(
+        ILoanApplicationRepository repository,
+        IHttpContextAccessor httpContextAccessor)
     {
         _repository = repository;
+        _httpContextAccessor = httpContextAccessor;
     }
 
     // Create new loan application
@@ -125,7 +130,7 @@ public class LoanApplicationService : ILoanApplicationService
                 .ToList();
         }
         // Loan Officer can see currently assigned applications
-        else if (user.Role.Key == "LOAN_OFFICER")
+        else if (user.Role.Key == "LOAN_OFFICER" || user.Role.Key == "OFFICER")
         {
             applications = applications
                 .Where(a => a.AssignedToUserId == userId)
@@ -145,7 +150,47 @@ public class LoanApplicationService : ILoanApplicationService
         }
 
         // Convert entities into response DTOs
-        return applications.Select(a => new LoanApplicationResponseDto
+        return applications.Select(MapToResponse).ToList();
+    }
+
+    public async Task<object> GetPagedAsync(int userId)
+    {
+        var user = await _repository.GetUserByIdAsync(userId);
+
+        if (user == null)
+        {
+            throw new KeyNotFoundException("User not found or inactive.");
+        }
+
+        var query = _httpContextAccessor.HttpContext?.Request.Query;
+
+        var pageNumber = int.TryParse(query?["pageNumber"], out var p) && p > 0 ? p : 1;
+        var pageSize = int.TryParse(query?["pageSize"], out var s) && s > 0 ? Math.Min(s, 100) : 10;
+        var search = query?["search"].ToString();
+        var sortBy = query?["sortBy"].ToString();
+        var sortDirection = string.Equals(query?["sortDirection"].ToString(), "asc", StringComparison.OrdinalIgnoreCase) ? "asc" : "desc";
+        int? statusId = int.TryParse(query?["statusId"], out var stId) ? stId : null;
+        int? loanTypeId = int.TryParse(query?["loanTypeId"], out var ltId) ? ltId : null;
+
+        var (items, totalRecords) = await _repository.GetPagedForUserAsync(
+            userId, user.Role.Key, pageNumber, pageSize, search, sortBy, sortDirection, statusId, loanTypeId);
+
+        var totalPages = totalRecords == 0 ? 0 : (int)Math.Ceiling(totalRecords / (double)pageSize);
+
+        return new
+        {
+            message = "Loan applications retrieved successfully.",
+            data = items.Select(MapToResponse).ToList(),
+            totalRecords,
+            pageNumber,
+            pageSize,
+            totalPages
+        };
+    }
+
+    private static LoanApplicationResponseDto MapToResponse(LoanApplication a)
+    {
+        return new LoanApplicationResponseDto
         {
             Id = a.Id,
             ApplicationNumber = a.ApplicationNumber,
@@ -170,7 +215,6 @@ public class LoanApplicationService : ILoanApplicationService
             AssignedToUserName = a.AssignedToUser?.FullName,
 
             CreatedAt = a.CreatedAt
-
-        }).ToList();
+        };
     }
 }

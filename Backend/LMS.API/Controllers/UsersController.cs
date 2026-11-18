@@ -1,4 +1,4 @@
-﻿
+
 using LMS.Application.DTO.Users;
 using LMS.Application.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace LMS.API.Controllers;
 
 [ApiController]
+[Authorize]
 [Route("api/[controller]")]
 public class UsersController : ControllerBase
 {
@@ -22,13 +23,9 @@ public class UsersController : ControllerBase
     [HttpGet]
     public async Task<IActionResult> GetAll()
     {
-        var users = await _userService.GetAllAsync();
+        var result = await _userService.GetPagedAsync();
 
-        return Ok(new
-        {
-            message = "Users retrieved successfully.",
-            data = users
-        });
+        return Ok(result);
     }
 
     // GET: api/users/{id}
@@ -131,8 +128,8 @@ public class UsersController : ControllerBase
     }
 
     // DELETE: api/users/{id}
-    // Only Admin can delete users.
-    [Authorize(Roles = "ADMIN")]
+    // Only Admin or users with USER_DELETE permission can delete users.
+    [Authorize(Policy = "Permission:USER_DELETE")]
     [HttpDelete("{id:int}")]
     public async Task<IActionResult> Delete(int id)
     {

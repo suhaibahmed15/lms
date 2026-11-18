@@ -1,10 +1,13 @@
-
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import Sidebar from "./Sidebar";
 import Header from "./Header";
 import Loading from "../common/Loading";
 import { getMenusByUser } from "../../services/menuService";
-import { getUserId } from "../../utils/auth";
+import {
+    getUserId,
+    isAuthenticated,
+    MENUS_UPDATED_EVENT
+} from "../../utils/auth";
 
 function MainLayout({ children, user, onLogout }) {
     const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -12,61 +15,80 @@ function MainLayout({ children, user, onLogout }) {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
 
-    useEffect(() => {
-        const fetchMenus = async () => {
-            try {
-                setLoading(true);
-                setError("");
+    const fetchMenus = useCallback(async () => {
+        if (!isAuthenticated()) {
+            setMenus([]);
+            setLoading(false);
+            return;
+        }
 
-                const userId = getUserId();
+        try {
+            setLoading(true);
+            setError("");
 
-                if (!userId) {
-                    setError("User information not found.");
-                    return;
-                }
+            const userId = getUserId();
 
-                const response = await getMenusByUser(userId);
-
-                // API returns menu array directly
-                const menuData = Array.isArray(response)
-                    ? response
-                    : response.data || [];
-
-                const activeMenus = menuData
-                    .filter((menu) => menu.isActive)
-                    .sort(
-                        (a, b) => a.displayOrder - b.displayOrder
-                    );
-
-                setMenus(activeMenus);
-
-            } catch (err) {
-                setError(
-                    err.response?.data?.message ||
-                    "Unable to load navigation menus."
-                );
-            } finally {
-                setLoading(false);
+            if (!userId) {
+                setError("User information not found.");
+                return;
             }
-        };
 
-        fetchMenus();
+            const response = await getMenusByUser(userId);
+
+            const menuData = Array.isArray(response)
+                ? response
+                : response.data || [];
+
+            const activeMenus = menuData
+                .filter((menu) => menu.isActive)
+                .sort((a, b) => a.displayOrder - b.displayOrder);
+
+            setMenus(activeMenus);
+        } catch (err) {
+            setError(
+                err.response?.data?.message ||
+                "Unable to load navigation menus."
+            );
+        } finally {
+            setLoading(false);
+        }
     }, []);
 
-    return (
-        <div className="flex min-h-screen bg-gray-50">
+    useEffect(() => {
+        fetchMenus();
+    }, [fetchMenus]);
 
-            {/* Desktop Sidebar */}
-            <div className="hidden lg:block">
+    useEffect(() => {
+        const handleMenusUpdated = () => {
+            fetchMenus();
+        };
+
+        window.addEventListener(MENUS_UPDATED_EVENT, handleMenusUpdated);
+        return () => {
+            window.removeEventListener(MENUS_UPDATED_EVENT, handleMenusUpdated);
+        };
+    }, [fetchMenus]);
+
+    // Never render protected layout if unauthenticated
+    if (!isAuthenticated()) {
+        return null;
+    }
+
+    return (
+        <div className="relative min-h-screen bg-[#080808] text-zinc-100">
+            {/* Subtle ambient theme lighting */}
+            <div className="pointer-events-none fixed inset-0 -z-10 bg-[radial-gradient(circle_at_top_right,rgba(255,94,0,0.09),transparent_45%)]" />
+
+            {/* Fixed Desktop Sidebar */}
+            <div className="fixed inset-y-0 left-0 z-30 hidden w-64 lg:block">
                 <Sidebar menus={menus} />
             </div>
 
-            {/* Mobile Sidebar */}
+            {/* Mobile Sidebar Drawer */}
             {sidebarOpen && (
                 <div className="fixed inset-0 z-50 flex lg:hidden">
-
                     <div
-                        className="absolute inset-0 bg-black/40"
+                        className="absolute inset-0 bg-black/70 backdrop-blur-sm"
                         onClick={() => setSidebarOpen(false)}
                     />
 
@@ -76,35 +98,29 @@ function MainLayout({ children, user, onLogout }) {
                             onClose={() => setSidebarOpen(false)}
                         />
                     </div>
-
                 </div>
             )}
 
-            {/* Main Content */}
-            <div className="flex min-w-0 flex-1 flex-col">
-
+            {/* Main Content Area (offset by fixed sidebar width on lg+) */}
+            <div className="flex min-h-screen min-w-0 flex-1 flex-col lg:pl-64">
                 <Header
                     user={user}
                     onLogout={onLogout}
                     onMenuClick={() => setSidebarOpen(true)}
                 />
 
-                <main className="flex-1 overflow-y-auto p-4 sm:p-6 lg:p-8">
-
+                <main className="flex-1 p-4 sm:p-6 lg:p-8">
                     {loading ? (
                         <Loading message="Loading navigation..." />
                     ) : error ? (
-                        <div className="rounded-xl border border-red-200 bg-red-50 p-4 text-sm text-red-700">
+                        <div className="rounded-xl border border-red-500/25 bg-red-500/10 p-4 text-sm text-red-400">
                             {error}
                         </div>
                     ) : (
                         children
                     )}
-
                 </main>
-
             </div>
-
         </div>
     );
 }

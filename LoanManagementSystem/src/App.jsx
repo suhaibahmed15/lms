@@ -7,7 +7,7 @@ import {
     useNavigate
 } from "react-router-dom";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 // Authentication Components
 import Login from "./components/auth/Login";
@@ -23,62 +23,28 @@ import Menus from "./pages/Menus";
 import Users from "./pages/Users";
 import UserMenus from "./pages/UserMenus";
 import UserPermissions from "./pages/UserPermissions";
+import Permissions from "./pages/Permissions";
+import RoleMenus from "./pages/RoleMenus";
+import RolePermissions from "./pages/RolePermissions";
 
 // Utilities
-import { isAuthenticated } from "./utils/auth";
+import {
+    AUTH_CHANGED_EVENT,
+    isAuthenticated,
+    setAuthSession
+} from "./utils/auth";
 
-// Read role name from JWT
-const getRoleNameFromToken = (token) => {
-    try {
-        const payload = token.split(".")[1];
-
-        const base64 = payload
-            .replace(/-/g, "+")
-            .replace(/_/g, "/");
-
-        const decoded = JSON.parse(
-            atob(base64)
-        );
-
-        const roleKey = Object.keys(decoded).find(
-            key =>
-                key === "role" ||
-                key.endsWith("/claims/role")
-        );
-
-        return roleKey ? decoded[roleKey] : null;
-
-    } catch (error) {
-        console.error("Unable to read JWT role:", error);
-        return null;
-    }
-};
-
-function AuthPage() {
+function AuthPage({ onAuthChange }) {
     const [showLogin, setShowLogin] = useState(true);
 
     const navigate = useNavigate();
 
     const handleLoginSuccess = (authData) => {
-        localStorage.setItem("token", authData.token);
+        setAuthSession(authData);
 
-        const roleName =
-            authData.roleName ||
-            authData.role ||
-            getRoleNameFromToken(authData.token);
-
-        const userData = {
-            userId: authData.userId,
-            fullName: authData.fullName,
-            email: authData.email,
-            roleId: authData.roleId,
-            // roleName: roleName
-        };
-
-        localStorage.setItem(
-            "user",
-            JSON.stringify(userData)
-        );
+        if (onAuthChange) {
+            onAuthChange(true);
+        }
 
         navigate("/dashboard", { replace: true });
     };
@@ -101,7 +67,21 @@ function AuthPage() {
 }
 
 function AppRoutes() {
-    const authenticated = isAuthenticated();
+    const [authenticated, setAuthenticated] = useState(() => isAuthenticated());
+
+    useEffect(() => {
+        const syncAuthState = () => {
+            setAuthenticated(isAuthenticated());
+        };
+
+        window.addEventListener(AUTH_CHANGED_EVENT, syncAuthState);
+        window.addEventListener("storage", syncAuthState);
+
+        return () => {
+            window.removeEventListener(AUTH_CHANGED_EVENT, syncAuthState);
+            window.removeEventListener("storage", syncAuthState);
+        };
+    }, []);
 
     return (
         <Routes>
@@ -111,11 +91,11 @@ function AppRoutes() {
                 element={
                     authenticated
                         ? <Navigate to="/dashboard" replace />
-                        : <AuthPage />
+                        : <AuthPage onAuthChange={setAuthenticated} />
                 }
             />
 
-            <Route element={<ProtectedRoute />}>
+            <Route element={<ProtectedRoute authenticated={authenticated} />}>
 
                 <Route
                     path="/dashboard"
@@ -147,6 +127,21 @@ function AppRoutes() {
                     element={<UserPermissions />}
                 />
 
+                <Route
+                    path="/permissions"
+                    element={<Permissions />}
+                />
+
+                <Route
+                    path="/role-menus"
+                    element={<RoleMenus />}
+                />
+
+                <Route
+                    path="/role-permissions"
+                    element={<RolePermissions />}
+                />
+
             </Route>
 
             <Route
@@ -161,7 +156,7 @@ function AppRoutes() {
 
             <Route
                 path="*"
-                element={<Navigate to="/" replace />}
+                element={<Navigate to={authenticated ? "/dashboard" : "/login"} replace />}
             />
 
         </Routes>

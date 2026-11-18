@@ -1,10 +1,12 @@
-﻿using LMS.Application.DTO.RolePermissions;
+using LMS.Application.DTO.RolePermissions;
 using LMS.Application.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LMS.API.Controllers;
 
 [ApiController]
+[Authorize]
 [Route("api/[controller]")]
 public class RolePermissionsController : ControllerBase
 {
@@ -18,6 +20,7 @@ public class RolePermissionsController : ControllerBase
     // POST: api/RolePermissions
     // Assign permission to role
     [HttpPost]
+    [Authorize(Policy = "Permission:PERMISSION_MANAGE")]
     public async Task<IActionResult> AssignPermission(
         [FromBody] CreateRolePermissionDto dto)
     {
@@ -39,9 +42,10 @@ public class RolePermissionsController : ControllerBase
     // GET: api/RolePermissions
     // Get all assignments
     [HttpGet]
+    [Authorize(Policy = "Permission:ROLE_PERMISSION_VIEW")]
     public async Task<IActionResult> GetAll()
     {
-        var result = await _service.GetAllAsync();
+        var result = await _service.GetPagedAsync();
 
         return Ok(result);
     }
@@ -49,6 +53,7 @@ public class RolePermissionsController : ControllerBase
     // GET: api/RolePermissions/role/1
     // Get permissions by role ID
     [HttpGet("role/{roleId}")]
+    [Authorize(Policy = "Permission:ROLE_PERMISSION_VIEW")]
     public async Task<IActionResult> GetByRoleId(int roleId)
     {
         try
@@ -66,6 +71,7 @@ public class RolePermissionsController : ControllerBase
     // DELETE: api/RolePermissions/1
     // Soft-delete assignment
     [HttpDelete("{id}")]
+    [Authorize(Policy = "Permission:PERMISSION_MANAGE")]
     public async Task<IActionResult> Delete(int id)
     {
         var result = await _service.DeleteAsync(id);

@@ -2,14 +2,14 @@
 import api from "./api";
 
 // Get all user permission assignments
-export const getAllUserPermissions = async () => {
-    const response = await api.get("/UserPermissions");
+export const getAllUserPermissions = async (params = {}) => {
+    const response = await api.get("/UserPermissions", { params });
     return response.data;
 };
 
 // Get permissions assigned to a specific user
-export const getUserPermissionsByUserId = async (userId) => {
-    const response = await api.get(`/UserPermissions/user/${userId}`);
+export const getUserPermissionsByUserId = async (userId, params = {}) => {
+    const response = await api.get(`/UserPermissions/user/${userId}`, { params });
     return response.data;
 };
 

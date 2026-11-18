@@ -1,10 +1,19 @@
-﻿using LMS.Domain.Entities;
+using LMS.Domain.Entities;
 
 namespace LMS.Application.Repositories.Interfaces;
 
 public interface IMenuRepository
 {
     Task<List<Menu>> GetAllAsync();
+
+    Task<(List<Menu> Items, int TotalRecords, int ActiveCount, int InactiveCount)> GetPagedAsync(
+        int pageNumber,
+        int pageSize,
+        string? search,
+        string? sortBy,
+        string? sortDirection,
+        bool? isActive,
+        int? parentMenuId);
 
     Task<Menu?> GetByIdAsync(int id);
 

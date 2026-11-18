@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from "react";
 import { X } from "lucide-react";
 
@@ -61,7 +60,6 @@ function UserModal({
 
             await onSubmit(userData);
             onClose();
-
         } catch (err) {
             setError(
                 err.response?.data?.message ||
@@ -73,20 +71,21 @@ function UserModal({
     };
 
     const inputClass =
-        "w-full rounded-lg border px-3 py-2 text-gray-900 placeholder:text-gray-400 outline-none focus:border-emerald-500";
+        "w-full rounded-xl border border-white/10 bg-white/[0.07] px-3.5 py-2.5 text-sm text-white placeholder:text-zinc-500 outline-none transition focus:border-orange-500/70 focus:bg-white/[0.10] focus:ring-4 focus:ring-orange-500/10";
+
+    const labelClass = "mb-1.5 block text-sm font-medium text-zinc-300";
 
     return (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
-            <div className="w-full max-w-lg rounded-xl bg-white shadow-xl">
-
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/75 p-4 backdrop-blur-sm">
+            <div className="w-full max-w-lg overflow-hidden rounded-2xl border border-white/15 bg-[#121212] shadow-2xl shadow-black/80">
                 {/* Header */}
-                <div className="flex items-center justify-between border-b p-5">
+                <div className="flex items-center justify-between border-b border-white/10 px-6 py-5">
                     <div>
-                        <h2 className="text-xl font-semibold text-gray-800">
+                        <h2 className="text-xl font-bold text-white">
                             Add New User
                         </h2>
 
-                        <p className="mt-1 text-sm text-gray-500">
+                        <p className="mt-1 text-sm text-zinc-400">
                             Enter user details below.
                         </p>
                     </div>
@@ -94,18 +93,17 @@ function UserModal({
                     <button
                         type="button"
                         onClick={onClose}
-                        className="rounded-lg p-2 text-gray-500 hover:bg-gray-100"
+                        className="rounded-xl p-2 text-zinc-400 transition hover:bg-white/10 hover:text-white"
                     >
                         <X size={20} />
                     </button>
                 </div>
 
                 {/* Form */}
-                <form onSubmit={handleSubmit} className="space-y-4 p-5">
-
+                <form onSubmit={handleSubmit} className="space-y-4 p-6">
                     {/* Full Name */}
                     <div>
-                        <label className="mb-1 block text-sm font-medium text-gray-700">
+                        <label className={labelClass}>
                             Full Name
                         </label>
 
@@ -123,7 +121,7 @@ function UserModal({
 
                     {/* Email */}
                     <div>
-                        <label className="mb-1 block text-sm font-medium text-gray-700">
+                        <label className={labelClass}>
                             Email Address
                         </label>
 
@@ -141,7 +139,7 @@ function UserModal({
 
                     {/* Phone */}
                     <div>
-                        <label className="mb-1 block text-sm font-medium text-gray-700">
+                        <label className={labelClass}>
                             Phone Number
                         </label>
 
@@ -158,7 +156,7 @@ function UserModal({
 
                     {/* Password */}
                     <div>
-                        <label className="mb-1 block text-sm font-medium text-gray-700">
+                        <label className={labelClass}>
                             Password
                         </label>
 
@@ -176,7 +174,7 @@ function UserModal({
 
                     {/* Role */}
                     <div>
-                        <label className="mb-1 block text-sm font-medium text-gray-700">
+                        <label className={labelClass}>
                             Select Role
                         </label>
 
@@ -204,18 +202,17 @@ function UserModal({
 
                     {/* Error */}
                     {error && (
-                        <div className="rounded-lg bg-red-50 p-3 text-sm text-red-600">
+                        <div className="rounded-xl border border-red-500/25 bg-red-500/10 p-3 text-sm text-red-400">
                             {error}
                         </div>
                     )}
 
                     {/* Buttons */}
-                    <div className="flex justify-end gap-3 border-t pt-4">
-
+                    <div className="flex justify-end gap-3 border-t border-white/10 pt-5">
                         <button
                             type="button"
                             onClick={onClose}
-                            className="rounded-lg border px-4 py-2 text-gray-600 hover:bg-gray-50"
+                            className="rounded-xl border border-white/10 bg-white/[0.05] px-4 py-2.5 text-sm font-medium text-zinc-300 transition hover:bg-white/[0.10] hover:text-white"
                         >
                             Cancel
                         </button>
@@ -223,13 +220,11 @@ function UserModal({
                         <button
                             type="submit"
                             disabled={loading}
-                            className="rounded-lg bg-emerald-600 px-5 py-2 text-white hover:bg-emerald-700 disabled:opacity-50"
+                            className="rounded-xl bg-gradient-to-r from-orange-600 to-orange-500 px-5 py-2.5 text-sm font-semibold text-white shadow-lg shadow-orange-500/20 transition hover:from-orange-500 hover:to-orange-400 disabled:cursor-not-allowed disabled:opacity-50"
                         >
                             {loading ? "Creating..." : "Create User"}
                         </button>
-
                     </div>
-
                 </form>
             </div>
         </div>

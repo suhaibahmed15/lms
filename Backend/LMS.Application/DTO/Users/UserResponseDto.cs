@@ -1,4 +1,4 @@
-﻿
+
 namespace LMS.Application.DTO.Users;
 
 public class UserResponseDto
@@ -12,6 +12,8 @@ public class UserResponseDto
     public string? PhoneNumber { get; set; }
 
     public int RoleId { get; set; }
+
+    public string? RoleName { get; set; }
 
     public bool IsActive { get; set; }
 

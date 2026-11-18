@@ -1,4 +1,4 @@
-﻿
+
 using LMS.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -26,5 +26,7 @@ public class UserMenuConfiguration : IEntityTypeConfiguration<UserMenu>
         // Prevent duplicate menu assignment to the same user
         builder.HasIndex(um => new { um.UserId, um.MenuId })
             .IsUnique();
+
+        builder.HasQueryFilter(um => !um.IsDeleted);
     }
 }

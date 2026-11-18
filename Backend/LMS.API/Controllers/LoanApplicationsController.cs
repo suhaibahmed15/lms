@@ -1,4 +1,4 @@
-﻿
+
 using LMS.Application.DTO.LoanApplications;
 using LMS.Application.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
@@ -23,13 +23,15 @@ public class LoanApplicationsController : ControllerBase
     // POST: api/LoanApplications
     // Customer submits a new loan application
     [HttpPost]
+    [Authorize(Policy = "Permission:LOAN_APPLICATION_CREATE")]
     public async Task<IActionResult> Create(
         [FromBody] CreateLoanApplicationDto dto)
     {
-        var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+        var userIdValue = User.FindFirstValue("UserId")
+            ?? User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-        if (userIdClaim == null ||
-            !int.TryParse(userIdClaim.Value, out int userId))
+        if (string.IsNullOrWhiteSpace(userIdValue) ||
+            !int.TryParse(userIdValue, out int userId))
         {
             return Unauthorized(new
             {
@@ -69,12 +71,14 @@ public class LoanApplicationsController : ControllerBase
     // GET: api/LoanApplications
     // Returns applications according to logged-in user's role
     [HttpGet]
+    [Authorize(Policy = "Permission:LOAN_APPLICATION_VIEW")]
     public async Task<IActionResult> GetAll()
     {
-        var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+        var userIdValue = User.FindFirstValue("UserId")
+            ?? User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-        if (userIdClaim == null ||
-            !int.TryParse(userIdClaim.Value, out int userId))
+        if (string.IsNullOrWhiteSpace(userIdValue) ||
+            !int.TryParse(userIdValue, out int userId))
         {
             return Unauthorized(new
             {
@@ -84,10 +88,9 @@ public class LoanApplicationsController : ControllerBase
 
         try
         {
-            var applications =
-                await _loanApplicationService.GetAllAsync(userId);
+            var result = await _loanApplicationService.GetPagedAsync(userId);
 
-            return Ok(applications);
+            return Ok(result);
         }
         catch (KeyNotFoundException ex)
         {

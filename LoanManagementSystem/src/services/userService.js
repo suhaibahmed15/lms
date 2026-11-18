@@ -1,9 +1,9 @@
 
 import api from "./api";
 
-// Get All Users
-export const getAllUsers = async () => {
-    const response = await api.get("/Users");
+// Get All Users (supports pagination, search, sorting, filtering)
+export const getAllUsers = async (params = {}) => {
+    const response = await api.get("/Users", { params });
 
     return response.data;
 };

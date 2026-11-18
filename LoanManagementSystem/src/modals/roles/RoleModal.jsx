@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from "react";
 import { X } from "lucide-react";
 
@@ -70,20 +69,20 @@ function RoleModal({ isOpen, onClose, onSubmit, selectedRole }) {
         }
     };
 
+    const inputClass =
+        "w-full rounded-xl border border-white/10 bg-white/[0.07] px-4 py-3 text-sm text-white placeholder:text-zinc-500 outline-none transition focus:border-orange-500/70 focus:bg-white/[0.10] focus:ring-4 focus:ring-orange-500/10";
+
     return (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4">
-
-            <div className="w-full max-w-lg rounded-2xl bg-white shadow-xl">
-
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/75 p-4 backdrop-blur-sm">
+            <div className="w-full max-w-lg overflow-hidden rounded-2xl border border-white/15 bg-[#121212] shadow-2xl shadow-black/80">
                 {/* Header */}
-                <div className="flex items-center justify-between border-b border-gray-200 px-6 py-5">
-
+                <div className="flex items-center justify-between border-b border-white/10 px-6 py-5">
                     <div>
-                        <h2 className="text-xl font-bold text-gray-900">
+                        <h2 className="text-xl font-bold text-white">
                             {selectedRole ? "Edit Role" : "Add New Role"}
                         </h2>
 
-                        <p className="mt-1 text-sm text-gray-500">
+                        <p className="mt-1 text-sm text-zinc-400">
                             {selectedRole
                                 ? "Update role information."
                                 : "Create a new system role."}
@@ -93,26 +92,24 @@ function RoleModal({ isOpen, onClose, onSubmit, selectedRole }) {
                     <button
                         type="button"
                         onClick={onClose}
-                        className="rounded-lg p-2 text-gray-500 hover:bg-gray-100"
+                        className="rounded-xl p-2 text-zinc-400 transition hover:bg-white/10 hover:text-white"
                     >
                         <X size={20} />
                     </button>
-
                 </div>
 
                 {/* Form */}
                 <form onSubmit={handleSubmit} className="space-y-5 p-6">
-
                     {error && (
-                        <div className="rounded-lg bg-red-50 px-4 py-3 text-sm text-red-700">
+                        <div className="rounded-xl border border-red-500/25 bg-red-500/10 px-4 py-3 text-sm text-red-400">
                             {error}
                         </div>
                     )}
 
                     {/* Role Name */}
                     <div>
-                        <label className="mb-2 block text-sm font-medium text-gray-700">
-                            Role Name <span className="text-red-500">*</span>
+                        <label className="mb-2 block text-sm font-medium text-zinc-300">
+                            Role Name <span className="text-orange-400">*</span>
                         </label>
 
                         <input
@@ -123,14 +120,14 @@ function RoleModal({ isOpen, onClose, onSubmit, selectedRole }) {
                             placeholder="e.g. Branch Manager"
                             maxLength={150}
                             required
-                            className="w-full rounded-xl border border-gray-300 px-4 py-3 text-sm outline-none transition focus:border-emerald-600 focus:ring-2 focus:ring-emerald-100"
+                            className={inputClass}
                         />
                     </div>
 
                     {/* Role Key */}
                     <div>
-                        <label className="mb-2 block text-sm font-medium text-gray-700">
-                            Role Key <span className="text-red-500">*</span>
+                        <label className="mb-2 block text-sm font-medium text-zinc-300">
+                            Role Key <span className="text-orange-400">*</span>
                         </label>
 
                         <input
@@ -141,17 +138,17 @@ function RoleModal({ isOpen, onClose, onSubmit, selectedRole }) {
                             placeholder="e.g. BRANCH_MANAGER"
                             maxLength={100}
                             required
-                            className="w-full rounded-xl border border-gray-300 px-4 py-3 text-sm uppercase outline-none transition focus:border-emerald-600 focus:ring-2 focus:ring-emerald-100"
+                            className={`${inputClass} uppercase`}
                         />
 
-                        <p className="mt-1 text-xs text-gray-400">
+                        <p className="mt-1.5 text-xs text-zinc-500">
                             Use uppercase letters and underscores.
                         </p>
                     </div>
 
                     {/* Description */}
                     <div>
-                        <label className="mb-2 block text-sm font-medium text-gray-700">
+                        <label className="mb-2 block text-sm font-medium text-zinc-300">
                             Description
                         </label>
 
@@ -161,18 +158,17 @@ function RoleModal({ isOpen, onClose, onSubmit, selectedRole }) {
                             onChange={handleChange}
                             placeholder="Enter role description..."
                             rows={3}
-                            className="w-full resize-none rounded-xl border border-gray-300 px-4 py-3 text-sm outline-none transition focus:border-emerald-600 focus:ring-2 focus:ring-emerald-100"
+                            className={`${inputClass} resize-none`}
                         />
                     </div>
 
                     {/* Buttons */}
-                    <div className="flex justify-end gap-3 border-t border-gray-100 pt-5">
-
+                    <div className="flex justify-end gap-3 border-t border-white/10 pt-5">
                         <button
                             type="button"
                             onClick={onClose}
                             disabled={loading}
-                            className="rounded-xl border border-gray-300 px-5 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-50"
+                            className="rounded-xl border border-white/10 bg-white/[0.05] px-5 py-2.5 text-sm font-medium text-zinc-300 transition hover:bg-white/[0.10] hover:text-white"
                         >
                             Cancel
                         </button>
@@ -180,7 +176,7 @@ function RoleModal({ isOpen, onClose, onSubmit, selectedRole }) {
                         <button
                             type="submit"
                             disabled={loading}
-                            className="rounded-xl bg-emerald-700 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-emerald-800 disabled:cursor-not-allowed disabled:opacity-60"
+                            className="rounded-xl bg-gradient-to-r from-orange-600 to-orange-500 px-5 py-2.5 text-sm font-semibold text-white shadow-lg shadow-orange-500/20 transition hover:from-orange-500 hover:to-orange-400 disabled:cursor-not-allowed disabled:opacity-60"
                         >
                             {loading
                                 ? "Saving..."
@@ -188,9 +184,7 @@ function RoleModal({ isOpen, onClose, onSubmit, selectedRole }) {
                                     ? "Update Role"
                                     : "Create Role"}
                         </button>
-
                     </div>
-
                 </form>
             </div>
         </div>

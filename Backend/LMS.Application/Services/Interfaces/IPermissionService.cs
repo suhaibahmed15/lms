@@ -1,4 +1,4 @@
-﻿using LMS.Application.DTO.Permissions;
+using LMS.Application.DTO.Permissions;
 
 namespace LMS.Application.Services.Interfaces;
 
@@ -7,6 +7,8 @@ public interface IPermissionService
     Task<PermissionResponseDto> CreateAsync(CreatePermissionDto dto);
 
     Task<List<PermissionResponseDto>> GetAllAsync();
+
+    Task<object> GetPagedAsync();
 
     Task<PermissionResponseDto?> GetByIdAsync(int id);
 

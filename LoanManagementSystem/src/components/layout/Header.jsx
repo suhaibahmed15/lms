@@ -1,37 +1,54 @@
-
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { ChevronDown, LogOut } from "lucide-react";
 import { getMyRole } from "../../services/roleService";
+import { logoutUser } from "../../utils/auth";
 
 function Header({ user, onLogout, onMenuClick }) {
     const [showProfile, setShowProfile] = useState(false);
     const [roleName, setRoleName] = useState("Loading...");
 
+    const profileRef = useRef(null);
     const navigate = useNavigate();
 
     useEffect(() => {
+        let isMounted = true;
+
         const fetchRole = async () => {
             try {
                 if (!user?.userId) {
-                    setRoleName("Unknown Role");
+                    if (isMounted) setRoleName("Unknown Role");
                     return;
                 }
 
                 const response = await getMyRole();
 
-                setRoleName(
-                    response?.data?.name || "Unknown Role"
-                );
-
+                if (isMounted) {
+                    setRoleName(response?.data?.name || "Unknown Role");
+                }
             } catch (error) {
                 console.error("Unable to load role:", error);
-                setRoleName("Unknown Role");
+                if (isMounted) setRoleName("Unknown Role");
             }
         };
 
         fetchRole();
 
+        return () => {
+            isMounted = false;
+        };
     }, [user?.userId]);
+
+    useEffect(() => {
+        const handleOutsideClick = (event) => {
+            if (profileRef.current && !profileRef.current.contains(event.target)) {
+                setShowProfile(false);
+            }
+        };
+
+        document.addEventListener("mousedown", handleOutsideClick);
+        return () => document.removeEventListener("mousedown", handleOutsideClick);
+    }, []);
 
     const handleLogout = () => {
         setShowProfile(false);
@@ -39,27 +56,21 @@ function Header({ user, onLogout, onMenuClick }) {
         if (onLogout) {
             onLogout();
         } else {
-            localStorage.removeItem("token");
-            localStorage.removeItem("user");
-            navigate("/login");
+            logoutUser();
+            navigate("/login", { replace: true });
         }
     };
 
-    const fullName =
-        user?.fullName ||
-        user?.name ||
-        "User";
+    const fullName = user?.fullName || user?.name || "User";
 
     return (
-        <header className="flex h-20 items-center justify-between border-b border-gray-200 bg-white px-6">
-
+        <header className="sticky top-0 z-20 flex h-20 shrink-0 items-center justify-between border-b border-white/10 bg-[#0d0d0d]/90 px-4 backdrop-blur-xl sm:px-6">
             {/* Left Section */}
             <div className="flex items-center gap-4">
-
                 <button
                     type="button"
                     onClick={onMenuClick}
-                    className="rounded-lg p-2 text-gray-600 hover:bg-gray-100 lg:hidden"
+                    className="rounded-xl border border-white/10 bg-white/[0.04] p-2 text-zinc-300 transition hover:bg-white/[0.10] hover:text-white lg:hidden"
                     aria-label="Open sidebar"
                 >
                     <svg
@@ -79,28 +90,27 @@ function Header({ user, onLogout, onMenuClick }) {
                 </button>
 
                 <div>
-                    <h1 className="text-lg font-bold text-gray-900">
+                    <h1 className="text-lg font-bold tracking-tight text-white">
                         Welcome Back
                     </h1>
 
-                    <p className="hidden text-sm text-gray-500 sm:block">
-                        Manage your loan operations efficiently.
+                    <p className="hidden text-xs text-zinc-400 sm:block">
+                        Manage your loan operations securely and efficiently.
                     </p>
                 </div>
             </div>
 
             {/* Right Section */}
-            <div className="flex items-center gap-4">
-
+            <div className="flex items-center gap-3">
                 {/* Notifications */}
                 <button
                     type="button"
-                    className="relative rounded-full p-2 text-gray-500 transition hover:bg-gray-100"
+                    className="relative rounded-xl border border-white/10 bg-white/[0.04] p-2.5 text-zinc-400 transition hover:border-orange-500/30 hover:bg-white/[0.08] hover:text-orange-400"
                     aria-label="Notifications"
                 >
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
-                        className="h-6 w-6"
+                        className="h-5 w-5"
                         fill="none"
                         viewBox="0 0 24 24"
                         stroke="currentColor"
@@ -113,61 +123,62 @@ function Header({ user, onLogout, onMenuClick }) {
                         />
                     </svg>
 
-                    <span className="absolute right-2 top-2 h-2 w-2 rounded-full bg-amber-500"></span>
+                    <span className="absolute right-2 top-2 h-2 w-2 rounded-full bg-orange-500"></span>
                 </button>
 
                 {/* User Profile */}
-                <div className="relative">
-
+                <div className="relative" ref={profileRef}>
                     <button
                         type="button"
-                        onClick={() => setShowProfile(!showProfile)}
-                        className="flex items-center gap-3 rounded-xl p-2 transition hover:bg-gray-50"
+                        onClick={() => setShowProfile((prev) => !prev)}
+                        className="flex items-center gap-3 rounded-xl border border-white/10 bg-white/[0.04] px-2.5 py-1.5 transition hover:border-orange-500/30 hover:bg-white/[0.08]"
                     >
-                        <div className="flex h-10 w-10 items-center justify-center rounded-full bg-emerald-100 font-bold text-emerald-800">
+                        <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-gradient-to-br from-orange-500 to-orange-600 text-sm font-bold text-white shadow-md shadow-orange-500/20">
                             {fullName.charAt(0).toUpperCase()}
                         </div>
 
                         <div className="hidden text-left sm:block">
-                            <p className="text-sm font-semibold text-gray-800">
+                            <p className="text-sm font-semibold text-white">
                                 {fullName}
                             </p>
 
-                            <p className="text-xs text-gray-500">
+                            <p className="text-xs text-orange-400">
                                 {roleName}
                             </p>
                         </div>
 
-                        <span className="hidden text-gray-400 sm:block">
-                            ▼
-                        </span>
+                        <ChevronDown
+                            size={16}
+                            className={`hidden text-zinc-400 transition-transform sm:block ${
+                                showProfile ? "rotate-180" : ""
+                            }`}
+                        />
                     </button>
 
                     {showProfile && (
-                        <div className="absolute right-0 top-14 z-50 w-56 rounded-xl border border-gray-200 bg-white p-2 shadow-lg">
-
-                            <div className="border-b border-gray-100 px-3 py-2">
-                                <p className="text-sm font-semibold text-gray-800">
+                        <div className="absolute right-0 top-14 z-50 w-60 rounded-2xl border border-white/15 bg-[#121212] p-2 shadow-2xl shadow-black/70 backdrop-blur-xl">
+                            <div className="border-b border-white/10 px-3 py-2.5">
+                                <p className="text-sm font-semibold text-white">
                                     {fullName}
                                 </p>
 
-                                <p className="text-xs text-gray-500">
+                                <p className="truncate text-xs text-zinc-400">
                                     {user?.email || ""}
                                 </p>
 
-                                <p className="mt-1 text-xs font-medium text-emerald-700">
+                                <span className="mt-2 inline-block rounded-full border border-orange-500/30 bg-orange-500/15 px-2.5 py-0.5 text-[11px] font-semibold text-orange-300">
                                     {roleName}
-                                </p>
+                                </span>
                             </div>
 
                             <button
                                 type="button"
                                 onClick={handleLogout}
-                                className="mt-2 w-full rounded-lg px-3 py-2 text-left text-sm font-medium text-red-600 hover:bg-red-50"
+                                className="mt-2 flex w-full items-center gap-2 rounded-xl px-3 py-2.5 text-left text-sm font-medium text-red-400 transition hover:bg-red-500/10 hover:text-red-300"
                             >
+                                <LogOut size={16} />
                                 Sign Out
                             </button>
-
                         </div>
                     )}
                 </div>

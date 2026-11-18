@@ -24,8 +24,8 @@ public class RolesController : ControllerBase
     [HttpGet("my-role")]
     public async Task<IActionResult> GetMyRole()
     {
-        var userIdValue = User.FindFirstValue(
-            ClaimTypes.NameIdentifier);
+        var userIdValue = User.FindFirstValue("UserId")
+            ?? User.FindFirstValue(ClaimTypes.NameIdentifier);
 
         if (!int.TryParse(userIdValue, out int userId))
         {
@@ -58,21 +58,17 @@ public class RolesController : ControllerBase
     }
 
     // GET: api/roles
-    [Authorize(Policy = "Permission:ROLE_MANAGE")]
+    [Authorize(Policy = "Permission:ROLE_VIEW")]
     [HttpGet]
     public async Task<IActionResult> GetAll()
     {
-        var roles = await _roleService.GetAllAsync();
+        var result = await _roleService.GetPagedAsync();
 
-        return Ok(new
-        {
-            message = "Roles retrieved successfully.",
-            data = roles
-        });
+        return Ok(result);
     }
 
     // GET: api/roles/{id}
-    [Authorize(Policy = "Permission:ROLE_MANAGE")]
+    [Authorize(Policy = "Permission:ROLE_VIEW")]
     [HttpGet("{id:int}")]
     public async Task<IActionResult> GetById(int id)
     {
@@ -158,8 +154,8 @@ public class RolesController : ControllerBase
     }
 
     // DELETE: api/roles/{id}
-    // Only Admin can delete roles.
-    [Authorize(Roles = "ADMIN")]
+    // Only Admin or users with ROLE_DELETE permission can delete roles.
+    [Authorize(Policy = "Permission:ROLE_DELETE")]
     [HttpDelete("{id:int}")]
     public async Task<IActionResult> Delete(int id)
     {

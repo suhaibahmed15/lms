@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from "react";
 import { X } from "lucide-react";
 
@@ -97,33 +96,31 @@ function MenuModal({
     );
 
     const inputClass =
-        "w-full rounded-lg border border-gray-300 bg-white px-3 py-2.5 text-sm text-gray-900 placeholder:text-gray-400 outline-none transition focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100";
+        "w-full rounded-xl border border-white/10 bg-white/[0.07] px-3.5 py-2.5 text-sm text-white placeholder:text-zinc-500 outline-none transition focus:border-orange-500/70 focus:bg-white/[0.10] focus:ring-4 focus:ring-orange-500/10";
 
     const labelClass =
-        "mb-1.5 block text-sm font-semibold text-gray-900";
+        "mb-1.5 block text-sm font-medium text-zinc-300";
 
     return (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
-            <div className="w-full max-w-lg overflow-hidden rounded-xl bg-white shadow-xl">
-
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/75 p-4 backdrop-blur-sm">
+            <div className="max-h-[90vh] w-full max-w-lg overflow-y-auto rounded-2xl border border-white/15 bg-[#121212] shadow-2xl shadow-black/80">
                 {/* Header */}
-                <div className="flex items-center justify-between border-b border-gray-200 p-5">
-                    <h2 className="text-xl font-bold text-gray-900">
+                <div className="flex items-center justify-between border-b border-white/10 px-6 py-5">
+                    <h2 className="text-xl font-bold text-white">
                         {selectedMenu ? "Edit Menu" : "Add New Menu"}
                     </h2>
 
                     <button
                         type="button"
                         onClick={onClose}
-                        className="rounded-lg p-2 text-gray-500 transition hover:bg-gray-100 hover:text-gray-900"
+                        className="rounded-xl p-2 text-zinc-400 transition hover:bg-white/10 hover:text-white"
                     >
                         <X size={20} />
                     </button>
                 </div>
 
                 {/* Form */}
-                <form onSubmit={handleSubmit} className="space-y-4 p-5">
-
+                <form onSubmit={handleSubmit} className="space-y-4 p-6">
                     <div>
                         <label className={labelClass}>
                             Menu Name
@@ -229,36 +226,36 @@ function MenuModal({
                         </select>
                     </div>
 
-                    <div className="flex items-center gap-2">
+                    <div className="flex items-center gap-2.5 pt-1">
                         <input
                             type="checkbox"
                             id="isActive"
                             name="isActive"
                             checked={formData.isActive}
                             onChange={handleChange}
-                            className="h-4 w-4 cursor-pointer accent-emerald-600"
+                            className="h-4 w-4 cursor-pointer accent-orange-500"
                         />
 
                         <label
                             htmlFor="isActive"
-                            className="cursor-pointer text-sm font-semibold text-gray-900"
+                            className="cursor-pointer text-sm font-medium text-zinc-300"
                         >
                             Active Menu
                         </label>
                     </div>
 
                     {error && (
-                        <p className="rounded-lg border border-red-200 bg-red-50 p-3 text-sm text-red-700">
+                        <p className="rounded-xl border border-red-500/25 bg-red-500/10 p-3 text-sm text-red-400">
                             {error}
                         </p>
                     )}
 
                     {/* Footer */}
-                    <div className="flex justify-end gap-3 border-t border-gray-200 pt-4">
+                    <div className="flex justify-end gap-3 border-t border-white/10 pt-5">
                         <button
                             type="button"
                             onClick={onClose}
-                            className="rounded-lg border border-gray-300 px-4 py-2 text-sm font-medium text-gray-700 transition hover:bg-gray-100"
+                            className="rounded-xl border border-white/10 bg-white/[0.05] px-4 py-2.5 text-sm font-medium text-zinc-300 transition hover:bg-white/[0.10] hover:text-white"
                         >
                             Cancel
                         </button>
@@ -266,7 +263,7 @@ function MenuModal({
                         <button
                             type="submit"
                             disabled={loading}
-                            className="rounded-lg bg-emerald-600 px-5 py-2 text-sm font-semibold text-white transition hover:bg-emerald-700 disabled:cursor-not-allowed disabled:opacity-50"
+                            className="rounded-xl bg-gradient-to-r from-orange-600 to-orange-500 px-5 py-2.5 text-sm font-semibold text-white shadow-lg shadow-orange-500/20 transition hover:from-orange-500 hover:to-orange-400 disabled:cursor-not-allowed disabled:opacity-50"
                         >
                             {loading
                                 ? "Saving..."
@@ -275,7 +272,6 @@ function MenuModal({
                                     : "Create Menu"}
                         </button>
                     </div>
-
                 </form>
             </div>
         </div>

@@ -1,10 +1,12 @@
-﻿using LMS.Application.DTO.Menus;
+using LMS.Application.DTO.Menus;
 
 namespace LMS.Application.Services.Interfaces;
 
 public interface IMenuService
 {
     Task<List<MenuResponseDto>> GetAllAsync();
+
+    Task<object> GetPagedAsync();
 
     Task<MenuResponseDto?> GetByIdAsync(int id);
 

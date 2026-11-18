@@ -5,9 +5,9 @@ import api from "./api";
 // PERMISSIONS
 // ==========================================
 
-// Get All Permissions
-export const getAllPermissions = async () => {
-    const response = await api.get("/Permissions");
+// Get All Permissions (supports pagination, search, sorting, filtering)
+export const getAllPermissions = async (params = {}) => {
+    const response = await api.get("/Permissions", { params });
     return response.data;
 };
 
@@ -29,6 +29,12 @@ export const updatePermission = async (id, permissionData) => {
     return response.data;
 };
 
+// Get Effective Active Permissions For A User (Role + Direct User Permissions, excluding revoked)
+export const getEffectivePermissionsByUser = async (userId) => {
+    const response = await api.get(`/Permissions/user/${userId}`);
+    return response.data;
+};
+
 // Delete Permission
 export const deletePermission = async (id) => {
     const response = await api.delete(`/Permissions/${id}`);
@@ -41,8 +47,8 @@ export const deletePermission = async (id) => {
 // ==========================================
 
 // Get All Role Permissions
-export const getAllRolePermissions = async () => {
-    const response = await api.get("/RolePermissions");
+export const getAllRolePermissions = async (params = {}) => {
+    const response = await api.get("/RolePermissions", { params });
     return response.data;
 };
 
@@ -69,15 +75,15 @@ export const removeRolePermission = async (id) => {
 // USER PERMISSIONS
 // ==========================================
 
-// Get All User Permissions
-export const getAllUserPermissions = async () => {
-    const response = await api.get("/UserPermissions");
+// Get All User Permissions (supports pagination, search, sorting, filtering)
+export const getAllUserPermissions = async (params = {}) => {
+    const response = await api.get("/UserPermissions", { params });
     return response.data;
 };
 
 // Get Permissions By User ID
-export const getUserPermissions = async (userId) => {
-    const response = await api.get(`/UserPermissions/user/${userId}`);
+export const getUserPermissions = async (userId, params = {}) => {
+    const response = await api.get(`/UserPermissions/user/${userId}`, { params });
     return response.data;
 };
 

@@ -1,9 +1,9 @@
 
 import api from "./api";
 
-// Get all roles.
-export const getAllRoles = async () => {
-    const response = await api.get("/Roles");
+// Get all roles (supports pagination, search, sorting, filtering)
+export const getAllRoles = async (params = {}) => {
+    const response = await api.get("/Roles", { params });
     return response.data;
 };
 

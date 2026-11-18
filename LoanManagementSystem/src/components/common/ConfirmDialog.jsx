@@ -1,4 +1,3 @@
-
 function ConfirmDialog({
     isOpen,
     title = "Are you sure?",
@@ -14,14 +13,11 @@ function ConfirmDialog({
     }
 
     return (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/40 p-4">
-
-            <div className="w-full max-w-md rounded-2xl bg-white p-6 shadow-xl">
-
+        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/70 p-4 backdrop-blur-sm">
+            <div className="w-full max-w-md rounded-2xl border border-white/15 bg-[#121212] p-6 shadow-2xl shadow-black/70">
                 {/* Header */}
                 <div className="mb-4 flex items-center gap-3">
-
-                    <div className="flex h-12 w-12 items-center justify-center rounded-full bg-red-100 text-red-600">
+                    <div className="flex h-12 w-12 items-center justify-center rounded-full border border-red-500/25 bg-red-500/15 text-red-400">
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
                             className="h-6 w-6"
@@ -38,25 +34,23 @@ function ConfirmDialog({
                         </svg>
                     </div>
 
-                    <h2 className="text-lg font-bold text-gray-900">
+                    <h2 className="text-lg font-bold text-white">
                         {title}
                     </h2>
-
                 </div>
 
                 {/* Message */}
-                <p className="mb-6 text-sm leading-6 text-gray-500">
+                <p className="mb-6 text-sm leading-6 text-zinc-400">
                     {message}
                 </p>
 
                 {/* Actions */}
                 <div className="flex justify-end gap-3">
-
                     <button
                         type="button"
                         onClick={onCancel}
                         disabled={isLoading}
-                        className="rounded-lg border border-gray-300 px-4 py-2 text-sm font-medium text-gray-700 transition hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50"
+                        className="rounded-xl border border-white/10 bg-white/[0.05] px-4 py-2 text-sm font-medium text-zinc-300 transition hover:bg-white/[0.10] disabled:cursor-not-allowed disabled:opacity-50"
                     >
                         {cancelText}
                     </button>
@@ -65,15 +59,12 @@ function ConfirmDialog({
                         type="button"
                         onClick={onConfirm}
                         disabled={isLoading}
-                        className="rounded-lg bg-red-600 px-4 py-2 text-sm font-medium text-white transition hover:bg-red-700 disabled:cursor-not-allowed disabled:opacity-50"
+                        className="rounded-xl bg-red-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-red-500 disabled:cursor-not-allowed disabled:opacity-50"
                     >
                         {isLoading ? "Processing..." : confirmText}
                     </button>
-
                 </div>
-
             </div>
-
         </div>
     );
 }

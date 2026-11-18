@@ -110,6 +110,7 @@ namespace LMS.Infrastructure.Migrations
                         .HasColumnType("int");
 
                     b.Property<decimal>("InterestRate")
+                        .HasPrecision(5, 2)
                         .HasColumnType("decimal(5,2)");
 
                     b.Property<bool>("IsDeleted")
@@ -126,9 +127,11 @@ namespace LMS.Infrastructure.Migrations
                         .HasColumnType("nvarchar(50)");
 
                     b.Property<decimal>("OutstandingBalance")
+                        .HasPrecision(18, 2)
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<decimal>("PrincipalAmount")
+                        .HasPrecision(18, 2)
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<int>("StatusId")
@@ -138,6 +141,7 @@ namespace LMS.Infrastructure.Migrations
                         .HasColumnType("int");
 
                     b.Property<decimal>("TotalPayableAmount")
+                        .HasPrecision(18, 2)
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<DateTime?>("UpdatedAt")
@@ -397,6 +401,9 @@ namespace LMS.Infrastructure.Migrations
                     b.Property<int>("LoanApplicationId")
                         .HasColumnType("int");
 
+                    b.Property<int>("StatusId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
@@ -419,6 +426,8 @@ namespace LMS.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("LoanApplicationId");
+
+                    b.HasIndex("StatusId");
 
                     b.HasIndex("UploadedByUserId");
 
@@ -1665,6 +1674,12 @@ namespace LMS.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.HasOne("LMS.Domain.Entities.Status", "Status")
+                        .WithMany()
+                        .HasForeignKey("StatusId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("LMS.Domain.Entities.User", "UploadedByUser")
                         .WithMany("UploadedLoanDocuments")
                         .HasForeignKey("UploadedByUserId")
@@ -1677,6 +1692,8 @@ namespace LMS.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("LoanApplication");
+
+                    b.Navigation("Status");
 
                     b.Navigation("UploadedByUser");
 

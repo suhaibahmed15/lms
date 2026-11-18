@@ -1,12 +1,15 @@
-
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import {
-    ShieldCheck,
     Search,
     RefreshCw,
     UserPlus,
     Shield,
-    XCircle
+    XCircle,
+    ArrowUpDown,
+    ArrowUp,
+    ArrowDown,
+    ChevronLeft,
+    ChevronRight
 } from "lucide-react";
 
 import MainLayout from "../components/layout/MainLayout";
@@ -14,12 +17,14 @@ import MainLayout from "../components/layout/MainLayout";
 import {
     getAllPermissions,
     getAllUserPermissions,
+    getEffectivePermissionsByUser,
     assignPermissionToUser,
     revokeUserPermission
 } from "../services/permissionService";
 
 import { getAllUsers } from "../services/userService";
-import { getCurrentUser } from "../utils/auth";
+import { getMyRole } from "../services/roleService";
+import { getCurrentUser, notifyMenusUpdated } from "../utils/auth";
 
 function UserPermissions() {
     const user = getCurrentUser();
@@ -28,42 +33,122 @@ function UserPermissions() {
     const [permissions, setPermissions] = useState([]);
     const [assignments, setAssignments] = useState([]);
 
-    const [selectedUserId, setSelectedUserId] = useState("");
+    // Form state (Assign)
+    const [assignUserId, setAssignUserId] = useState("");
     const [selectedPermissionId, setSelectedPermissionId] = useState("");
 
+    // Table query state
+    const [filterUserId, setFilterUserId] = useState("");
+    const [filterPermissionId, setFilterPermissionId] = useState("");
+    const [statusFilter, setStatusFilter] = useState("true"); // Default to active non-revoked permissions
+    const [searchInput, setSearchInput] = useState("");
     const [search, setSearch] = useState("");
+    const [sortBy, setSortBy] = useState("id");
+    const [sortDirection, setSortDirection] = useState("desc");
+    const [pageNumber, setPageNumber] = useState(1);
+    const [pageSize, setPageSize] = useState(10);
+
+    const [totalRecords, setTotalRecords] = useState(0);
+    const [totalPages, setTotalPages] = useState(0);
+    const [summary, setSummary] = useState({ total: 0, active: 0, revoked: 0 });
+
     const [loading, setLoading] = useState(true);
     const [assigning, setAssigning] = useState(false);
     const [error, setError] = useState("");
     const [success, setSuccess] = useState("");
+    const [canManage, setCanManage] = useState(false);
 
-    // Get response data safely
+    useEffect(() => {
+        const fetchCurrentUserAccess = async () => {
+            const currentUserId = user?.userId ?? user?.id;
+            if (!currentUserId) return;
+            try {
+                const [roleResp, permsResp] = await Promise.all([
+                    getMyRole().catch(() => null),
+                    getEffectivePermissionsByUser(currentUserId).catch(() => [])
+                ]);
+                const isAdmin = roleResp?.data?.key?.toUpperCase() === "ADMIN";
+                const permList = Array.isArray(permsResp) ? permsResp : permsResp?.data || [];
+                const permKeys = new Set(permList.map((p) => p.key?.toUpperCase()));
+                setCanManage(isAdmin || permKeys.has("PERMISSION_MANAGE"));
+            } catch {
+                setCanManage(false);
+            }
+        };
+        fetchCurrentUserAccess();
+    }, [user?.userId, user?.id]);
+
     const extractData = (response) => {
         if (Array.isArray(response)) return response;
         if (Array.isArray(response?.data)) return response.data;
         return [];
     };
 
-    // Fetch Users, Permissions and Assignments
-    const fetchData = async () => {
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setSearch(searchInput.trim());
+            setPageNumber(1);
+        }, 300);
+
+        return () => clearTimeout(timer);
+    }, [searchInput]);
+
+    // Fetch dropdown options (users and active permissions)
+    const fetchLookups = useCallback(async () => {
+        try {
+            const [usersResponse, permissionsResponse] = await Promise.all([
+                getAllUsers({ pageNumber: 1, pageSize: 100 }),
+                getAllPermissions({ pageNumber: 1, pageSize: 100, isActive: true })
+            ]);
+
+            setUsers(extractData(usersResponse));
+            setPermissions(
+                extractData(permissionsResponse).filter(
+                    (p) => !p.key?.toUpperCase().startsWith("AUDIT_LOG")
+                )
+            );
+        } catch (err) {
+            setError(
+                err.response?.data?.message ||
+                "Failed to load users and permissions."
+            );
+        }
+    }, []);
+
+    // Fetch paged assignments from backend
+    const fetchAssignments = useCallback(async () => {
         try {
             setLoading(true);
             setError("");
 
-            const [
-                usersResponse,
-                permissionsResponse,
-                assignmentsResponse
-            ] = await Promise.all([
-                getAllUsers(),
-                getAllPermissions(),
-                getAllUserPermissions()
-            ]);
+            const params = {
+                pageNumber,
+                pageSize,
+                sortBy,
+                sortDirection
+            };
 
-            setUsers(extractData(usersResponse));
-            setPermissions(extractData(permissionsResponse));
-            setAssignments(extractData(assignmentsResponse));
+            if (search) params.search = search;
+            if (filterUserId) params.userId = Number(filterUserId);
+            if (filterPermissionId) params.permissionId = Number(filterPermissionId);
+            if (statusFilter !== "") params.isActive = statusFilter === "true";
 
+            const response = await getAllUserPermissions(params);
+            const data = extractData(response).filter(
+                (a) => !a.permissionKey?.toUpperCase().startsWith("AUDIT_LOG")
+            );
+
+            setAssignments(data);
+            setTotalRecords(response.totalRecords ?? data.length);
+            setTotalPages(response.totalPages ?? (data.length > 0 ? 1 : 0));
+
+            const activeCount = response.activeCount ?? data.filter((a) => a.isActive).length;
+            const revokedCount = response.revokedCount ?? data.filter((a) => !a.isActive).length;
+            setSummary({
+                total: activeCount + revokedCount,
+                active: activeCount,
+                revoked: revokedCount
+            });
         } catch (err) {
             setError(
                 err.response?.data?.message ||
@@ -72,58 +157,34 @@ function UserPermissions() {
         } finally {
             setLoading(false);
         }
-    };
+    }, [pageNumber, pageSize, search, filterUserId, filterPermissionId, statusFilter, sortBy, sortDirection]);
 
     useEffect(() => {
-        fetchData();
-    }, []);
+        fetchLookups();
+    }, [fetchLookups]);
 
-    // Get User Name
-    const getUserName = (userId) => {
-        const selectedUser = users.find(
-            (item) => Number(item.id) === Number(userId)
-        );
+    useEffect(() => {
+        fetchAssignments();
+    }, [fetchAssignments]);
 
-        return selectedUser?.fullName || `User ${userId}`;
+    const handleSort = (column) => {
+        if (sortBy === column) {
+            setSortDirection((prev) => (prev === "asc" ? "desc" : "asc"));
+        } else {
+            setSortBy(column);
+            setSortDirection("asc");
+        }
+        setPageNumber(1);
     };
 
-    // Get Permission Name
-    const getPermissionName = (permissionId) => {
-        const permission = permissions.find(
-            (item) => Number(item.id) === Number(permissionId)
-        );
-
-        return permission?.name || `Permission ${permissionId}`;
+    const renderSortIcon = (column) => {
+        if (sortBy !== column) {
+            return <ArrowUpDown size={14} className="text-zinc-500" />;
+        }
+        return sortDirection === "asc"
+            ? <ArrowUp size={14} className="text-orange-400" />
+            : <ArrowDown size={14} className="text-orange-400" />;
     };
-
-    // Active and inactive assignments
-    const activeAssignments = assignments.filter(
-        (item) => item.isActive && !item.isDeleted
-    );
-
-    const revokedAssignments = assignments.filter(
-        (item) => !item.isActive || item.isDeleted
-    );
-
-    // Selected user's assignments
-    const filteredAssignments = assignments.filter((item) => {
-        const matchesUser =
-            !selectedUserId ||
-            Number(item.userId) === Number(selectedUserId);
-
-        const searchText = search.toLowerCase();
-
-        const userName = getUserName(item.userId).toLowerCase();
-        const permissionName = getPermissionName(
-            item.permissionId
-        ).toLowerCase();
-
-        const matchesSearch =
-            userName.includes(searchText) ||
-            permissionName.includes(searchText);
-
-        return matchesUser && matchesSearch;
-    });
 
     // Assign Permission
     const handleAssign = async (e) => {
@@ -132,43 +193,27 @@ function UserPermissions() {
         setError("");
         setSuccess("");
 
-        if (!selectedUserId || !selectedPermissionId) {
+        if (!assignUserId || !selectedPermissionId) {
             setError("Please select a user and permission.");
             return;
         }
 
-        const alreadyAssigned = activeAssignments.some(
-            (item) =>
-                Number(item.userId) === Number(selectedUserId) &&
-                Number(item.permissionId) === Number(selectedPermissionId)
-        );
-
-        if (alreadyAssigned) {
-            setError("This permission is already assigned to this user.");
-            return;
-        }
-
-        const assignedByUserId = user?.id ?? user?.userId;
-
-        if (!assignedByUserId) {
-            setError("Logged-in user ID could not be found.");
-            return;
-        }
+        const assignedByUserId = user?.userId ?? user?.id;
 
         try {
             setAssigning(true);
 
             await assignPermissionToUser({
-                userId: Number(selectedUserId),
+                userId: Number(assignUserId),
                 permissionId: Number(selectedPermissionId),
-                assignedByUserId: Number(assignedByUserId)
+                assignedByUserId: assignedByUserId ? Number(assignedByUserId) : null
             });
 
             setSuccess("Permission assigned successfully.");
             setSelectedPermissionId("");
 
-            await fetchData();
-
+            await fetchAssignments();
+            notifyMenusUpdated();
         } catch (err) {
             setError(
                 err.response?.data?.message ||
@@ -187,26 +232,18 @@ function UserPermissions() {
 
         if (!confirmed) return;
 
-        const revokedByUserId = user?.id ?? user?.userId;
-
-        if (!revokedByUserId) {
-            setError("Logged-in user ID could not be found.");
-            return;
-        }
+        const revokedByUserId = user?.userId ?? user?.id;
 
         try {
             setError("");
             setSuccess("");
 
-            await revokeUserPermission(
-                assignmentId,
-                revokedByUserId
-            );
+            await revokeUserPermission(assignmentId, revokedByUserId);
 
             setSuccess("Permission revoked successfully.");
 
-            await fetchData();
-
+            await fetchAssignments();
+            notifyMenusUpdated();
         } catch (err) {
             setError(
                 err.response?.data?.message ||
@@ -215,109 +252,97 @@ function UserPermissions() {
         }
     };
 
+    const controlClass =
+        "rounded-xl border border-white/10 bg-white/[0.07] px-3.5 py-2.5 text-sm text-white placeholder:text-zinc-500 outline-none transition focus:border-orange-500/70 focus:bg-white/[0.10] focus:ring-4 focus:ring-orange-500/10";
+
+    const startRecord = totalRecords === 0 ? 0 : (pageNumber - 1) * pageSize + 1;
+    const endRecord = Math.min(pageNumber * pageSize, totalRecords);
+
     return (
         <MainLayout user={user}>
             <div className="space-y-6">
-
                 {/* Page Header */}
                 <div>
-                    <h1 className="text-2xl font-bold text-gray-800">
+                    <h1 className="text-2xl font-bold tracking-tight text-white">
                         User Permissions
                     </h1>
 
-                    <p className="mt-1 text-sm text-gray-500">
-                        Assign, view and manage individual user permissions.
+                    <p className="mt-1 text-sm text-zinc-400">
+                        Assign, view and revoke individual user permissions.
                     </p>
                 </div>
 
                 {/* Summary Cards */}
                 <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
-
-                    <div className="rounded-xl border bg-white p-5 shadow-sm">
+                    <div className="rounded-2xl border border-white/10 bg-[#111111] p-5 shadow-xl shadow-black/40">
                         <div className="flex items-center justify-between">
                             <div>
-                                <p className="text-sm text-gray-500">
-                                    Total Assignments
-                                </p>
-
-                                <h2 className="mt-2 text-2xl font-bold text-gray-800">
-                                    {assignments.length}
+                                <p className="text-sm text-zinc-400">Total Assignments</p>
+                                <h2 className="mt-2 text-2xl font-bold text-white">
+                                    {summary.total}
                                 </h2>
                             </div>
 
-                            <div className="rounded-lg bg-blue-50 p-3 text-blue-600">
+                            <div className="rounded-xl border border-orange-500/25 bg-orange-500/15 p-3 text-orange-400">
                                 <Shield size={22} />
                             </div>
                         </div>
                     </div>
 
-                    <div className="rounded-xl border bg-white p-5 shadow-sm">
-                        <p className="text-sm text-gray-500">
-                            Active Permissions
-                        </p>
-
-                        <h2 className="mt-2 text-2xl font-bold text-emerald-600">
-                            {activeAssignments.length}
+                    <div className="rounded-2xl border border-white/10 bg-[#111111] p-5 shadow-xl shadow-black/40">
+                        <p className="text-sm text-zinc-400">Active Permissions</p>
+                        <h2 className="mt-2 text-2xl font-bold text-emerald-400">
+                            {summary.active}
                         </h2>
                     </div>
 
-                    <div className="rounded-xl border bg-white p-5 shadow-sm">
-                        <p className="text-sm text-gray-500">
-                            Revoked Permissions
-                        </p>
-
-                        <h2 className="mt-2 text-2xl font-bold text-red-600">
-                            {revokedAssignments.length}
+                    <div className="rounded-2xl border border-white/10 bg-[#111111] p-5 shadow-xl shadow-black/40">
+                        <p className="text-sm text-zinc-400">Revoked Permissions</p>
+                        <h2 className="mt-2 text-2xl font-bold text-red-400">
+                            {summary.revoked}
                         </h2>
                     </div>
-
                 </div>
 
                 {/* Assign Permission Form */}
-                <div className="rounded-xl border bg-white p-5 shadow-sm">
-
+                {canManage && (
+                    <div className="rounded-2xl border border-white/10 bg-[#111111] p-5 shadow-xl shadow-black/40">
                     <div className="mb-5 flex items-center gap-3">
-                        <div className="rounded-lg bg-emerald-50 p-3 text-emerald-600">
+                        <div className="rounded-xl border border-orange-500/25 bg-orange-500/15 p-3 text-orange-400">
                             <UserPlus size={22} />
                         </div>
 
                         <div>
-                            <h2 className="font-semibold text-gray-800">
+                            <h2 className="font-semibold text-white">
                                 Assign Permission
                             </h2>
 
-                            <p className="text-sm text-gray-500">
-                                Give an individual permission to a user.
+                            <p className="text-sm text-zinc-400">
+                                Grant or re-grant an active permission to a user.
                             </p>
                         </div>
                     </div>
 
                     <form onSubmit={handleAssign}>
                         <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-
                             {/* User Dropdown */}
                             <div>
-                                <label className="mb-2 block text-sm font-medium text-gray-700">
+                                <label className="mb-2 block text-sm font-medium text-zinc-300">
                                     Select User
                                 </label>
 
                                 <select
-                                    value={selectedUserId}
-                                    onChange={(e) => setSelectedUserId(e.target.value)}
-                                    className="w-full rounded-lg border px-3 py-2.5 text-sm text-black outline-none focus:border-emerald-500"
+                                    value={assignUserId}
+                                    onChange={(e) => setAssignUserId(e.target.value)}
+                                    className={`${controlClass} w-full`}
                                     required
                                 >
-                                    <option value="">
-                                        Choose a user
-                                    </option>
+                                    <option value="">Choose a user</option>
 
                                     {users
                                         .filter((item) => item.isActive && !item.isDeleted)
                                         .map((item) => (
-                                            <option
-                                                key={item.id}
-                                                value={item.id}
-                                            >
+                                            <option key={item.id} value={item.id}>
                                                 {item.fullName} ({item.email})
                                             </option>
                                         ))}
@@ -326,40 +351,34 @@ function UserPermissions() {
 
                             {/* Permission Dropdown */}
                             <div>
-                                <label className="mb-2 block text-sm font-medium text-gray-700">
+                                <label className="mb-2 block text-sm font-medium text-zinc-300">
                                     Select Permission
                                 </label>
 
                                 <select
                                     value={selectedPermissionId}
                                     onChange={(e) => setSelectedPermissionId(e.target.value)}
-                                    className="w-full rounded-lg border px-3 py-2.5 text-sm text-black outline-none focus:border-emerald-500"
+                                    className={`${controlClass} w-full`}
                                     required
                                 >
-                                    <option value="">
-                                        Choose a permission
-                                    </option>
+                                    <option value="">Choose a permission</option>
 
                                     {permissions
                                         .filter((item) => item.isActive && !item.isDeleted)
                                         .map((item) => (
-                                            <option
-                                                key={item.id}
-                                                value={item.id}
-                                            >
+                                            <option key={item.id} value={item.id}>
                                                 {item.name} ({item.key})
                                             </option>
                                         ))}
                                 </select>
                             </div>
-
                         </div>
 
                         <div className="mt-5 flex justify-end">
                             <button
                                 type="submit"
-                                disabled={assigning || loading}
-                                className="flex items-center justify-center gap-2 rounded-lg bg-emerald-600 px-5 py-2.5 text-sm font-medium text-white hover:bg-emerald-700 disabled:cursor-not-allowed disabled:opacity-60"
+                                disabled={assigning}
+                                className="flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-orange-600 to-orange-500 px-5 py-2.5 text-sm font-semibold text-white shadow-lg shadow-orange-500/20 transition hover:from-orange-500 hover:to-orange-400 disabled:cursor-not-allowed disabled:opacity-60"
                             >
                                 <UserPlus size={17} />
                                 {assigning ? "Assigning..." : "Assign Permission"}
@@ -367,190 +386,295 @@ function UserPermissions() {
                         </div>
                     </form>
                 </div>
+                )}
 
                 {/* Notifications */}
                 {error && (
-                    <div className="flex items-center gap-2 rounded-lg bg-red-50 p-3 text-sm text-red-600">
-                        <XCircle size={18} />
+                    <div className="flex items-center gap-2 rounded-xl border border-red-500/25 bg-red-500/10 p-3.5 text-sm text-red-400">
+                        <XCircle size={18} className="shrink-0" />
                         {error}
                     </div>
                 )}
 
                 {success && (
-                    <div className="rounded-lg bg-emerald-50 p-3 text-sm text-emerald-700">
+                    <div className="rounded-xl border border-emerald-500/25 bg-emerald-500/10 p-3.5 text-sm text-emerald-400">
                         {success}
                     </div>
                 )}
 
                 {/* Assigned Permissions Table */}
-                <div className="overflow-hidden rounded-xl border bg-white shadow-sm">
+                <div className="overflow-hidden rounded-2xl border border-white/10 bg-[#111111] shadow-xl shadow-black/40">
+                    {/* Search, Filters & Refresh */}
+                    <div className="space-y-3 border-b border-white/10 p-4">
+                        <div className="flex flex-col justify-between gap-3 sm:flex-row sm:items-center">
+                            <div>
+                                <h2 className="font-semibold text-white">
+                                    Permission Assignments
+                                </h2>
 
-                    {/* Search and Refresh */}
-                    <div className="flex flex-col justify-between gap-3 border-b p-4 sm:flex-row sm:items-center">
+                                <p className="mt-1 text-xs text-zinc-400">
+                                    View, filter and revoke user permission assignments.
+                                </p>
+                            </div>
 
-                        <div>
-                            <h2 className="font-semibold text-gray-800">
-                                Assigned Permissions
-                            </h2>
+                            <div className="flex items-center gap-2">
+                                <select
+                                    value={pageSize}
+                                    onChange={(e) => {
+                                        setPageSize(Number(e.target.value));
+                                        setPageNumber(1);
+                                    }}
+                                    className={controlClass}
+                                    aria-label="Rows per page"
+                                >
+                                    <option value={5}>5 / page</option>
+                                    <option value={10}>10 / page</option>
+                                    <option value={20}>20 / page</option>
+                                    <option value={50}>50 / page</option>
+                                </select>
 
-                            <p className="mt-1 text-xs text-gray-500">
-                                View and revoke user permission assignments.
-                            </p>
+                                <button
+                                    type="button"
+                                    onClick={fetchAssignments}
+                                    disabled={loading}
+                                    className="flex items-center justify-center gap-2 rounded-xl border border-white/10 bg-white/[0.05] px-4 py-2.5 text-sm text-zinc-300 transition hover:bg-white/[0.10] hover:text-white"
+                                >
+                                    <RefreshCw size={15} className={loading ? "animate-spin" : ""} />
+                                    Refresh
+                                </button>
+                            </div>
                         </div>
 
-                        <div className="flex flex-col gap-3 sm:flex-row">
-
-                            <div className="relative w-full sm:w-64">
+                        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
+                            <div className="relative">
                                 <Search
-                                    size={18}
-                                    className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"
+                                    size={17}
+                                    className="absolute left-3.5 top-1/2 -translate-y-1/2 text-zinc-500"
                                 />
 
                                 <input
                                     type="text"
-                                    value={search}
-                                    onChange={(e) => setSearch(e.target.value)}
-                                    placeholder="Search assignments..."
-                                    className="w-full rounded-lg border py-2 pl-10 pr-3 text-sm outline-none focus:border-emerald-500"
+                                    value={searchInput}
+                                    onChange={(e) => setSearchInput(e.target.value)}
+                                    placeholder="Search user or permission..."
+                                    className={`${controlClass} w-full pl-10`}
                                 />
                             </div>
 
-                            <button
-                                onClick={fetchData}
-                                disabled={loading}
-                                className="flex items-center justify-center gap-2 rounded-lg border px-4 py-2 text-sm text-gray-600 hover:bg-gray-50"
+                            <select
+                                value={filterUserId}
+                                onChange={(e) => {
+                                    setFilterUserId(e.target.value);
+                                    setPageNumber(1);
+                                }}
+                                className={controlClass}
                             >
-                                <RefreshCw size={16} />
-                                Refresh
-                            </button>
+                                <option value="">All Users</option>
+                                {users.map((item) => (
+                                    <option key={item.id} value={item.id}>
+                                        {item.fullName}
+                                    </option>
+                                ))}
+                            </select>
 
+                            <select
+                                value={filterPermissionId}
+                                onChange={(e) => {
+                                    setFilterPermissionId(e.target.value);
+                                    setPageNumber(1);
+                                }}
+                                className={controlClass}
+                            >
+                                <option value="">All Permissions</option>
+                                {permissions.map((item) => (
+                                    <option key={item.id} value={item.id}>
+                                        {item.name}
+                                    </option>
+                                ))}
+                            </select>
+
+                            <select
+                                value={statusFilter}
+                                onChange={(e) => {
+                                    setStatusFilter(e.target.value);
+                                    setPageNumber(1);
+                                }}
+                                className={controlClass}
+                            >
+                                <option value="true">Active Only</option>
+                                <option value="false">Revoked Only</option>
+                                <option value="">All Statuses</option>
+                            </select>
                         </div>
-                    </div>
-
-                    {/* User Filter */}
-                    <div className="border-b px-4 py-3">
-                        <select
-                            value={selectedUserId}
-                            onChange={(e) => setSelectedUserId(e.target.value)}
-                            className="w-full rounded-lg border px-3 py-2 text-sm text-black outline-none focus:border-emerald-500 sm:max-w-xs"
-                        >
-                            <option value="">
-                                All Users
-                            </option>
-
-                            {users.map((item) => (
-                                <option key={item.id} value={item.id}>
-                                    {item.fullName}
-                                </option>
-                            ))}
-                        </select>
                     </div>
 
                     {/* Table */}
                     <div className="overflow-x-auto">
                         <table className="w-full text-left text-sm">
-
-                            <thead className="bg-gray-50 text-xs uppercase text-gray-500">
+                            <thead className="border-b border-white/10 bg-white/[0.04] text-xs uppercase tracking-wider text-zinc-400">
                                 <tr>
-                                    <th className="px-5 py-4">User</th>
-                                    <th className="px-5 py-4">Permission</th>
-                                    <th className="px-5 py-4">Assigned At</th>
-                                    <th className="px-5 py-4">Status</th>
-                                    <th className="px-5 py-4 text-center">Actions</th>
+                                    <th className="px-5 py-4">
+                                        <button
+                                            type="button"
+                                            onClick={() => handleSort("userName")}
+                                            className="inline-flex items-center gap-1.5 font-semibold uppercase hover:text-orange-400"
+                                        >
+                                            User {renderSortIcon("userName")}
+                                        </button>
+                                    </th>
+                                    <th className="px-5 py-4">
+                                        <button
+                                            type="button"
+                                            onClick={() => handleSort("permissionName")}
+                                            className="inline-flex items-center gap-1.5 font-semibold uppercase hover:text-orange-400"
+                                        >
+                                            Permission {renderSortIcon("permissionName")}
+                                        </button>
+                                    </th>
+                                    <th className="px-5 py-4">
+                                        <button
+                                            type="button"
+                                            onClick={() => handleSort("assignedAt")}
+                                            className="inline-flex items-center gap-1.5 font-semibold uppercase hover:text-orange-400"
+                                        >
+                                            Assigned At {renderSortIcon("assignedAt")}
+                                        </button>
+                                    </th>
+                                    <th className="px-5 py-4">
+                                        <button
+                                            type="button"
+                                            onClick={() => handleSort("isActive")}
+                                            className="inline-flex items-center gap-1.5 font-semibold uppercase hover:text-orange-400"
+                                        >
+                                            Status {renderSortIcon("isActive")}
+                                        </button>
+                                    </th>
+                                    <th className="px-5 py-4 text-center font-semibold">
+                                        Actions
+                                    </th>
                                 </tr>
                             </thead>
 
-                            <tbody className="divide-y divide-gray-100">
-
+                            <tbody className="divide-y divide-white/[0.07]">
                                 {loading ? (
                                     <tr>
-                                        <td colSpan="5" className="px-5 py-10 text-center text-gray-500">
+                                        <td colSpan="5" className="px-5 py-10 text-center text-zinc-400">
                                             Loading assignments...
                                         </td>
                                     </tr>
-                                ) : filteredAssignments.length === 0 ? (
+                                ) : assignments.length === 0 ? (
                                     <tr>
-                                        <td colSpan="5" className="px-5 py-10 text-center text-gray-500">
+                                        <td colSpan="5" className="px-5 py-10 text-center text-zinc-500">
                                             No permission assignments found.
                                         </td>
                                     </tr>
                                 ) : (
-                                    filteredAssignments.map((item) => (
-                                        <tr key={item.id} className="hover:bg-gray-50">
+                                    assignments.map((item) => {
+                                        const isRowActive = item.isActive && !item.revokedAt;
 
-                                            <td className="px-5 py-4">
-                                                <div className="font-medium text-gray-800">
-                                                    {getUserName(item.userId)}
-                                                </div>
+                                        return (
+                                            <tr
+                                                key={item.id}
+                                                className="transition hover:bg-white/[0.04]"
+                                            >
+                                                <td className="px-5 py-4">
+                                                    <div className="font-medium text-white">
+                                                        {item.fullName || `User ${item.userId}`}
+                                                    </div>
 
-                                                <div className="mt-1 text-xs text-gray-500">
-                                                    User ID: {item.userId}
-                                                </div>
-                                            </td>
+                                                    <div className="mt-1 text-xs text-zinc-500">
+                                                        User ID: {item.userId}
+                                                    </div>
+                                                </td>
 
-                                            <td className="px-5 py-4">
-                                                <div className="font-medium text-gray-800">
-                                                    {getPermissionName(item.permissionId)}
-                                                </div>
+                                                <td className="px-5 py-4">
+                                                    <div className="font-medium text-white">
+                                                        {item.permissionName || `Permission ${item.permissionId}`}
+                                                    </div>
 
-                                                <div className="mt-1 text-xs text-gray-500">
-                                                    Permission ID: {item.permissionId}
-                                                </div>
-                                            </td>
+                                                    <div className="mt-1 text-xs text-orange-300/80">
+                                                        {item.permissionKey || `ID: ${item.permissionId}`}
+                                                    </div>
+                                                </td>
 
-                                            <td className="whitespace-nowrap px-5 py-4 text-gray-500">
-                                                {item.assignedAt
-                                                    ? new Date(item.assignedAt).toLocaleDateString()
-                                                    : "-"}
-                                            </td>
+                                                <td className="whitespace-nowrap px-5 py-4 text-zinc-400">
+                                                    {item.assignedAt
+                                                        ? new Date(item.assignedAt).toLocaleDateString()
+                                                        : "-"}
+                                                </td>
 
-                                            <td className="px-5 py-4">
-                                                <span
-                                                    className={`rounded-full px-3 py-1 text-xs font-medium ${
-                                                        item.isActive && !item.isDeleted
-                                                            ? "bg-emerald-50 text-emerald-700"
-                                                            : "bg-red-50 text-red-600"
-                                                    }`}
-                                                >
-                                                    {item.isActive && !item.isDeleted
-                                                        ? "Active"
-                                                        : "Revoked"}
-                                                </span>
-                                            </td>
+                                                <td className="px-5 py-4">
+                                                    <span
+                                                        className={`rounded-full border px-3 py-1 text-xs font-medium ${
+                                                            isRowActive
+                                                                ? "border-emerald-500/25 bg-emerald-500/10 text-emerald-400"
+                                                                : "border-red-500/25 bg-red-500/10 text-red-400"
+                                                        }`}
+                                                    >
+                                                        {isRowActive ? "Active" : "Revoked"}
+                                                    </span>
+                                                </td>
 
-                                            <td className="px-5 py-4">
-                                                <div className="flex justify-center">
-                                                    {item.isActive && !item.isDeleted ? (
-                                                        <button
-                                                            onClick={() => handleRevoke(item.id)}
-                                                            title="Revoke Permission"
-                                                            className="rounded-lg p-2 text-red-600 hover:bg-red-50"
-                                                        >
-                                                            <XCircle size={18} />
-                                                        </button>
-                                                    ) : (
-                                                        <span className="text-xs text-gray-400">
-                                                            Revoked
-                                                        </span>
-                                                    )}
-                                                </div>
-                                            </td>
-
-                                        </tr>
-                                    ))
+                                                <td className="px-5 py-4">
+                                                    <div className="flex justify-center">
+                                                        {canManage && isRowActive ? (
+                                                            <button
+                                                                type="button"
+                                                                onClick={() => handleRevoke(item.id)}
+                                                                title="Revoke Permission"
+                                                                className="inline-flex items-center gap-1.5 rounded-lg border border-red-500/25 bg-red-500/10 px-3 py-1.5 text-xs font-medium text-red-400 transition hover:bg-red-500/20 hover:text-red-300"
+                                                            >
+                                                                <XCircle size={15} />
+                                                                Revoke
+                                                            </button>
+                                                        ) : (
+                                                            <span className="text-xs text-zinc-500">
+                                                                {isRowActive ? "View Only" : "Revoked"}
+                                                            </span>
+                                                        )}
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        );
+                                    })
                                 )}
-
                             </tbody>
                         </table>
                     </div>
 
-                    {/* Footer */}
-                    <div className="border-t px-5 py-4 text-sm text-gray-500">
-                        Showing {filteredAssignments.length} of {assignments.length} assignments
+                    {/* Pagination Footer */}
+                    <div className="flex flex-col items-center justify-between gap-3 border-t border-white/10 px-5 py-4 sm:flex-row">
+                        <p className="text-xs text-zinc-400">
+                            Showing {startRecord}–{endRecord} of {totalRecords} assignments
+                        </p>
+
+                        <div className="flex items-center gap-2">
+                            <button
+                                type="button"
+                                onClick={() => setPageNumber((p) => Math.max(1, p - 1))}
+                                disabled={pageNumber <= 1 || loading}
+                                className="inline-flex items-center gap-1 rounded-xl border border-white/10 bg-white/[0.05] px-3 py-1.5 text-xs font-medium text-zinc-300 transition hover:bg-white/[0.10] disabled:cursor-not-allowed disabled:opacity-40"
+                            >
+                                <ChevronLeft size={15} />
+                                Previous
+                            </button>
+
+                            <span className="px-2 text-xs font-medium text-zinc-300">
+                                Page {totalPages === 0 ? 0 : pageNumber} of {totalPages}
+                            </span>
+
+                            <button
+                                type="button"
+                                onClick={() => setPageNumber((p) => Math.min(totalPages, p + 1))}
+                                disabled={pageNumber >= totalPages || loading}
+                                className="inline-flex items-center gap-1 rounded-xl border border-white/10 bg-white/[0.05] px-3 py-1.5 text-xs font-medium text-zinc-300 transition hover:bg-white/[0.10] disabled:cursor-not-allowed disabled:opacity-40"
+                            >
+                                Next
+                                <ChevronRight size={15} />
+                            </button>
+                        </div>
                     </div>
-
                 </div>
-
             </div>
         </MainLayout>
     );

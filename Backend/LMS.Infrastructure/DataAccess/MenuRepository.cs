@@ -1,4 +1,3 @@
-﻿
 using LMS.Application.Repositories.Interfaces;
 using LMS.Domain.Entities;
 using LMS.Infrastructure.Data;
@@ -20,8 +19,94 @@ public class MenuRepository : IMenuRepository
         return await _context.Menus
             .AsNoTracking()
             .Include(m => m.ParentMenu)
+            .Where(m => !m.IsDeleted && m.Key != "AUDIT_LOGS")
             .OrderBy(m => m.DisplayOrder)
             .ToListAsync();
+    }
+
+    public async Task<(List<Menu> Items, int TotalRecords, int ActiveCount, int InactiveCount)> GetPagedAsync(
+        int pageNumber,
+        int pageSize,
+        string? search,
+        string? sortBy,
+        string? sortDirection,
+        bool? isActive,
+        int? parentMenuId)
+    {
+        var baseQuery = _context.Menus
+            .AsNoTracking()
+            .Include(m => m.ParentMenu)
+            .Where(m => !m.IsDeleted && m.Key != "AUDIT_LOGS");
+
+        var activeCount = await baseQuery.CountAsync(m => m.IsActive);
+        var inactiveCount = await baseQuery.CountAsync(m => !m.IsActive);
+
+        var query = baseQuery;
+
+        if (isActive.HasValue)
+        {
+            query = query.Where(m => m.IsActive == isActive.Value);
+        }
+
+        if (parentMenuId.HasValue)
+        {
+            if (parentMenuId.Value == 0)
+            {
+                query = query.Where(m => m.ParentMenuId == null);
+            }
+            else
+            {
+                query = query.Where(m => m.ParentMenuId == parentMenuId.Value);
+            }
+        }
+
+        if (!string.IsNullOrWhiteSpace(search))
+        {
+            var term = search.Trim().ToLower();
+            query = query.Where(m =>
+                m.Name.ToLower().Contains(term) ||
+                m.Key.ToLower().Contains(term) ||
+                (m.Route != null && m.Route.ToLower().Contains(term)) ||
+                (m.Icon != null && m.Icon.ToLower().Contains(term)) ||
+                (m.ParentMenu != null && m.ParentMenu.Name.ToLower().Contains(term)));
+        }
+
+        var totalRecords = await query.CountAsync();
+
+        var isDesc = string.Equals(sortDirection, "desc", StringComparison.OrdinalIgnoreCase);
+
+        query = sortBy?.Trim().ToLowerInvariant() switch
+        {
+            "name" => isDesc ? query.OrderByDescending(m => m.Name) : query.OrderBy(m => m.Name),
+            "key" => isDesc ? query.OrderByDescending(m => m.Key) : query.OrderBy(m => m.Key),
+            "route" => isDesc ? query.OrderByDescending(m => m.Route) : query.OrderBy(m => m.Route),
+            "parentmenu" or "parentmenuname" => isDesc
+                ? query.OrderByDescending(m => m.ParentMenu != null ? m.ParentMenu.Name : string.Empty)
+                : query.OrderBy(m => m.ParentMenu != null ? m.ParentMenu.Name : string.Empty),
+            "isactive" or "status" => isDesc ? query.OrderByDescending(m => m.IsActive) : query.OrderBy(m => m.IsActive),
+            "createdat" => isDesc ? query.OrderByDescending(m => m.CreatedAt) : query.OrderBy(m => m.CreatedAt),
+            "id" => isDesc ? query.OrderByDescending(m => m.Id) : query.OrderBy(m => m.Id),
+            _ => isDesc
+                ? query
+                    .OrderByDescending(m => m.ParentMenu != null ? m.ParentMenu.DisplayOrder : m.DisplayOrder)
+                    .ThenByDescending(m => m.ParentMenuId ?? m.Id)
+                    .ThenBy(m => m.ParentMenuId == null ? 0 : 1)
+                    .ThenByDescending(m => m.DisplayOrder)
+                    .ThenByDescending(m => m.Name)
+                : query
+                    .OrderBy(m => m.ParentMenu != null ? m.ParentMenu.DisplayOrder : m.DisplayOrder)
+                    .ThenBy(m => m.ParentMenuId ?? m.Id)
+                    .ThenBy(m => m.ParentMenuId == null ? 0 : 1)
+                    .ThenBy(m => m.DisplayOrder)
+                    .ThenBy(m => m.Name)
+        };
+
+        var items = await query
+            .Skip((pageNumber - 1) * pageSize)
+            .Take(pageSize)
+            .ToListAsync();
+
+        return (items, totalRecords, activeCount, inactiveCount);
     }
 
     public async Task<Menu?> GetByIdAsync(int id)
@@ -52,17 +137,18 @@ public class MenuRepository : IMenuRepository
             .AnyAsync(m => m.ParentMenuId == menuId);
     }
 
-
     public async Task<List<Menu>> GetMenusByUserIdAsync(int userId)
     {
-        // Step 1: Verify user
+        // Step 1: Verify active user with active role
         var user = await _context.Users
             .AsNoTracking()
             .Include(u => u.Role)
             .FirstOrDefaultAsync(u =>
                 u.Id == userId &&
                 u.IsActive &&
-                !u.IsDeleted);
+                !u.IsDeleted &&
+                u.Role.IsActive &&
+                !u.Role.IsDeleted);
 
         if (user == null)
         {
@@ -70,53 +156,85 @@ public class MenuRepository : IMenuRepository
                 "User not found or inactive.");
         }
 
-        // Step 2: Admin can access all active menus
+        // Load all active, non-deleted menus once (Audit Logs is database-only)
+        var allMenus = await _context.Menus
+            .AsNoTracking()
+            .Include(m => m.ParentMenu)
+            .Where(m => m.IsActive && !m.IsDeleted && m.Key != "AUDIT_LOGS")
+            .OrderBy(m => m.DisplayOrder)
+            .ThenBy(m => m.Name)
+            .ToListAsync();
+
+        var menuById = allMenus.ToDictionary(m => m.Id);
+
+        // Step 2: Admin can access all active menus (excluding empty non-routable parent menus)
         if (user.Role != null &&
             user.Role.Key.Equals(
                 "ADMIN",
                 StringComparison.OrdinalIgnoreCase))
         {
-            return await _context.Menus
-                .AsNoTracking()
-                .Include(m => m.ParentMenu)
-                .Where(m => m.IsActive && !m.IsDeleted)
+            var adminRoutableIds = allMenus
+                .Where(m => !string.IsNullOrWhiteSpace(m.Route))
+                .Select(m => m.Id)
+                .ToHashSet();
+
+            var adminVisibleIds = new HashSet<int>(adminRoutableIds);
+            foreach (var menuId in adminRoutableIds)
+            {
+                var parentId = menuById[menuId].ParentMenuId;
+                while (parentId.HasValue && menuById.TryGetValue(parentId.Value, out var parent))
+                {
+                    adminVisibleIds.Add(parent.Id);
+                    parentId = parent.ParentMenuId;
+                }
+            }
+
+            return allMenus
+                .Where(m => adminVisibleIds.Contains(m.Id))
                 .OrderBy(m => m.DisplayOrder)
-                .ToListAsync();
+                .ThenBy(m => m.Name)
+                .ToList();
         }
 
-        // Step 3: Find explicitly revoked permissions
-        var revokedPermissionIds = await _context.UserPermissions
-            .Where(up =>
-                up.UserId == userId &&
-                !up.IsActive &&
-                !up.IsDeleted &&
-                up.RevokedAt != null &&
-                up.Permission.IsActive &&
-                !up.Permission.IsDeleted)
-            .Where(up => !_context.UserPermissions.Any(active =>
-                active.UserId == userId &&
-                active.PermissionId == up.PermissionId &&
-                active.IsActive &&
-                !active.IsDeleted))
-            .Select(up => up.PermissionId)
-            .Distinct()
-            .ToListAsync();
-
-        // Step 4: Get active individual user permissions
-        var userPermissionMenuIds = await _context.UserPermissions
+        // Step 3: Active individual user permissions (non-revoked, active permission)
+        var activeUserPermissions = await _context.UserPermissions
+            .AsNoTracking()
             .Where(up =>
                 up.UserId == userId &&
                 up.IsActive &&
                 !up.IsDeleted &&
+                up.RevokedAt == null &&
                 up.Permission.IsActive &&
-                !up.Permission.IsDeleted &&
-                up.Permission.MenuId.HasValue)
-            .Select(up => up.Permission.MenuId!.Value)
+                !up.Permission.IsDeleted)
+            .Select(up => new { up.PermissionId, up.Permission.MenuId })
+            .ToListAsync();
+
+        var activeUserPermissionIds = activeUserPermissions
+            .Select(x => x.PermissionId)
+            .ToHashSet();
+
+        // Step 4: Explicitly revoked individual permissions (excluding any currently active ones)
+        var revokedPermissionIds = await _context.UserPermissions
+            .AsNoTracking()
+            .Where(up =>
+                up.UserId == userId &&
+                (!up.IsActive || up.RevokedAt != null) &&
+                !up.IsDeleted &&
+                !activeUserPermissionIds.Contains(up.PermissionId))
+            .Select(up => up.PermissionId)
             .Distinct()
             .ToListAsync();
 
-        // Step 5: Get active role permissions
+        // Step 5: Menu IDs from active individual user permissions
+        var userPermissionMenuIds = activeUserPermissions
+            .Where(x => x.MenuId.HasValue)
+            .Select(x => x.MenuId!.Value)
+            .Distinct()
+            .ToList();
+
+        // Step 6: Menu IDs from active role permissions (excluding revoked permissions)
         var rolePermissionMenuIds = await _context.RolePermissions
+            .AsNoTracking()
             .Where(rp =>
                 rp.RoleId == user.RoleId &&
                 !rp.IsDeleted &&
@@ -128,51 +246,47 @@ public class MenuRepository : IMenuRepository
             .Distinct()
             .ToListAsync();
 
-        // Step 6: Combine allowed permission menu IDs
-        var allowedMenuIds = rolePermissionMenuIds
-            .Union(userPermissionMenuIds)
-            .Distinct()
-            .ToHashSet();
-
-        // Step 7: Get all active menus
-        var allMenus = await _context.Menus
+        // Step 7: Menu IDs from active, non-deleted individual UserMenus
+        var activeUserMenuIds = await _context.UserMenus
             .AsNoTracking()
-            .Include(m => m.ParentMenu)
-            .Where(m => m.IsActive && !m.IsDeleted)
+            .Where(um =>
+                um.UserId == userId &&
+                um.IsActive &&
+                !um.IsDeleted &&
+                um.Menu.IsActive &&
+                !um.Menu.IsDeleted)
+            .Select(um => um.MenuId)
+            .Distinct()
             .ToListAsync();
 
-        // Step 8: Include only authorized menus
+        // Step 8: Combine allowed routable menu IDs
+        var allowedMenuIds = rolePermissionMenuIds
+            .Union(userPermissionMenuIds)
+            .Union(activeUserMenuIds)
+            .Where(id => menuById.TryGetValue(id, out var m) && !string.IsNullOrWhiteSpace(m.Route))
+            .ToHashSet();
+
+        // Step 9: Include parent menus ONLY when they have at least one accessible child menu
         var visibleMenuIds = new HashSet<int>(allowedMenuIds);
 
-        // Step 9: Include parent menus of authorized children
-        foreach (var menu in allMenus)
+        foreach (var menuId in allowedMenuIds)
         {
-            if (!allowedMenuIds.Contains(menu.Id))
-                continue;
+            var parentId = menuById[menuId].ParentMenuId;
 
-            var parentId = menu.ParentMenuId;
-
-            while (parentId.HasValue)
+            while (parentId.HasValue && menuById.TryGetValue(parentId.Value, out var parent))
             {
-                var parent = allMenus.FirstOrDefault(
-                    m => m.Id == parentId.Value);
-
-                if (parent == null)
-                    break;
-
                 visibleMenuIds.Add(parent.Id);
-
                 parentId = parent.ParentMenuId;
             }
         }
 
-        // Step 10: Return authorized menus
+        // Step 10: Return authorized menus in display order
         return allMenus
             .Where(m => visibleMenuIds.Contains(m.Id))
             .OrderBy(m => m.DisplayOrder)
+            .ThenBy(m => m.Name)
             .ToList();
     }
-
 
     public async Task AddAsync(Menu menu)
     {
