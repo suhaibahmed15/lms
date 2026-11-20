@@ -14,4 +14,9 @@ public interface ILoanDocumentService
         int userId,
         int documentId,
         VerifyLoanDocumentDto dto);
+
+    Task RejectAsync(
+    int userId,
+    int documentId,
+    RejectLoanDocumentDto dto);
 }

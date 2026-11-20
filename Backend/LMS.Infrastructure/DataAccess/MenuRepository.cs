@@ -137,6 +137,7 @@ public class MenuRepository : IMenuRepository
             .AnyAsync(m => m.ParentMenuId == menuId);
     }
 
+
     public async Task<List<Menu>> GetMenusByUserIdAsync(int userId)
     {
         // Step 1: Verify active user with active role
@@ -156,33 +157,35 @@ public class MenuRepository : IMenuRepository
                 "User not found or inactive.");
         }
 
-        // Load all active, non-deleted menus once (Audit Logs is database-only)
+        // Step 2: Load all active menus
         var allMenus = await _context.Menus
             .AsNoTracking()
-            .Include(m => m.ParentMenu)
-            .Where(m => m.IsActive && !m.IsDeleted && m.Key != "AUDIT_LOGS")
+            .Where(m =>
+                m.IsActive &&
+                !m.IsDeleted &&
+                m.Key != "AUDIT_LOGS")
             .OrderBy(m => m.DisplayOrder)
             .ThenBy(m => m.Name)
             .ToListAsync();
 
         var menuById = allMenus.ToDictionary(m => m.Id);
 
-        // Step 2: Admin can access all active menus (excluding empty non-routable parent menus)
-        if (user.Role != null &&
-            user.Role.Key.Equals(
-                "ADMIN",
-                StringComparison.OrdinalIgnoreCase))
+        // Step 3: Admin gets all active routable menus
+        if (user.Role.Key.Equals(
+            "ADMIN",
+            StringComparison.OrdinalIgnoreCase))
         {
-            var adminRoutableIds = allMenus
-                .Where(m => !string.IsNullOrWhiteSpace(m.Route))
-                .Select(m => m.Id)
-                .ToHashSet();
+            var adminVisibleIds = new HashSet<int>(
+                allMenus
+                    .Where(m => !string.IsNullOrWhiteSpace(m.Route))
+                    .Select(m => m.Id));
 
-            var adminVisibleIds = new HashSet<int>(adminRoutableIds);
-            foreach (var menuId in adminRoutableIds)
+            foreach (var menuId in adminVisibleIds.ToList())
             {
                 var parentId = menuById[menuId].ParentMenuId;
-                while (parentId.HasValue && menuById.TryGetValue(parentId.Value, out var parent))
+
+                while (parentId.HasValue &&
+                       menuById.TryGetValue(parentId.Value, out var parent))
                 {
                     adminVisibleIds.Add(parent.Id);
                     parentId = parent.ParentMenuId;
@@ -196,7 +199,7 @@ public class MenuRepository : IMenuRepository
                 .ToList();
         }
 
-        // Step 3: Active individual user permissions (non-revoked, active permission)
+        // Step 4: Get active individual user permissions
         var activeUserPermissions = await _context.UserPermissions
             .AsNoTracking()
             .Where(up =>
@@ -206,14 +209,18 @@ public class MenuRepository : IMenuRepository
                 up.RevokedAt == null &&
                 up.Permission.IsActive &&
                 !up.Permission.IsDeleted)
-            .Select(up => new { up.PermissionId, up.Permission.MenuId })
+            .Select(up => new
+            {
+                up.PermissionId,
+                up.Permission.MenuId
+            })
             .ToListAsync();
 
         var activeUserPermissionIds = activeUserPermissions
             .Select(x => x.PermissionId)
             .ToHashSet();
 
-        // Step 4: Explicitly revoked individual permissions (excluding any currently active ones)
+        // Step 5: Get explicitly revoked user permissions
         var revokedPermissionIds = await _context.UserPermissions
             .AsNoTracking()
             .Where(up =>
@@ -225,14 +232,15 @@ public class MenuRepository : IMenuRepository
             .Distinct()
             .ToListAsync();
 
-        // Step 5: Menu IDs from active individual user permissions
+        // Step 6: Menus assigned through individual permissions
         var userPermissionMenuIds = activeUserPermissions
             .Where(x => x.MenuId.HasValue)
             .Select(x => x.MenuId!.Value)
             .Distinct()
             .ToList();
 
-        // Step 6: Menu IDs from active role permissions (excluding revoked permissions)
+        // Step 7: Menus assigned through role permissions
+        // Exclude permissions explicitly revoked for this user
         var rolePermissionMenuIds = await _context.RolePermissions
             .AsNoTracking()
             .Where(rp =>
@@ -246,41 +254,57 @@ public class MenuRepository : IMenuRepository
             .Distinct()
             .ToListAsync();
 
-        // Step 7: Menu IDs from active, non-deleted individual UserMenus
-        var activeUserMenuIds = await _context.UserMenus
+        // Step 8: Menus directly assigned to the user's role
+        var roleMenuIds = await _context.RoleMenus
             .AsNoTracking()
-            .Where(um =>
-                um.UserId == userId &&
-                um.IsActive &&
-                !um.IsDeleted &&
-                um.Menu.IsActive &&
-                !um.Menu.IsDeleted)
-            .Select(um => um.MenuId)
+            .Where(rm =>
+                rm.RoleId == user.RoleId &&
+                rm.IsActive &&
+                !rm.IsDeleted &&
+                rm.Menu.IsActive &&
+                !rm.Menu.IsDeleted)
+            .Select(rm => rm.MenuId)
             .Distinct()
             .ToListAsync();
 
-        // Step 8: Combine allowed routable menu IDs
-        var allowedMenuIds = rolePermissionMenuIds
+        // Step 9: Menus directly assigned to the individual user
+       var roleMenuIds = await _context.RoleMenus
+    .AsNoTracking()
+    .Where(rm =>
+        rm.RoleId == user.RoleId &&
+        !rm.IsDeleted &&
+        rm.Menu.IsActive &&
+        !rm.Menu.IsDeleted)
+    .Select(rm => rm.MenuId)
+    .Distinct()
+    .ToListAsync();
+
+        // Step 10: Combine all four access sources
+        var allowedMenuIds = roleMenuIds
+            .Union(rolePermissionMenuIds)
+            .Union(userMenuIds)
             .Union(userPermissionMenuIds)
-            .Union(activeUserMenuIds)
-            .Where(id => menuById.TryGetValue(id, out var m) && !string.IsNullOrWhiteSpace(m.Route))
+            .Where(id =>
+                menuById.TryGetValue(id, out var menu) &&
+                !string.IsNullOrWhiteSpace(menu.Route))
             .ToHashSet();
 
-        // Step 9: Include parent menus ONLY when they have at least one accessible child menu
+        // Step 11: Include parent menus of accessible menus
         var visibleMenuIds = new HashSet<int>(allowedMenuIds);
 
         foreach (var menuId in allowedMenuIds)
         {
             var parentId = menuById[menuId].ParentMenuId;
 
-            while (parentId.HasValue && menuById.TryGetValue(parentId.Value, out var parent))
+            while (parentId.HasValue &&
+                   menuById.TryGetValue(parentId.Value, out var parent))
             {
                 visibleMenuIds.Add(parent.Id);
                 parentId = parent.ParentMenuId;
             }
         }
 
-        // Step 10: Return authorized menus in display order
+        // Step 12: Return final menus in display order
         return allMenus
             .Where(m => visibleMenuIds.Contains(m.Id))
             .OrderBy(m => m.DisplayOrder)

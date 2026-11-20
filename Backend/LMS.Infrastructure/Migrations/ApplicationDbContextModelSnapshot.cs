@@ -401,6 +401,16 @@ namespace LMS.Infrastructure.Migrations
                     b.Property<int>("LoanApplicationId")
                         .HasColumnType("int");
 
+                    b.Property<DateTime?>("RejectedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("RejectedByUserId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("RejectionRemarks")
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
                     b.Property<int>("StatusId")
                         .HasColumnType("int");
 
@@ -426,6 +436,8 @@ namespace LMS.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("LoanApplicationId");
+
+                    b.HasIndex("RejectedByUserId");
 
                     b.HasIndex("StatusId");
 
@@ -480,6 +492,16 @@ namespace LMS.Infrastructure.Migrations
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)");
 
+                    b.Property<DateTime?>("RejectedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("RejectedByUserId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("RejectionRemarks")
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
                     b.Property<string>("RelationshipToApplicant")
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
@@ -506,6 +528,8 @@ namespace LMS.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("LoanApplicationId");
+
+                    b.HasIndex("RejectedByUserId");
 
                     b.HasIndex("StatusId");
 
@@ -1674,10 +1698,15 @@ namespace LMS.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.HasOne("LMS.Domain.Entities.User", "RejectedByUser")
+                        .WithMany("RejectedLoanDocuments")
+                        .HasForeignKey("RejectedByUserId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
                     b.HasOne("LMS.Domain.Entities.Status", "Status")
                         .WithMany()
                         .HasForeignKey("StatusId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("LMS.Domain.Entities.User", "UploadedByUser")
@@ -1692,6 +1721,8 @@ namespace LMS.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("LoanApplication");
+
+                    b.Navigation("RejectedByUser");
 
                     b.Navigation("Status");
 
@@ -1708,6 +1739,11 @@ namespace LMS.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.HasOne("LMS.Domain.Entities.User", "RejectedByUser")
+                        .WithMany("RejectedGuarantors")
+                        .HasForeignKey("RejectedByUserId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
                     b.HasOne("LMS.Domain.Entities.Status", "Status")
                         .WithMany("LoanGuarantors")
                         .HasForeignKey("StatusId")
@@ -1720,6 +1756,8 @@ namespace LMS.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("LoanApplication");
+
+                    b.Navigation("RejectedByUser");
 
                     b.Navigation("Status");
 
@@ -1999,6 +2037,10 @@ namespace LMS.Infrastructure.Migrations
                     b.Navigation("ReceivedLoanAssignments");
 
                     b.Navigation("RecordedRepayments");
+
+                    b.Navigation("RejectedGuarantors");
+
+                    b.Navigation("RejectedLoanDocuments");
 
                     b.Navigation("ReviewedLoanApplications");
 

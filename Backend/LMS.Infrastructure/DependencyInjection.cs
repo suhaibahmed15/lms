@@ -28,6 +28,62 @@ public static class DependencyInjection
         services.AddHttpContextAccessor();
         services.AddDbContext<ApplicationDbContext>(options =>
             options.UseSqlServer(connectionString));
+
+
+        services.AddScoped<
+    ILoanApplicationAssignmentRepository,
+    LoanApplicationAssignmentRepository>();
+
+        services.AddScoped<
+            ILoanApplicationAssignmentService,
+            LoanApplicationAssignmentService>();
+
+        services.AddScoped<
+            ILoanApplicationAssignmentRepository,
+            LoanApplicationAssignmentRepository>();
+
+        services.AddScoped<
+            ILoanApplicationAssignmentService,
+            LoanApplicationAssignmentService>();
+
+        services.AddScoped<
+            ILoanApprovalRepository,
+            LoanApprovalRepository>();
+
+        services.AddScoped<
+            ILoanApprovalService,
+            LoanApprovalService>();
+
+        services.AddScoped<
+    ILoanApprovalRepository,
+    LoanApprovalRepository>();
+
+        services.AddScoped<
+            ILoanApprovalService,
+            LoanApprovalService>();
+
+        services.AddScoped<
+    ILoanDisbursementRepository,
+    LoanDisbursementRepository>();
+
+        services.AddScoped<
+            ILoanDisbursementService,
+            LoanDisbursementService>();
+
+
+        services.AddScoped<
+    IRepaymentScheduleRepository,
+    RepaymentScheduleRepository>();
+
+        services.AddScoped<IRepaymentScheduleService,RepaymentScheduleService>();
+
+        services.AddScoped<IRepaymentRepository, RepaymentRepository>();
+        services.AddScoped<IRepaymentService, RepaymentService>();
+
+        services.AddScoped<ILoanGuarantorRepository, LoanGuarantorRepository>();
+        services.AddScoped<ILoanGuarantorService, LoanGuarantorService>();
+
+
         services.AddSingleton<IAuthorizationPolicyProvider, PermissionPolicyProvider>();
         services.AddScoped<IAuthorizationHandler, PermissionAuthorizationHandler>();
 

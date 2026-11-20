@@ -14,6 +14,11 @@ public class LoanDocumentService : ILoanDocumentService
 
     private const long MaxFileSize = 5 * 1024 * 1024;
 
+    private const string DocumentCategory = "LoanDocument";
+    private const string PendingStatus = "DOCUMENT_PENDING";
+    private const string VerifiedStatus = "DOCUMENT_VERIFIED";
+    private const string RejectedStatus = "DOCUMENT_REJECTED";
+
     private static readonly Dictionary<string, string> AllowedFileTypes = new()
     {
         { ".pdf", "application/pdf" },
@@ -44,7 +49,9 @@ public class LoanDocumentService : ILoanDocumentService
         var extension = Path.GetExtension(dto.File.FileName)
             .ToLowerInvariant();
 
-        if (!AllowedFileTypes.TryGetValue(extension, out var expectedContentType))
+        if (!AllowedFileTypes.TryGetValue(
+            extension,
+            out var expectedContentType))
         {
             throw new ArgumentException(
                 "Only PDF, JPG, JPEG and PNG files are allowed.");
@@ -85,6 +92,16 @@ public class LoanDocumentService : ILoanDocumentService
         {
             throw new InvalidOperationException(
                 "This document type has already been uploaded for this application.");
+        }
+
+        var pendingStatus = await _repository.GetStatusByCategoryAndKeyAsync(
+            DocumentCategory,
+            PendingStatus);
+
+        if (pendingStatus == null)
+        {
+            throw new InvalidOperationException(
+                "Loan document Pending status was not found or is inactive.");
         }
 
         var webRootPath = _environment.WebRootPath;
@@ -128,6 +145,7 @@ public class LoanDocumentService : ILoanDocumentService
                 ContentType = expectedContentType,
                 FileSizeBytes = dto.File.Length,
                 UploadedByUserId = userId,
+                StatusId = pendingStatus.Id,
                 IsVerified = false
             };
 
@@ -167,15 +185,34 @@ public class LoanDocumentService : ILoanDocumentService
 
         return documents.Select(d => new LoanDocumentResponseDto
         {
+            // Document Information
             Id = d.Id,
             LoanApplicationId = d.LoanApplicationId,
             DocumentType = d.DocumentType,
             FileName = d.FileName,
             ContentType = d.ContentType,
             FileSizeBytes = d.FileSizeBytes,
+
+            // Upload Information
             UploadedByUserId = d.UploadedByUserId,
+            CreatedAt = d.CreatedAt,
+
+            // Status Information
+            StatusId = d.StatusId,
+            StatusName = d.Status.Name,
+            StatusKey = d.Status.Key,
             IsVerified = d.IsVerified,
-            CreatedAt = d.CreatedAt
+
+            // Verification Information
+            VerifiedByUserId = d.VerifiedByUserId,
+            VerifiedAt = d.VerifiedAt,
+            VerificationRemarks = d.VerificationRemarks,
+
+            // Rejection Information
+            RejectedByUserId = d.RejectedByUserId,
+            RejectedAt = d.RejectedAt,
+            RejectionRemarks = d.RejectionRemarks
+
         }).ToList();
     }
 
@@ -190,16 +227,73 @@ public class LoanDocumentService : ILoanDocumentService
         if (document == null)
             throw new KeyNotFoundException("Loan document not found.");
 
-        if (document.IsVerified)
+        if (document.Status.Key != PendingStatus)
         {
             throw new InvalidOperationException(
-                "This document has already been verified.");
+                "Only pending documents can be verified.");
         }
+
+        var verifiedStatus = await _repository.GetStatusByCategoryAndKeyAsync(
+            DocumentCategory,
+            VerifiedStatus);
+
+        if (verifiedStatus == null)
+        {
+            throw new InvalidOperationException(
+                "Loan document Verified status was not found or is inactive.");
+        }
+
+        document.StatusId = verifiedStatus.Id;
 
         document.IsVerified = true;
         document.VerifiedByUserId = userId;
         document.VerifiedAt = DateTime.UtcNow;
         document.VerificationRemarks = dto.VerificationRemarks?.Trim();
+
+        await _repository.SaveChangesAsync();
+    }
+
+    // PUT: Reject loan document
+    public async Task RejectAsync(
+        int userId,
+        int documentId,
+        RejectLoanDocumentDto dto)
+    {
+        var document = await _repository.GetDocumentByIdAsync(documentId);
+
+        if (document == null)
+            throw new KeyNotFoundException("Loan document not found.");
+
+        if (document.Status.Key != PendingStatus)
+        {
+            throw new InvalidOperationException(
+                "Only pending documents can be rejected.");
+        }
+
+        var rejectionRemarks = dto.RejectionRemarks?.Trim();
+
+        if (string.IsNullOrWhiteSpace(rejectionRemarks))
+        {
+            throw new ArgumentException(
+                "Rejection remarks are required.");
+        }
+
+        var rejectedStatus = await _repository.GetStatusByCategoryAndKeyAsync(
+            DocumentCategory,
+            RejectedStatus);
+
+        if (rejectedStatus == null)
+        {
+            throw new InvalidOperationException(
+                "Loan document Rejected status was not found or is inactive.");
+        }
+
+        document.StatusId = rejectedStatus.Id;
+        document.IsVerified = false;
+
+        document.RejectedByUserId = userId;
+        document.RejectedAt = DateTime.UtcNow;
+        document.RejectionRemarks = rejectionRemarks;
 
         await _repository.SaveChangesAsync();
     }

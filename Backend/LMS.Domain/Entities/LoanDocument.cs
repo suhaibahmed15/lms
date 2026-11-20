@@ -1,4 +1,3 @@
-
 namespace LMS.Domain.Entities;
 
 public class LoanDocument : BaseEntity
@@ -15,16 +14,24 @@ public class LoanDocument : BaseEntity
 
     public int UploadedByUserId { get; set; }
 
-    // Temporary: remove after successful status migration
+    // Temporary: remove after old workflow is fully migrated
     public bool IsVerified { get; set; }
 
+    // Verification details
     public int? VerifiedByUserId { get; set; }
     public DateTime? VerifiedAt { get; set; }
     public string? VerificationRemarks { get; set; }
 
+    // Rejection details
+    public int? RejectedByUserId { get; set; }
+    public DateTime? RejectedAt { get; set; }
+    public string? RejectionRemarks { get; set; }
+
     // Navigation properties
     public LoanApplication LoanApplication { get; set; } = null!;
     public Status Status { get; set; } = null!;
+
     public User UploadedByUser { get; set; } = null!;
     public User? VerifiedByUser { get; set; }
+    public User? RejectedByUser { get; set; }
 }

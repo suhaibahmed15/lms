@@ -15,7 +15,7 @@ public class LoanApplicationRepository : ILoanApplicationRepository
         _context = context;
     }
 
-    // Get active user by ID
+    // Get active user by ID with role
     public async Task<User?> GetUserByIdAsync(int userId)
     {
         return await _context.Users
@@ -25,6 +25,7 @@ public class LoanApplicationRepository : ILoanApplicationRepository
                 u.Id == userId &&
                 u.IsActive &&
                 !u.IsDeleted &&
+                u.Role != null &&
                 u.Role.IsActive &&
                 !u.Role.IsDeleted);
     }
@@ -40,7 +41,7 @@ public class LoanApplicationRepository : ILoanApplicationRepository
                 !lt.IsDeleted);
     }
 
-    // Get Application Status by Key
+    // Get active Application Status by Key
     public async Task<Status?> GetStatusByKeyAsync(string statusKey)
     {
         return await _context.Statuses
@@ -74,10 +75,12 @@ public class LoanApplicationRepository : ILoanApplicationRepository
             .Include(a => a.Status)
             .Include(a => a.AssignedToUser)
             .Include(a => a.Assignments)
+            .Where(a => !a.IsDeleted)
             .OrderByDescending(a => a.CreatedAt)
             .ToListAsync();
     }
 
+    // Get paginated loan applications according to user role
     public async Task<(List<LoanApplication> Items, int TotalRecords)> GetPagedForUserAsync(
         int userId,
         string roleKey,
@@ -97,20 +100,26 @@ public class LoanApplicationRepository : ILoanApplicationRepository
             .Include(a => a.AssignedToUser)
             .Where(a => !a.IsDeleted);
 
+        // ADMIN can view all applications
         if (roleKey.Equals("ADMIN", StringComparison.OrdinalIgnoreCase))
         {
-            // Full access
+            // No additional filter required
         }
+
+        // MANAGER can view all applications to assign or reassign officers
         else if (roleKey.Equals("MANAGER", StringComparison.OrdinalIgnoreCase))
         {
-            query = query.Where(a => a.Assignments.Any(
-                assignment => assignment.AssignedToUserId == userId && !assignment.IsDeleted));
+            // No additional filter required
         }
-        else if (roleKey.Equals("LOAN_OFFICER", StringComparison.OrdinalIgnoreCase) ||
-                 roleKey.Equals("OFFICER", StringComparison.OrdinalIgnoreCase))
+
+        // OFFICER can view only currently assigned applications
+        else if (roleKey.Equals("OFFICER", StringComparison.OrdinalIgnoreCase) ||
+                 roleKey.Equals("LOAN_OFFICER", StringComparison.OrdinalIgnoreCase))
         {
             query = query.Where(a => a.AssignedToUserId == userId);
         }
+
+        // CUSTOMER can view only their own applications
         else if (roleKey.Equals("CUSTOMER", StringComparison.OrdinalIgnoreCase))
         {
             query = query.Where(a => a.ApplicantUserId == userId);
@@ -121,19 +130,23 @@ public class LoanApplicationRepository : ILoanApplicationRepository
                 "You are not authorized to view loan applications.");
         }
 
+        // Filter by application status
         if (statusId.HasValue)
         {
             query = query.Where(a => a.StatusId == statusId.Value);
         }
 
+        // Filter by loan type
         if (loanTypeId.HasValue)
         {
             query = query.Where(a => a.LoanTypeId == loanTypeId.Value);
         }
 
+        // Search applications
         if (!string.IsNullOrWhiteSpace(search))
         {
             var term = search.Trim().ToLower();
+
             query = query.Where(a =>
                 a.ApplicationNumber.ToLower().Contains(term) ||
                 a.ApplicantUser.FullName.ToLower().Contains(term) ||
@@ -142,20 +155,43 @@ public class LoanApplicationRepository : ILoanApplicationRepository
                 (a.Purpose != null && a.Purpose.ToLower().Contains(term)));
         }
 
+        // Get total records before pagination
         var totalRecords = await query.CountAsync();
 
-        var isDesc = string.Equals(sortDirection, "desc", StringComparison.OrdinalIgnoreCase);
+        // Sorting
+        var isDesc = string.Equals(
+            sortDirection,
+            "desc",
+            StringComparison.OrdinalIgnoreCase);
 
         query = sortBy?.Trim().ToLowerInvariant() switch
         {
-            "applicationnumber" => isDesc ? query.OrderByDescending(a => a.ApplicationNumber) : query.OrderBy(a => a.ApplicationNumber),
-            "requestedamount" => isDesc ? query.OrderByDescending(a => a.RequestedAmount) : query.OrderBy(a => a.RequestedAmount),
-            "submittedat" => isDesc ? query.OrderByDescending(a => a.SubmittedAt) : query.OrderBy(a => a.SubmittedAt),
-            "status" => isDesc ? query.OrderByDescending(a => a.Status.Name) : query.OrderBy(a => a.Status.Name),
-            "id" => isDesc ? query.OrderByDescending(a => a.Id) : query.OrderBy(a => a.Id),
-            _ => isDesc ? query.OrderByDescending(a => a.CreatedAt) : query.OrderBy(a => a.CreatedAt)
+            "applicationnumber" => isDesc
+                ? query.OrderByDescending(a => a.ApplicationNumber)
+                : query.OrderBy(a => a.ApplicationNumber),
+
+            "requestedamount" => isDesc
+                ? query.OrderByDescending(a => a.RequestedAmount)
+                : query.OrderBy(a => a.RequestedAmount),
+
+            "submittedat" => isDesc
+                ? query.OrderByDescending(a => a.SubmittedAt)
+                : query.OrderBy(a => a.SubmittedAt),
+
+            "status" => isDesc
+                ? query.OrderByDescending(a => a.Status.Name)
+                : query.OrderBy(a => a.Status.Name),
+
+            "id" => isDesc
+                ? query.OrderByDescending(a => a.Id)
+                : query.OrderBy(a => a.Id),
+
+            _ => isDesc
+                ? query.OrderByDescending(a => a.CreatedAt)
+                : query.OrderBy(a => a.CreatedAt)
         };
 
+        // Pagination
         var items = await query
             .Skip((pageNumber - 1) * pageSize)
             .Take(pageSize)
@@ -163,5 +199,19 @@ public class LoanApplicationRepository : ILoanApplicationRepository
 
         return (items, totalRecords);
     }
+
+    // Get a single application with related data
+    // Tracking is enabled because assignment and approval workflows may update it
+    public async Task<LoanApplication?> GetApplicationByIdAsync(int applicationId)
+    {
+        return await _context.LoanApplications
+            .Include(a => a.ApplicantUser)
+            .Include(a => a.LoanType)
+            .Include(a => a.Status)
+            .Include(a => a.AssignedToUser)
+            .Include(a => a.Assignments)
+            .FirstOrDefaultAsync(a =>
+                a.Id == applicationId &&
+                !a.IsDeleted);
+    }
 }
-    

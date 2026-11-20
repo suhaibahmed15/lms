@@ -13,11 +13,15 @@ public interface ILoanDocumentRepository
 
     Task<List<LoanDocument>> GetDocumentsByApplicationIdAsync(
         int applicationId);
+
     Task<LoanDocument?> GetDocumentByIdAsync(int documentId);
 
-    Task SaveChangesAsync();
+    Task<Status?> GetStatusByCategoryAndKeyAsync(
+        string category,
+        string key);
+
 
     Task AddAsync(LoanDocument document);
 
-  
+    Task SaveChangesAsync();
 }

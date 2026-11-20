@@ -26,5 +26,7 @@ public interface ILoanApplicationRepository
 
     Task AddAsync(LoanApplication application);
 
+    Task<LoanApplication?> GetApplicationByIdAsync(int applicationId);
+
     Task SaveChangesAsync();
 }

@@ -1,3 +1,4 @@
+
 using LMS.Application.Authorization;
 using LMS.Infrastructure.Data;
 using Microsoft.AspNetCore.Authorization;
@@ -11,8 +12,7 @@ public class PermissionAuthorizationHandler
 {
     private readonly ApplicationDbContext _context;
 
-    public PermissionAuthorizationHandler(
-        ApplicationDbContext context)
+    public PermissionAuthorizationHandler(ApplicationDbContext context)
     {
         _context = context;
     }
@@ -26,9 +26,7 @@ public class PermissionAuthorizationHandler
             ?? context.User.FindFirstValue(ClaimTypes.NameIdentifier);
 
         if (!int.TryParse(userIdValue, out var userId))
-        {
             return;
-        }
 
         // Step 2: Get active user with active role
         var user = await _context.Users
@@ -38,26 +36,28 @@ public class PermissionAuthorizationHandler
                 u.Id == userId &&
                 u.IsActive &&
                 !u.IsDeleted &&
+                u.Role != null &&
                 u.Role.IsActive &&
                 !u.Role.IsDeleted);
 
         if (user == null)
-        {
             return;
-        }
 
         // Step 3: Admin has full permission access
-        if (user.Role != null &&
-            user.Role.Key.Equals(
-                "ADMIN",
-                StringComparison.OrdinalIgnoreCase))
+        if (user.Role!.Key.Equals(
+            "ADMIN",
+            StringComparison.OrdinalIgnoreCase))
         {
             context.Succeed(requirement);
             return;
         }
 
         var requestedKey = requirement.PermissionKey;
-        var isViewPermission = requestedKey.EndsWith("_VIEW", StringComparison.OrdinalIgnoreCase);
+
+        var isViewPermission = requestedKey.EndsWith(
+            "_VIEW",
+            StringComparison.OrdinalIgnoreCase);
+
         var impliedManageKey = GetImpliedManageKey(requestedKey);
 
         var acceptedKeys = impliedManageKey != null
@@ -83,11 +83,28 @@ public class PermissionAuthorizationHandler
             return;
         }
 
-        // Step 5: Assigning a menu in UserMenus grants VIEW-ONLY (*_VIEW) access to that menu's page by default.
-        // Non-view permissions (CREATE, UPDATE, DELETE, MANAGE) are never granted by UserMenus alone.
+        // Step 5: Explicit individual revocation
+        // overrides role permissions and UserMenus VIEW access.
+        var hasRevokedUserPermission =
+            await _context.UserPermissions
+                .AsNoTracking()
+                .AnyAsync(up =>
+                    up.UserId == userId &&
+                    (!up.IsActive || up.RevokedAt != null) &&
+                    !up.IsDeleted &&
+                    acceptedKeys.Contains(up.Permission.Key) &&
+                    up.Permission.IsActive &&
+                    !up.Permission.IsDeleted);
+
+        if (hasRevokedUserPermission)
+            return;
+
+        // Step 6: UserMenus grants VIEW-only access.
+        // It never grants CREATE, UPDATE, DELETE or MANAGE.
         if (isViewPermission)
         {
-            var mappedMenuKey = GetMappedMenuKeyForView(requestedKey);
+            var mappedMenuKey =
+                GetMappedMenuKeyForView(requestedKey);
 
             var hasActiveUserMenuView =
                 await _context.UserMenus
@@ -103,32 +120,14 @@ public class PermissionAuthorizationHandler
                             p.Key == requestedKey &&
                             p.IsActive &&
                             !p.IsDeleted) ||
-                         (mappedMenuKey != null && um.Menu.Key == mappedMenuKey)));
+                         (mappedMenuKey != null &&
+                          um.Menu.Key == mappedMenuKey)));
 
             if (hasActiveUserMenuView)
             {
                 context.Succeed(requirement);
                 return;
             }
-        }
-
-        // Step 6: Check whether this user explicitly revoked
-        // the requested permission and has not received it again.
-        var hasRevokedUserPermission =
-            await _context.UserPermissions
-                .AsNoTracking()
-                .AnyAsync(up =>
-                    up.UserId == userId &&
-                    (!up.IsActive || up.RevokedAt != null) &&
-                    !up.IsDeleted &&
-                    acceptedKeys.Contains(up.Permission.Key) &&
-                    up.Permission.IsActive &&
-                    !up.Permission.IsDeleted);
-
-        if (hasRevokedUserPermission)
-        {
-            // Explicit individual revocation overrides role access.
-            return;
         }
 
         // Step 7: Check role-based permission

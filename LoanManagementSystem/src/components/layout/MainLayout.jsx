@@ -1,3 +1,4 @@
+
 import { useCallback, useEffect, useState } from "react";
 import Sidebar from "./Sidebar";
 import Header from "./Header";
@@ -6,6 +7,7 @@ import { getMenusByUser } from "../../services/menuService";
 import {
     getUserId,
     isAuthenticated,
+    AUTH_CHANGED_EVENT,
     MENUS_UPDATED_EVENT
 } from "../../utils/auth";
 
@@ -18,6 +20,7 @@ function MainLayout({ children, user, onLogout }) {
     const fetchMenus = useCallback(async () => {
         if (!isAuthenticated()) {
             setMenus([]);
+            setError("");
             setLoading(false);
             return;
         }
@@ -29,6 +32,7 @@ function MainLayout({ children, user, onLogout }) {
             const userId = getUserId();
 
             if (!userId) {
+                setMenus([]);
                 setError("User information not found.");
                 return;
             }
@@ -37,7 +41,7 @@ function MainLayout({ children, user, onLogout }) {
 
             const menuData = Array.isArray(response)
                 ? response
-                : response.data || [];
+                : response?.data || [];
 
             const activeMenus = menuData
                 .filter((menu) => menu.isActive)
@@ -45,6 +49,7 @@ function MainLayout({ children, user, onLogout }) {
 
             setMenus(activeMenus);
         } catch (err) {
+            setMenus([]);
             setError(
                 err.response?.data?.message ||
                 "Unable to load navigation menus."
@@ -54,39 +59,62 @@ function MainLayout({ children, user, onLogout }) {
         }
     }, []);
 
+    // Load menus when layout mounts
     useEffect(() => {
         fetchMenus();
     }, [fetchMenus]);
 
+    // Refresh menus whenever login/logout happens
+    useEffect(() => {
+        const handleAuthChanged = () => {
+            fetchMenus();
+        };
+
+        window.addEventListener(AUTH_CHANGED_EVENT, handleAuthChanged);
+
+        return () => {
+            window.removeEventListener(
+                AUTH_CHANGED_EVENT,
+                handleAuthChanged
+            );
+        };
+    }, [fetchMenus]);
+
+    // Refresh menus when menu permissions are updated
     useEffect(() => {
         const handleMenusUpdated = () => {
             fetchMenus();
         };
 
         window.addEventListener(MENUS_UPDATED_EVENT, handleMenusUpdated);
+
         return () => {
-            window.removeEventListener(MENUS_UPDATED_EVENT, handleMenusUpdated);
+            window.removeEventListener(
+                MENUS_UPDATED_EVENT,
+                handleMenusUpdated
+            );
         };
     }, [fetchMenus]);
 
-    // Never render protected layout if unauthenticated
     if (!isAuthenticated()) {
         return null;
     }
 
     return (
         <div className="relative min-h-screen bg-[#080808] text-zinc-100">
-            {/* Subtle ambient theme lighting */}
+
+            {/* Background */}
             <div className="pointer-events-none fixed inset-0 -z-10 bg-[radial-gradient(circle_at_top_right,rgba(255,94,0,0.09),transparent_45%)]" />
 
-            {/* Fixed Desktop Sidebar */}
+            {/* Desktop Sidebar */}
             <div className="fixed inset-y-0 left-0 z-30 hidden w-64 lg:block">
                 <Sidebar menus={menus} />
             </div>
 
-            {/* Mobile Sidebar Drawer */}
+            {/* Mobile Sidebar */}
             {sidebarOpen && (
                 <div className="fixed inset-0 z-50 flex lg:hidden">
+
                     <div
                         className="absolute inset-0 bg-black/70 backdrop-blur-sm"
                         onClick={() => setSidebarOpen(false)}
@@ -101,8 +129,9 @@ function MainLayout({ children, user, onLogout }) {
                 </div>
             )}
 
-            {/* Main Content Area (offset by fixed sidebar width on lg+) */}
+            {/* Main Content */}
             <div className="flex min-h-screen min-w-0 flex-1 flex-col lg:pl-64">
+
                 <Header
                     user={user}
                     onLogout={onLogout}
@@ -110,6 +139,7 @@ function MainLayout({ children, user, onLogout }) {
                 />
 
                 <main className="flex-1 p-4 sm:p-6 lg:p-8">
+
                     {loading ? (
                         <Loading message="Loading navigation..." />
                     ) : error ? (
@@ -119,6 +149,7 @@ function MainLayout({ children, user, onLogout }) {
                     ) : (
                         children
                     )}
+
                 </main>
             </div>
         </div>

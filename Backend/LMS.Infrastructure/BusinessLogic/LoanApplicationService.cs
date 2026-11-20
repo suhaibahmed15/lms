@@ -21,16 +21,22 @@ public class LoanApplicationService : ILoanApplicationService
     }
 
     // Create new loan application
-    public async Task<int> CreateAsync(int userId, CreateLoanApplicationDto dto)
+    public async Task<int> CreateAsync(
+        int userId,
+        CreateLoanApplicationDto dto)
     {
         var user = await _repository.GetUserByIdAsync(userId);
 
         if (user == null)
         {
-            throw new KeyNotFoundException("User not found or inactive.");
+            throw new KeyNotFoundException(
+                "User not found or inactive.");
         }
 
-        if (user.Role.Key != "CUSTOMER")
+        if (!string.Equals(
+            user.Role.Key,
+            "CUSTOMER",
+            StringComparison.OrdinalIgnoreCase))
         {
             throw new UnauthorizedAccessException(
                 "Only customers can submit loan applications.");
@@ -90,9 +96,11 @@ public class LoanApplicationService : ILoanApplicationService
             StatusId = status.Id,
             RequestedAmount = dto.RequestedAmount,
             RequestedTermMonths = dto.RequestedTermMonths,
+
             Purpose = string.IsNullOrWhiteSpace(dto.Purpose)
                 ? null
                 : dto.Purpose.Trim(),
+
             SubmittedAt = DateTime.UtcNow,
             CreatedBy = userId
         };
@@ -104,40 +112,51 @@ public class LoanApplicationService : ILoanApplicationService
     }
 
     // Get loan applications according to logged-in user's role
-    public async Task<List<LoanApplicationResponseDto>> GetAllAsync(int userId)
+    public async Task<List<LoanApplicationResponseDto>> GetAllAsync(
+        int userId)
     {
         var user = await _repository.GetUserByIdAsync(userId);
 
         if (user == null)
         {
-            throw new KeyNotFoundException("User not found or inactive.");
+            throw new KeyNotFoundException(
+                "User not found or inactive.");
         }
 
         var applications = await _repository.GetAllAsync();
 
-        // Admin can see all applications
-        if (user.Role.Key == "ADMIN")
+        var roleKey = user.Role.Key;
+
+        // Admin can view all applications
+        if (roleKey.Equals(
+            "ADMIN",
+            StringComparison.OrdinalIgnoreCase))
         {
             // No filtering required
         }
-        // Branch Manager can see all applications assigned to them
-        // including applications delegated to Loan Officers
-        else if (user.Role.Key == "MANAGER")
+
+        // Manager can view all applications,
+        // including unassigned and officer-assigned applications
+        else if (roleKey.Equals(
+            "MANAGER",
+            StringComparison.OrdinalIgnoreCase))
         {
-            applications = applications
-                .Where(a => a.Assignments.Any(
-                    assignment => assignment.AssignedToUserId == userId))
-                .ToList();
+            // No filtering required
         }
-        // Loan Officer can see currently assigned applications
-        else if (user.Role.Key == "LOAN_OFFICER" || user.Role.Key == "OFFICER")
+
+        // Loan Officer can view only currently assigned applications
+        else if (roleKey.Equals("OFFICER", StringComparison.OrdinalIgnoreCase) ||
+                 roleKey.Equals("LOAN_OFFICER", StringComparison.OrdinalIgnoreCase))
         {
             applications = applications
                 .Where(a => a.AssignedToUserId == userId)
                 .ToList();
         }
-        // Customer can see only their own applications
-        else if (user.Role.Key == "CUSTOMER")
+
+        // Customer can view only their own applications
+        else if (roleKey.Equals(
+            "CUSTOMER",
+            StringComparison.OrdinalIgnoreCase))
         {
             applications = applications
                 .Where(a => a.ApplicantUserId == userId)
@@ -149,33 +168,70 @@ public class LoanApplicationService : ILoanApplicationService
                 "You are not authorized to view loan applications.");
         }
 
-        // Convert entities into response DTOs
-        return applications.Select(MapToResponse).ToList();
+        return applications
+            .Select(MapToResponse)
+            .ToList();
     }
 
+    // Get paginated loan applications
     public async Task<object> GetPagedAsync(int userId)
     {
         var user = await _repository.GetUserByIdAsync(userId);
 
         if (user == null)
         {
-            throw new KeyNotFoundException("User not found or inactive.");
+            throw new KeyNotFoundException(
+                "User not found or inactive.");
         }
 
         var query = _httpContextAccessor.HttpContext?.Request.Query;
 
-        var pageNumber = int.TryParse(query?["pageNumber"], out var p) && p > 0 ? p : 1;
-        var pageSize = int.TryParse(query?["pageSize"], out var s) && s > 0 ? Math.Min(s, 100) : 10;
+        var pageNumber =
+            int.TryParse(query?["pageNumber"], out var p) && p > 0
+                ? p
+                : 1;
+
+        var pageSize =
+            int.TryParse(query?["pageSize"], out var s) && s > 0
+                ? Math.Min(s, 100)
+                : 10;
+
         var search = query?["search"].ToString();
         var sortBy = query?["sortBy"].ToString();
-        var sortDirection = string.Equals(query?["sortDirection"].ToString(), "asc", StringComparison.OrdinalIgnoreCase) ? "asc" : "desc";
-        int? statusId = int.TryParse(query?["statusId"], out var stId) ? stId : null;
-        int? loanTypeId = int.TryParse(query?["loanTypeId"], out var ltId) ? ltId : null;
 
-        var (items, totalRecords) = await _repository.GetPagedForUserAsync(
-            userId, user.Role.Key, pageNumber, pageSize, search, sortBy, sortDirection, statusId, loanTypeId);
+        var sortDirection = string.Equals(
+            query?["sortDirection"].ToString(),
+            "asc",
+            StringComparison.OrdinalIgnoreCase)
+                ? "asc"
+                : "desc";
 
-        var totalPages = totalRecords == 0 ? 0 : (int)Math.Ceiling(totalRecords / (double)pageSize);
+        int? statusId =
+            int.TryParse(query?["statusId"], out var stId)
+                ? stId
+                : null;
+
+        int? loanTypeId =
+            int.TryParse(query?["loanTypeId"], out var ltId)
+                ? ltId
+                : null;
+
+        var (items, totalRecords) =
+            await _repository.GetPagedForUserAsync(
+                userId,
+                user.Role.Key,
+                pageNumber,
+                pageSize,
+                search,
+                sortBy,
+                sortDirection,
+                statusId,
+                loanTypeId);
+
+        var totalPages = totalRecords == 0
+            ? 0
+            : (int)Math.Ceiling(
+                totalRecords / (double)pageSize);
 
         return new
         {
@@ -188,7 +244,97 @@ public class LoanApplicationService : ILoanApplicationService
         };
     }
 
-    private static LoanApplicationResponseDto MapToResponse(LoanApplication a)
+    // Loan Officer reviews an assigned application
+    public async Task ReviewAsync(
+        int applicationId,
+        int officerId,
+        ReviewLoanApplicationDto dto)
+    {
+        var officer = await _repository.GetUserByIdAsync(officerId);
+
+        if (officer == null)
+        {
+            throw new KeyNotFoundException(
+                "Loan Officer not found or inactive.");
+        }
+
+        var roleKey = officer.Role.Key;
+
+        if (!roleKey.Equals(
+            "OFFICER",
+            StringComparison.OrdinalIgnoreCase) &&
+            !roleKey.Equals(
+                "LOAN_OFFICER",
+                StringComparison.OrdinalIgnoreCase))
+        {
+            throw new UnauthorizedAccessException(
+                "Only Loan Officers can review applications.");
+        }
+
+        var application =
+            await _repository.GetApplicationByIdAsync(applicationId);
+
+        if (application == null)
+        {
+            throw new KeyNotFoundException(
+                "Loan application not found.");
+        }
+
+        if (application.AssignedToUserId != officerId)
+        {
+            throw new UnauthorizedAccessException(
+                "You can only review applications assigned to you.");
+        }
+
+        if (string.IsNullOrWhiteSpace(dto.StatusKey))
+        {
+            throw new ArgumentException(
+                "Status key is required.");
+        }
+
+        var currentStatusKey = application.Status.Key;
+
+        if (currentStatusKey != "APPLICATION_SUBMITTED" &&
+            currentStatusKey != "APPLICATION_UNDER_REVIEW" &&
+            currentStatusKey != "APPLICATION_DOCUMENTS_REQUIRED")
+        {
+            throw new InvalidOperationException(
+                "This application cannot be reviewed in its current status.");
+        }
+
+        var requestedStatus = dto.StatusKey.Trim().ToUpperInvariant();
+
+        if (requestedStatus != "APPLICATION_UNDER_REVIEW" &&
+            requestedStatus != "APPLICATION_DOCUMENTS_REQUIRED")
+        {
+            throw new ArgumentException(
+                "Officer can only set UNDER_REVIEW or DOCUMENTS_REQUIRED status.");
+        }
+
+        var status = await _repository.GetStatusByKeyAsync(
+            requestedStatus);
+
+        if (status == null)
+        {
+            throw new InvalidOperationException(
+                $"{requestedStatus} status is not configured.");
+        }
+
+        application.StatusId = status.Id;
+        application.ReviewedByUserId = officerId;
+        application.ReviewedAt = DateTime.UtcNow;
+
+        application.ReviewRemarks =
+            string.IsNullOrWhiteSpace(dto.Remarks)
+                ? null
+                : dto.Remarks.Trim();
+
+        await _repository.SaveChangesAsync();
+    }
+
+    // Convert Loan Application entity into response DTO
+    private static LoanApplicationResponseDto MapToResponse(
+        LoanApplication a)
     {
         return new LoanApplicationResponseDto
         {

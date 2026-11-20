@@ -34,5 +34,10 @@ public class User : BaseEntity
         = new List<LoanApplicationAssignment>();
 
     public ICollection<UserMenu> UserMenus { get; set; } = new List<UserMenu>();
+    public ICollection<LoanDocument> RejectedLoanDocuments { get; set; }
+    = new List<LoanDocument>();
+
+    public ICollection<LoanGuarantor> RejectedGuarantors { get; set; }
+    = new List<LoanGuarantor>();
 }
 

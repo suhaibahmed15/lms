@@ -101,5 +101,46 @@ public class LoanApplicationsController : ControllerBase
             return StatusCode(403, new { message = ex.Message });
         }
     }
+
+
+    [HttpPut("{applicationId:int}/review")]
+    [Authorize(Policy = "Permission:LOAN_APPLICATION_REVIEW")]
+    public async Task<IActionResult> Review(
+        int applicationId,
+        [FromBody] ReviewLoanApplicationDto dto)
+    {
+        var userIdValue = User.FindFirstValue("UserId")
+            ?? User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+        if (!int.TryParse(userIdValue, out var officerId) || officerId <= 0)
+            return Unauthorized(new { message = "Invalid user token." });
+
+        try
+        {
+            await _loanApplicationService.ReviewAsync(
+                applicationId, officerId, dto);
+
+            return Ok(new
+            {
+                message = "Loan application reviewed successfully."
+            });
+        }
+        catch (KeyNotFoundException ex)
+        {
+            return NotFound(new { message = ex.Message });
+        }
+        catch (UnauthorizedAccessException ex)
+        {
+            return StatusCode(403, new { message = ex.Message });
+        }
+        catch (ArgumentException ex)
+        {
+            return BadRequest(new { message = ex.Message });
+        }
+        catch (InvalidOperationException ex)
+        {
+            return BadRequest(new { message = ex.Message });
+        }
+    }
+
 }
-    
