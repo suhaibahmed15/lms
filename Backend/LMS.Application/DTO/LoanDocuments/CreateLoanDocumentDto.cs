@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http;
 using System.ComponentModel.DataAnnotations;
 
 namespace LMS.Application.DTO.LoanDocuments
@@ -14,7 +14,7 @@ namespace LMS.Application.DTO.LoanDocuments
         public string DocumentType { get; set; } = string.Empty;
 
         [Required]
-        public IFormFile File { get; set; } =  null;
+        public IFormFile File { get; set; } = null!;
     }
 }
 

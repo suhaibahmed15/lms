@@ -1,0 +1,52 @@
+const formatAmount = (amount) =>
+    Number(amount || 0).toLocaleString("en-PK", {
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 0
+    });
+
+export default function PortfolioBarChart({
+    disbursed = 0,
+    outstanding = 0,
+    collected = 0
+}) {
+    const values = [
+        { label: "Disbursed Capital", value: Number(disbursed) || 0, color: "from-blue-600 to-blue-400", barBg: "bg-blue-500" },
+        { label: "Outstanding Balance", value: Number(outstanding) || 0, color: "from-amber-600 to-amber-400", barBg: "bg-amber-500" },
+        { label: "Collected Repayments", value: Number(collected) || 0, color: "from-emerald-600 to-emerald-400", barBg: "bg-emerald-500" }
+    ];
+
+    const maxValue = Math.max(...values.map((v) => v.value), 1);
+
+    return (
+        <div className="space-y-4 p-2">
+            <div className="space-y-4">
+                {values.map((item) => {
+                    const percentage = Math.min(Math.round((item.value / maxValue) * 100), 100);
+
+                    return (
+                        <div key={item.label} className="space-y-1.5">
+                            <div className="flex justify-between items-center text-sm">
+                                <span className="font-medium text-zinc-300">{item.label}</span>
+                                <span className="font-bold text-white font-mono">
+                                    PKR {formatAmount(item.value)}
+                                </span>
+                            </div>
+
+                            <div className="h-4 w-full rounded-full bg-white/[0.05] overflow-hidden p-0.5 border border-white/5">
+                                <div
+                                    className={`h-full rounded-full bg-gradient-to-r ${item.color} transition-all duration-700 ease-out`}
+                                    style={{ width: `${Math.max(percentage, 2)}%` }}
+                                />
+                            </div>
+                        </div>
+                    );
+                })}
+            </div>
+
+            <div className="pt-2 border-t border-white/10 flex justify-between text-xs text-zinc-500">
+                <span>0 PKR</span>
+                <span>Peak: PKR {formatAmount(maxValue)}</span>
+            </div>
+        </div>
+    );
+}

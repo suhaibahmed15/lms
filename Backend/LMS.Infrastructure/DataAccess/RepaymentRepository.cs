@@ -1,4 +1,4 @@
-﻿using LMS.Application.Repositories.Interfaces;
+using LMS.Application.Repositories.Interfaces;
 using LMS.Domain.Entities;
 using LMS.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
@@ -30,6 +30,14 @@ public class RepaymentRepository : IRepaymentRepository
                 !x.Role.IsDeleted);
     }
 
+    public async Task<User?> GetUserWithRoleAsync(int userId)
+    {
+        return await _context.Users
+            .AsNoTracking()
+            .Include(u => u.Role)
+            .FirstOrDefaultAsync(u => u.Id == userId && u.IsActive && !u.IsDeleted);
+    }
+
     public async Task<RepaymentSchedule?> GetScheduleForCustomerAsync(
         int scheduleId,
         int customerId)
@@ -43,6 +51,20 @@ public class RepaymentRepository : IRepaymentRepository
             .FirstOrDefaultAsync(x =>
                 x.Id == scheduleId &&
                 x.Loan.BorrowerUserId == customerId &&
+                !x.IsDeleted &&
+                !x.Loan.IsDeleted);
+    }
+
+    public async Task<RepaymentSchedule?> GetScheduleByIdAsync(int scheduleId)
+    {
+        return await _context.RepaymentSchedules
+            .Include(x => x.Status)
+            .Include(x => x.Loan)
+                .ThenInclude(x => x.Status)
+            .Include(x => x.Repayments)
+                .ThenInclude(x => x.Status)
+            .FirstOrDefaultAsync(x =>
+                x.Id == scheduleId &&
                 !x.IsDeleted &&
                 !x.Loan.IsDeleted);
     }
@@ -103,12 +125,78 @@ public class RepaymentRepository : IRepaymentRepository
             .ToListAsync();
     }
 
+    public async Task<(List<Repayment> Items, int TotalCount)> GetPagedAsync(
+        int pageNumber,
+        int pageSize,
+        string? search = null,
+        string? statusKey = null,
+        int? customerId = null,
+        int? loanId = null,
+        DateTime? fromDate = null,
+        DateTime? toDate = null)
+    {
+        var query = _context.Repayments
+            .AsNoTracking()
+            .Include(x => x.Status)
+            .Include(x => x.Loan)
+                .ThenInclude(x => x.BorrowerUser)
+            .Include(x => x.RepaymentSchedule)
+            .Where(x => !x.IsDeleted);
+
+        if (customerId.HasValue)
+        {
+            query = query.Where(x => x.Loan.BorrowerUserId == customerId.Value);
+        }
+
+        if (loanId.HasValue)
+        {
+            query = query.Where(x => x.LoanId == loanId.Value);
+        }
+
+        if (!string.IsNullOrWhiteSpace(statusKey))
+        {
+            query = query.Where(x => x.Status.Key == statusKey.Trim());
+        }
+
+        if (!string.IsNullOrWhiteSpace(search))
+        {
+            var s = search.Trim();
+            query = query.Where(x =>
+                x.PaymentReference.Contains(s) ||
+                (x.Remarks != null && x.Remarks.Contains(s)) ||
+                x.Loan.BorrowerUser.FullName.Contains(s) ||
+                x.Loan.LoanNumber.Contains(s));
+        }
+
+        if (fromDate.HasValue)
+        {
+            query = query.Where(x => x.PaidAt >= fromDate.Value);
+        }
+
+        if (toDate.HasValue)
+        {
+            query = query.Where(x => x.PaidAt <= toDate.Value);
+        }
+
+        var total = await query.CountAsync();
+
+        var items = await query
+            .OrderByDescending(x => x.PaidAt)
+            .Skip((pageNumber - 1) * pageSize)
+            .Take(pageSize)
+            .ToListAsync();
+
+        return (items, total);
+    }
+
     public async Task<Repayment?> GetPaymentByIdAsync(int repaymentId)
     {
         return await _context.Repayments
             .Include(x => x.Status)
             .Include(x => x.Loan)
                 .ThenInclude(x => x.Status)
+            .Include(x => x.Loan)
+                .ThenInclude(x => x.BorrowerUser)
             .Include(x => x.RepaymentSchedule)
                 .ThenInclude(x => x!.Repayments)
                     .ThenInclude(x => x.Status)
@@ -119,7 +207,6 @@ public class RepaymentRepository : IRepaymentRepository
     {
         await _context.SaveChangesAsync();
     }
-
 
     public async Task BeginTransactionAsync()
     {

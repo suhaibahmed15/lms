@@ -44,7 +44,8 @@ public class PermissionAuthorizationHandler
             return;
 
         // Step 3: Admin has full permission access
-        if (user.Role!.Key.Equals(
+        if (string.Equals(
+            user.Role!.Key,
             "ADMIN",
             StringComparison.OrdinalIgnoreCase))
         {
@@ -64,7 +65,7 @@ public class PermissionAuthorizationHandler
             ? new[] { requestedKey, impliedManageKey }
             : new[] { requestedKey };
 
-        // Step 4: Check active non-revoked individual permission
+        // Step 4: Check active individual permission
         var hasActiveUserPermission =
             await _context.UserPermissions
                 .AsNoTracking()
@@ -83,24 +84,7 @@ public class PermissionAuthorizationHandler
             return;
         }
 
-        // Step 5: Explicit individual revocation
-        // overrides role permissions and UserMenus VIEW access.
-        var hasRevokedUserPermission =
-            await _context.UserPermissions
-                .AsNoTracking()
-                .AnyAsync(up =>
-                    up.UserId == userId &&
-                    (!up.IsActive || up.RevokedAt != null) &&
-                    !up.IsDeleted &&
-                    acceptedKeys.Contains(up.Permission.Key) &&
-                    up.Permission.IsActive &&
-                    !up.Permission.IsDeleted);
-
-        if (hasRevokedUserPermission)
-            return;
-
-        // Step 6: UserMenus grants VIEW-only access.
-        // It never grants CREATE, UPDATE, DELETE or MANAGE.
+        // Step 5: UserMenus grants VIEW-only access
         if (isViewPermission)
         {
             var mappedMenuKey =
@@ -130,7 +114,7 @@ public class PermissionAuthorizationHandler
             }
         }
 
-        // Step 7: Check role-based permission
+        // Step 6: Check role-based permission
         var hasRolePermission =
             await _context.RolePermissions
                 .AsNoTracking()
@@ -152,6 +136,7 @@ public class PermissionAuthorizationHandler
         return permissionKey.ToUpperInvariant() switch
         {
             "ROLE_VIEW" => "ROLE_MANAGE",
+            "ROLE_DELETE" => "ROLE_MANAGE",
             "MENU_VIEW" => "MENU_MANAGE",
             "ROLE_MENU_VIEW" => "MENU_MANAGE",
             "USER_MENU_VIEW" => "MENU_MANAGE",
@@ -159,6 +144,9 @@ public class PermissionAuthorizationHandler
             "ROLE_PERMISSION_VIEW" => "PERMISSION_MANAGE",
             "USER_PERMISSION_VIEW" => "PERMISSION_MANAGE",
             "STATUS_VIEW" => "STATUS_MANAGE",
+            "LOAN_TYPE_VIEW" => "LOAN_TYPE_MANAGE",
+            "LOAN_VIEW" => "LOAN_MANAGE",
+            "REPAYMENT_VIEW" => "REPAYMENT_MANAGE",
             _ => null
         };
     }

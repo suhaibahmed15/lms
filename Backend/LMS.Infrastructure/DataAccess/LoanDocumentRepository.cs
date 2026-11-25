@@ -1,4 +1,4 @@
-﻿using LMS.Application.Repositories.Interfaces;
+using LMS.Application.Repositories.Interfaces;
 using LMS.Domain.Entities;
 using LMS.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
@@ -40,20 +40,7 @@ public class LoanDocumentRepository : ILoanDocumentRepository
                 !d.IsDeleted);
     }
 
-    // Get status using category and key
-    public async Task<Status?> GetStatusByCategoryAndKeyAsync(
-        string category,
-        string key)
-    {
-        return await _context.Statuses
-            .FirstOrDefaultAsync(s =>
-                s.Category == category &&
-                s.Key == key &&
-                s.IsActive &&
-                !s.IsDeleted);
-    }
-
-    // Get documents by application ID, including status
+    // Get all documents of a loan application
     public async Task<List<LoanDocument>> GetDocumentsByApplicationIdAsync(
         int applicationId)
     {
@@ -72,9 +59,35 @@ public class LoanDocumentRepository : ILoanDocumentRepository
     {
         return await _context.LoanDocuments
             .Include(d => d.Status)
+            .Include(d => d.LoanApplication)
             .FirstOrDefaultAsync(d =>
                 d.Id == documentId &&
                 !d.IsDeleted);
+    }
+
+    // Get status by category and key
+    public async Task<Status?> GetStatusByCategoryAndKeyAsync(
+        string category,
+        string key)
+    {
+        return await _context.Statuses
+            .FirstOrDefaultAsync(s =>
+                s.Category == category &&
+                s.Key == key &&
+                s.IsActive &&
+                !s.IsDeleted);
+    }
+
+    // Get user with role
+    public async Task<User?> GetUserWithRoleAsync(int userId)
+    {
+        return await _context.Users
+            .AsNoTracking()
+            .Include(u => u.Role)
+            .FirstOrDefaultAsync(u =>
+                u.Id == userId &&
+                u.IsActive &&
+                !u.IsDeleted);
     }
 
     // Add document

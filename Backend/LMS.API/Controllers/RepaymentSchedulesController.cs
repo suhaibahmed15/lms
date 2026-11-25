@@ -1,4 +1,4 @@
-﻿using LMS.Application.DTO.Repayments;
+using LMS.Application.DTO.Repayments;
 using LMS.Application.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -62,6 +62,39 @@ public class RepaymentSchedulesController : ControllerBase
         catch (InvalidOperationException ex)
         {
             return BadRequest(new { message = ex.Message });
+        }
+    }
+
+    // GET: api/RepaymentSchedules/loan/{loanId}
+    [HttpGet("loan/{loanId:int}")]
+    [Authorize(Policy = "Permission:REPAYMENT_SCHEDULE_VIEW")]
+    public async Task<IActionResult> GetByLoanId(int loanId)
+    {
+        var userIdValue =
+            User.FindFirstValue("UserId")
+            ?? User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+        if (!int.TryParse(userIdValue, out var userId) || userId <= 0)
+        {
+            return Unauthorized(new { message = "Invalid user token." });
+        }
+
+        try
+        {
+            var items = await _service.GetByLoanIdAsync(userId, loanId);
+            return Ok(new
+            {
+                message = "Repayment schedules retrieved successfully.",
+                data = items
+            });
+        }
+        catch (KeyNotFoundException ex)
+        {
+            return NotFound(new { message = ex.Message });
+        }
+        catch (UnauthorizedAccessException ex)
+        {
+            return StatusCode(403, new { message = ex.Message });
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿
+
 using LMS.Application.DTO.LoanDocuments;
 using LMS.Application.Repositories.Interfaces;
 using LMS.Application.Services.Interfaces;
@@ -163,57 +163,93 @@ public class LoanDocumentService : ILoanDocumentService
         }
     }
 
+    private async Task ValidateDocumentAccessAsync(int userId, LoanApplication application)
+    {
+        if (application.ApplicantUserId == userId)
+            return;
+
+        var user = await _repository.GetUserWithRoleAsync(userId);
+        if (user == null)
+            throw new UnauthorizedAccessException("User not found or inactive.");
+
+        var roleKey = user.Role.Key.ToUpperInvariant();
+        if (roleKey == "ADMIN" || roleKey == "MANAGER")
+            return;
+
+        if (roleKey == "OFFICER" || roleKey == "LOAN_OFFICER")
+        {
+            if (application.AssignedToUserId == userId || application.AssignedToUserId == null)
+                return;
+        }
+
+        throw new UnauthorizedAccessException("You are not authorized to access documents for this loan application.");
+    }
+
     // GET: Get documents by loan application ID
     public async Task<List<LoanDocumentResponseDto>> GetByApplicationIdAsync(
         int userId,
         int applicationId)
     {
-        var application = await _repository.GetApplicationByIdAsync(
-            applicationId);
+        var application = await _repository.GetApplicationByIdAsync(applicationId);
 
         if (application == null)
             throw new KeyNotFoundException("Loan application not found.");
 
-        if (application.ApplicantUserId != userId)
+        await ValidateDocumentAccessAsync(userId, application);
+
+        var documents = await _repository.GetDocumentsByApplicationIdAsync(applicationId);
+
+        return documents.Select(MapToResponseDto).ToList();
+    }
+
+    // GET: Get document details by ID
+    public async Task<LoanDocumentResponseDto> GetByIdAsync(int userId, int documentId)
+    {
+        var document = await _repository.GetDocumentByIdAsync(documentId);
+
+        if (document == null)
+            throw new KeyNotFoundException("Loan document not found.");
+
+        var application = await _repository.GetApplicationByIdAsync(document.LoanApplicationId);
+        if (application == null)
+            throw new KeyNotFoundException("Associated loan application not found.");
+
+        await ValidateDocumentAccessAsync(userId, application);
+
+        return MapToResponseDto(document);
+    }
+
+    // GET: Download document bytes
+    public async Task<(byte[] FileBytes, string ContentType, string FileName)> DownloadAsync(
+        int userId,
+        int documentId)
+    {
+        var document = await _repository.GetDocumentByIdAsync(documentId);
+
+        if (document == null)
+            throw new KeyNotFoundException("Loan document not found.");
+
+        var application = await _repository.GetApplicationByIdAsync(document.LoanApplicationId);
+        if (application == null)
+            throw new KeyNotFoundException("Associated loan application not found.");
+
+        await ValidateDocumentAccessAsync(userId, application);
+
+        var webRootPath = _environment.WebRootPath;
+        if (string.IsNullOrWhiteSpace(webRootPath))
         {
-            throw new UnauthorizedAccessException(
-                "You can only view documents of your own loan application.");
+            webRootPath = Path.Combine(_environment.ContentRootPath, "wwwroot");
         }
 
-        var documents = await _repository.GetDocumentsByApplicationIdAsync(
-            applicationId);
+        var fullFilePath = Path.Combine(
+            webRootPath,
+            document.FilePath.TrimStart('/').Replace('/', Path.DirectorySeparatorChar));
 
-        return documents.Select(d => new LoanDocumentResponseDto
-        {
-            // Document Information
-            Id = d.Id,
-            LoanApplicationId = d.LoanApplicationId,
-            DocumentType = d.DocumentType,
-            FileName = d.FileName,
-            ContentType = d.ContentType,
-            FileSizeBytes = d.FileSizeBytes,
+        if (!File.Exists(fullFilePath))
+            throw new FileNotFoundException("Document file does not exist on disk.");
 
-            // Upload Information
-            UploadedByUserId = d.UploadedByUserId,
-            CreatedAt = d.CreatedAt,
-
-            // Status Information
-            StatusId = d.StatusId,
-            StatusName = d.Status.Name,
-            StatusKey = d.Status.Key,
-            IsVerified = d.IsVerified,
-
-            // Verification Information
-            VerifiedByUserId = d.VerifiedByUserId,
-            VerifiedAt = d.VerifiedAt,
-            VerificationRemarks = d.VerificationRemarks,
-
-            // Rejection Information
-            RejectedByUserId = d.RejectedByUserId,
-            RejectedAt = d.RejectedAt,
-            RejectionRemarks = d.RejectionRemarks
-
-        }).ToList();
+        var fileBytes = await File.ReadAllBytesAsync(fullFilePath);
+        return (fileBytes, document.ContentType, document.FileName);
     }
 
     // PUT: Verify loan document
@@ -222,6 +258,14 @@ public class LoanDocumentService : ILoanDocumentService
         int documentId,
         VerifyLoanDocumentDto dto)
     {
+        var user = await _repository.GetUserWithRoleAsync(userId);
+        if (user == null)
+            throw new UnauthorizedAccessException("User not found or inactive.");
+
+        var roleKey = user.Role.Key.ToUpperInvariant();
+        if (roleKey != "ADMIN" && roleKey != "MANAGER" && roleKey != "OFFICER" && roleKey != "LOAN_OFFICER")
+            throw new UnauthorizedAccessException("Only Admin, Manager, or Loan Officer can verify documents.");
+
         var document = await _repository.GetDocumentByIdAsync(documentId);
 
         if (document == null)
@@ -229,8 +273,7 @@ public class LoanDocumentService : ILoanDocumentService
 
         if (document.Status.Key != PendingStatus)
         {
-            throw new InvalidOperationException(
-                "Only pending documents can be verified.");
+            throw new InvalidOperationException("Only pending documents can be verified.");
         }
 
         var verifiedStatus = await _repository.GetStatusByCategoryAndKeyAsync(
@@ -239,12 +282,10 @@ public class LoanDocumentService : ILoanDocumentService
 
         if (verifiedStatus == null)
         {
-            throw new InvalidOperationException(
-                "Loan document Verified status was not found or is inactive.");
+            throw new InvalidOperationException("Loan document Verified status was not found or is inactive.");
         }
 
         document.StatusId = verifiedStatus.Id;
-
         document.IsVerified = true;
         document.VerifiedByUserId = userId;
         document.VerifiedAt = DateTime.UtcNow;
@@ -259,6 +300,14 @@ public class LoanDocumentService : ILoanDocumentService
         int documentId,
         RejectLoanDocumentDto dto)
     {
+        var user = await _repository.GetUserWithRoleAsync(userId);
+        if (user == null)
+            throw new UnauthorizedAccessException("User not found or inactive.");
+
+        var roleKey = user.Role.Key.ToUpperInvariant();
+        if (roleKey != "ADMIN" && roleKey != "MANAGER" && roleKey != "OFFICER" && roleKey != "LOAN_OFFICER")
+            throw new UnauthorizedAccessException("Only Admin, Manager, or Loan Officer can reject documents.");
+
         var document = await _repository.GetDocumentByIdAsync(documentId);
 
         if (document == null)
@@ -266,16 +315,14 @@ public class LoanDocumentService : ILoanDocumentService
 
         if (document.Status.Key != PendingStatus)
         {
-            throw new InvalidOperationException(
-                "Only pending documents can be rejected.");
+            throw new InvalidOperationException("Only pending documents can be rejected.");
         }
 
         var rejectionRemarks = dto.RejectionRemarks?.Trim();
 
         if (string.IsNullOrWhiteSpace(rejectionRemarks))
         {
-            throw new ArgumentException(
-                "Rejection remarks are required.");
+            throw new ArgumentException("Rejection remarks are required.");
         }
 
         var rejectedStatus = await _repository.GetStatusByCategoryAndKeyAsync(
@@ -284,17 +331,40 @@ public class LoanDocumentService : ILoanDocumentService
 
         if (rejectedStatus == null)
         {
-            throw new InvalidOperationException(
-                "Loan document Rejected status was not found or is inactive.");
+            throw new InvalidOperationException("Loan document Rejected status was not found or is inactive.");
         }
 
         document.StatusId = rejectedStatus.Id;
         document.IsVerified = false;
-
         document.RejectedByUserId = userId;
         document.RejectedAt = DateTime.UtcNow;
         document.RejectionRemarks = rejectionRemarks;
 
         await _repository.SaveChangesAsync();
+    }
+
+    private static LoanDocumentResponseDto MapToResponseDto(LoanDocument d)
+    {
+        return new LoanDocumentResponseDto
+        {
+            Id = d.Id,
+            LoanApplicationId = d.LoanApplicationId,
+            DocumentType = d.DocumentType,
+            FileName = d.FileName,
+            ContentType = d.ContentType,
+            FileSizeBytes = d.FileSizeBytes,
+            UploadedByUserId = d.UploadedByUserId,
+            CreatedAt = d.CreatedAt,
+            StatusId = d.StatusId,
+            StatusName = d.Status.Name,
+            StatusKey = d.Status.Key,
+            IsVerified = d.IsVerified,
+            VerifiedByUserId = d.VerifiedByUserId,
+            VerifiedAt = d.VerifiedAt,
+            VerificationRemarks = d.VerificationRemarks,
+            RejectedByUserId = d.RejectedByUserId,
+            RejectedAt = d.RejectedAt,
+            RejectionRemarks = d.RejectionRemarks
+        };
     }
 }

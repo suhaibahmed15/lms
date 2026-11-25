@@ -1,4 +1,3 @@
-﻿
 using LMS.Application.Repositories.Interfaces;
 using LMS.Domain.Entities;
 using LMS.Infrastructure.Data;
@@ -54,9 +53,39 @@ public class LoanGuarantorRepository : ILoanGuarantorRepository
     {
         return await _context.LoanGuarantors
             .Include(g => g.Status)
+            .Include(g => g.LoanApplication)
             .FirstOrDefaultAsync(g =>
                 g.Id == guarantorId &&
                 !g.IsDeleted);
+    }
+
+    public async Task<bool> ExistsByNationalIdOrPhoneAsync(
+        int applicationId,
+        string? nationalId,
+        string phoneNumber,
+        int? excludeGuarantorId = null)
+    {
+        var cleanPhone = phoneNumber.Trim();
+        var cleanNationalId = nationalId?.Trim();
+
+        return await _context.LoanGuarantors
+            .AnyAsync(g =>
+                g.LoanApplicationId == applicationId &&
+                !g.IsDeleted &&
+                (!excludeGuarantorId.HasValue || g.Id != excludeGuarantorId.Value) &&
+                (g.PhoneNumber == cleanPhone ||
+                 (!string.IsNullOrWhiteSpace(cleanNationalId) && g.NationalIdNumber == cleanNationalId)));
+    }
+
+    public async Task<User?> GetUserWithRoleAsync(int userId)
+    {
+        return await _context.Users
+            .AsNoTracking()
+            .Include(u => u.Role)
+            .FirstOrDefaultAsync(u =>
+                u.Id == userId &&
+                u.IsActive &&
+                !u.IsDeleted);
     }
 
     public async Task AddAsync(LoanGuarantor guarantor)

@@ -1,4 +1,3 @@
-﻿
 using LMS.Application.DTO.LoanGuarantors;
 using LMS.Application.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
@@ -14,8 +13,7 @@ public class LoanGuarantorsController : ControllerBase
 {
     private readonly ILoanGuarantorService _service;
 
-    public LoanGuarantorsController(
-        ILoanGuarantorService service)
+    public LoanGuarantorsController(ILoanGuarantorService service)
     {
         _service = service;
     }
@@ -31,8 +29,7 @@ public class LoanGuarantorsController : ControllerBase
     // POST: api/LoanGuarantors
     [HttpPost]
     [Authorize(Policy = "Permission:LOAN_APPLICATION_CREATE")]
-    public async Task<IActionResult> Create(
-        [FromBody] CreateLoanGuarantorDto dto)
+    public async Task<IActionResult> Create([FromBody] CreateLoanGuarantorDto dto)
     {
         if (!TryGetUserId(out var userId))
             return Unauthorized(new { message = "Invalid user token." });
@@ -40,7 +37,6 @@ public class LoanGuarantorsController : ControllerBase
         try
         {
             var id = await _service.CreateAsync(userId, dto);
-
             return Ok(new
             {
                 message = "Loan guarantor created successfully.",
@@ -51,9 +47,9 @@ public class LoanGuarantorsController : ControllerBase
         {
             return NotFound(new { message = ex.Message });
         }
-        catch (UnauthorizedAccessException )
+        catch (UnauthorizedAccessException ex)
         {
-            return Forbid();
+            return StatusCode(403, new { message = ex.Message });
         }
         catch (ArgumentException ex)
         {
@@ -65,21 +61,17 @@ public class LoanGuarantorsController : ControllerBase
         }
     }
 
-    // GET: api/LoanGuarantors/application/1
+    // GET: api/LoanGuarantors/application/{applicationId}
     [HttpGet("application/{applicationId:int}")]
     [Authorize(Policy = "Permission:LOAN_APPLICATION_VIEW")]
-    public async Task<IActionResult> GetByApplication(
-        int applicationId)
+    public async Task<IActionResult> GetByApplication(int applicationId)
     {
         if (!TryGetUserId(out var userId))
             return Unauthorized(new { message = "Invalid user token." });
 
         try
         {
-            var result = await _service.GetByApplicationIdAsync(
-                userId,
-                applicationId);
-
+            var result = await _service.GetByApplicationIdAsync(userId, applicationId);
             return Ok(new
             {
                 message = "Loan guarantors retrieved successfully.",
@@ -90,34 +82,65 @@ public class LoanGuarantorsController : ControllerBase
         {
             return NotFound(new { message = ex.Message });
         }
-        catch (UnauthorizedAccessException)
+        catch (UnauthorizedAccessException ex)
         {
-            return Forbid();
+            return StatusCode(403, new { message = ex.Message });
         }
     }
 
-    // PUT: api/LoanGuarantors/1/verify
-    [HttpPut("{guarantorId:int}/verify")]
-    [Authorize(Policy = "Permission:LOAN_GUARANTOR_MANAGE")]
-    public async Task<IActionResult> Verify(
-        int guarantorId,
-        [FromBody] VerifyLoanGuarantorDto dto)
+    // GET: api/LoanGuarantors/{guarantorId}
+    [HttpGet("{guarantorId:int}")]
+    [Authorize(Policy = "Permission:LOAN_APPLICATION_VIEW")]
+    public async Task<IActionResult> GetById(int guarantorId)
     {
         if (!TryGetUserId(out var userId))
             return Unauthorized(new { message = "Invalid user token." });
 
         try
         {
-            await _service.VerifyAsync(userId, guarantorId, dto);
-
+            var result = await _service.GetByIdAsync(userId, guarantorId);
             return Ok(new
             {
-                message = "Loan guarantor verified successfully."
+                message = "Loan guarantor retrieved successfully.",
+                data = result
             });
         }
         catch (KeyNotFoundException ex)
         {
             return NotFound(new { message = ex.Message });
+        }
+        catch (UnauthorizedAccessException ex)
+        {
+            return StatusCode(403, new { message = ex.Message });
+        }
+    }
+
+    // PUT: api/LoanGuarantors/{guarantorId}
+    [HttpPut("{guarantorId:int}")]
+    [Authorize(Policy = "Permission:LOAN_APPLICATION_CREATE")]
+    public async Task<IActionResult> Update(
+        int guarantorId,
+        [FromBody] UpdateLoanGuarantorDto dto)
+    {
+        if (!TryGetUserId(out var userId))
+            return Unauthorized(new { message = "Invalid user token." });
+
+        try
+        {
+            await _service.UpdateAsync(userId, guarantorId, dto);
+            return Ok(new
+            {
+                message = "Loan guarantor updated successfully.",
+                guarantorId
+            });
+        }
+        catch (KeyNotFoundException ex)
+        {
+            return NotFound(new { message = ex.Message });
+        }
+        catch (UnauthorizedAccessException ex)
+        {
+            return StatusCode(403, new { message = ex.Message });
         }
         catch (ArgumentException ex)
         {
@@ -129,9 +152,73 @@ public class LoanGuarantorsController : ControllerBase
         }
     }
 
-    // PUT: api/LoanGuarantors/1/reject
+    // DELETE: api/LoanGuarantors/{guarantorId}
+    [HttpDelete("{guarantorId:int}")]
+    [Authorize(Policy = "Permission:LOAN_APPLICATION_CREATE")]
+    public async Task<IActionResult> Delete(int guarantorId)
+    {
+        if (!TryGetUserId(out var userId))
+            return Unauthorized(new { message = "Invalid user token." });
+
+        try
+        {
+            await _service.DeleteAsync(userId, guarantorId);
+            return Ok(new
+            {
+                message = "Loan guarantor removed successfully.",
+                guarantorId
+            });
+        }
+        catch (KeyNotFoundException ex)
+        {
+            return NotFound(new { message = ex.Message });
+        }
+        catch (UnauthorizedAccessException ex)
+        {
+            return StatusCode(403, new { message = ex.Message });
+        }
+    }
+
+    // PUT: api/LoanGuarantors/{guarantorId}/verify
+    [HttpPut("{guarantorId:int}/verify")]
+    [Authorize(Policy = "Permission:LOAN_APPLICATION_REVIEW")]
+    public async Task<IActionResult> Verify(
+        int guarantorId,
+        [FromBody] VerifyLoanGuarantorDto dto)
+    {
+        if (!TryGetUserId(out var userId))
+            return Unauthorized(new { message = "Invalid user token." });
+
+        try
+        {
+            await _service.VerifyAsync(userId, guarantorId, dto);
+            return Ok(new
+            {
+                message = "Loan guarantor verified successfully.",
+                guarantorId
+            });
+        }
+        catch (KeyNotFoundException ex)
+        {
+            return NotFound(new { message = ex.Message });
+        }
+        catch (UnauthorizedAccessException ex)
+        {
+            return StatusCode(403, new { message = ex.Message });
+        }
+        catch (ArgumentException ex)
+        {
+            return BadRequest(new { message = ex.Message });
+        }
+        catch (InvalidOperationException ex)
+        {
+            return BadRequest(new { message = ex.Message });
+        }
+    }
+
+    // PUT: api/LoanGuarantors/{guarantorId}/reject
     [HttpPut("{guarantorId:int}/reject")]
-    [Authorize(Policy = "Permission:LOAN_GUARANTOR_MANAGE")]
+    [Authorize(Policy = "Permission:LOAN_APPLICATION_REVIEW")]
     public async Task<IActionResult> Reject(
         int guarantorId,
         [FromBody] RejectLoanGuarantorDto dto)
@@ -142,15 +229,19 @@ public class LoanGuarantorsController : ControllerBase
         try
         {
             await _service.RejectAsync(userId, guarantorId, dto);
-
             return Ok(new
             {
-                message = "Loan guarantor rejected successfully."
+                message = "Loan guarantor rejected successfully.",
+                guarantorId
             });
         }
         catch (KeyNotFoundException ex)
         {
             return NotFound(new { message = ex.Message });
+        }
+        catch (UnauthorizedAccessException ex)
+        {
+            return StatusCode(403, new { message = ex.Message });
         }
         catch (ArgumentException ex)
         {

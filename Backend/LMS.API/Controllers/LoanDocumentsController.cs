@@ -13,8 +13,7 @@ public class LoanDocumentsController : ControllerBase
 {
     private readonly ILoanDocumentService _loanDocumentService;
 
-    public LoanDocumentsController(
-        ILoanDocumentService loanDocumentService)
+    public LoanDocumentsController(ILoanDocumentService loanDocumentService)
     {
         _loanDocumentService = loanDocumentService;
     }
@@ -22,7 +21,7 @@ public class LoanDocumentsController : ControllerBase
     // POST: api/LoanDocuments
     // Upload document against a loan application
     [HttpPost]
-    [Authorize(Policy = "Permission:LOAN_DOCUMENT_CREATE")]
+    [Authorize(Policy = "Permission:LOAN_DOCUMENT_UPLOAD")]
     [Consumes("multipart/form-data")]
     public async Task<IActionResult> Upload(
         [FromForm] CreateLoanDocumentDto dto)
@@ -108,17 +107,163 @@ public class LoanDocumentsController : ControllerBase
         }
         catch (KeyNotFoundException ex)
         {
-            return NotFound(new
-            {
-                message = ex.Message
-            });
+            return NotFound(new { message = ex.Message });
         }
         catch (UnauthorizedAccessException ex)
         {
-            return StatusCode(403, new
+            return StatusCode(403, new { message = ex.Message });
+        }
+    }
+
+    // GET: api/LoanDocuments/{documentId}
+    // Get details of a single loan document
+    [HttpGet("{documentId:int}")]
+    [Authorize(Policy = "Permission:LOAN_DOCUMENT_VIEW")]
+    public async Task<IActionResult> GetById(int documentId)
+    {
+        var userIdValue = User.FindFirstValue("UserId")
+            ?? User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+        if (string.IsNullOrWhiteSpace(userIdValue) ||
+            !int.TryParse(userIdValue, out int userId))
+        {
+            return Unauthorized(new { message = "Invalid user token." });
+        }
+
+        try
+        {
+            var document = await _loanDocumentService.GetByIdAsync(userId, documentId);
+            return Ok(new
             {
-                message = ex.Message
+                message = "Loan document retrieved successfully.",
+                data = document
             });
+        }
+        catch (KeyNotFoundException ex)
+        {
+            return NotFound(new { message = ex.Message });
+        }
+        catch (UnauthorizedAccessException ex)
+        {
+            return StatusCode(403, new { message = ex.Message });
+        }
+    }
+
+    // GET: api/LoanDocuments/{documentId}/download
+    // Securely download or stream document file
+    [HttpGet("{documentId:int}/download")]
+    [Authorize(Policy = "Permission:LOAN_DOCUMENT_VIEW")]
+    public async Task<IActionResult> Download(int documentId)
+    {
+        var userIdValue = User.FindFirstValue("UserId")
+            ?? User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+        if (string.IsNullOrWhiteSpace(userIdValue) ||
+            !int.TryParse(userIdValue, out int userId))
+        {
+            return Unauthorized(new { message = "Invalid user token." });
+        }
+
+        try
+        {
+            var (fileBytes, contentType, fileName) = await _loanDocumentService.DownloadAsync(userId, documentId);
+            return File(fileBytes, contentType, fileName);
+        }
+        catch (KeyNotFoundException ex)
+        {
+            return NotFound(new { message = ex.Message });
+        }
+        catch (FileNotFoundException ex)
+        {
+            return NotFound(new { message = ex.Message });
+        }
+        catch (UnauthorizedAccessException ex)
+        {
+            return StatusCode(403, new { message = ex.Message });
+        }
+    }
+
+    // PUT: api/LoanDocuments/{documentId}/verify
+    // Verify an uploaded loan document
+    [HttpPut("{documentId:int}/verify")]
+    [Authorize(Policy = "Permission:LOAN_APPLICATION_REVIEW")]
+    public async Task<IActionResult> Verify(
+        int documentId,
+        [FromBody] VerifyLoanDocumentDto dto)
+    {
+        var userIdValue = User.FindFirstValue("UserId")
+            ?? User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+        if (string.IsNullOrWhiteSpace(userIdValue) ||
+            !int.TryParse(userIdValue, out int userId))
+        {
+            return Unauthorized(new { message = "Invalid user token." });
+        }
+
+        try
+        {
+            await _loanDocumentService.VerifyAsync(userId, documentId, dto);
+            return Ok(new
+            {
+                message = "Loan document verified successfully.",
+                documentId
+            });
+        }
+        catch (KeyNotFoundException ex)
+        {
+            return NotFound(new { message = ex.Message });
+        }
+        catch (UnauthorizedAccessException ex)
+        {
+            return StatusCode(403, new { message = ex.Message });
+        }
+        catch (InvalidOperationException ex)
+        {
+            return BadRequest(new { message = ex.Message });
+        }
+    }
+
+    // PUT: api/LoanDocuments/{documentId}/reject
+    // Reject an uploaded loan document with remarks
+    [HttpPut("{documentId:int}/reject")]
+    [Authorize(Policy = "Permission:LOAN_APPLICATION_REVIEW")]
+    public async Task<IActionResult> Reject(
+        int documentId,
+        [FromBody] RejectLoanDocumentDto dto)
+    {
+        var userIdValue = User.FindFirstValue("UserId")
+            ?? User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+        if (string.IsNullOrWhiteSpace(userIdValue) ||
+            !int.TryParse(userIdValue, out int userId))
+        {
+            return Unauthorized(new { message = "Invalid user token." });
+        }
+
+        try
+        {
+            await _loanDocumentService.RejectAsync(userId, documentId, dto);
+            return Ok(new
+            {
+                message = "Loan document rejected successfully.",
+                documentId
+            });
+        }
+        catch (KeyNotFoundException ex)
+        {
+            return NotFound(new { message = ex.Message });
+        }
+        catch (UnauthorizedAccessException ex)
+        {
+            return StatusCode(403, new { message = ex.Message });
+        }
+        catch (ArgumentException ex)
+        {
+            return BadRequest(new { message = ex.Message });
+        }
+        catch (InvalidOperationException ex)
+        {
+            return BadRequest(new { message = ex.Message });
         }
     }
 }

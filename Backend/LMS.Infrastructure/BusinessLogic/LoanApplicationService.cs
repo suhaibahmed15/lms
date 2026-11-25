@@ -33,13 +33,11 @@ public class LoanApplicationService : ILoanApplicationService
                 "User not found or inactive.");
         }
 
-        if (!string.Equals(
-            user.Role.Key,
-            "CUSTOMER",
-            StringComparison.OrdinalIgnoreCase))
+        if (!string.Equals(user.Role.Key, "CUSTOMER", StringComparison.OrdinalIgnoreCase) &&
+            !string.Equals(user.Role.Key, "ADMIN", StringComparison.OrdinalIgnoreCase))
         {
             throw new UnauthorizedAccessException(
-                "Only customers can submit loan applications.");
+                "Only customers and administrators can submit loan applications.");
         }
 
         if (dto.RequestedAmount <= 0)
@@ -336,6 +334,12 @@ public class LoanApplicationService : ILoanApplicationService
     private static LoanApplicationResponseDto MapToResponse(
         LoanApplication a)
     {
+        var requiresGuarantor = a.LoanType?.RequiresGuarantor ?? false;
+        var activeGuarantors = a.Guarantors?.Where(g => !g.IsDeleted).ToList() ?? new List<LoanGuarantor>();
+        var hasVerifiedGuarantor = activeGuarantors.Any(g =>
+            g.Status != null &&
+            g.Status.Key.Equals("GUARANTOR_VERIFIED", StringComparison.OrdinalIgnoreCase));
+
         return new LoanApplicationResponseDto
         {
             Id = a.Id,
@@ -345,7 +349,10 @@ public class LoanApplicationService : ILoanApplicationService
             ApplicantName = a.ApplicantUser.FullName,
 
             LoanTypeId = a.LoanTypeId,
-            LoanTypeName = a.LoanType.Name,
+            LoanTypeName = a.LoanType?.Name ?? string.Empty,
+            RequiresGuarantor = requiresGuarantor,
+            GuarantorCount = activeGuarantors.Count,
+            HasVerifiedGuarantor = hasVerifiedGuarantor,
 
             StatusId = a.StatusId,
             StatusName = a.Status.Name,

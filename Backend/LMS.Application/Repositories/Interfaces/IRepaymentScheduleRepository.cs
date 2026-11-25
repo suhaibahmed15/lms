@@ -1,4 +1,4 @@
-﻿using LMS.Domain.Entities;
+using LMS.Domain.Entities;
 
 namespace LMS.Application.Repositories.Interfaces;
 
@@ -11,6 +11,10 @@ public interface IRepaymentScheduleRepository
         string category);
 
     Task<bool> ScheduleExistsAsync(int loanId);
+
+    Task<List<RepaymentSchedule>> GetByLoanIdAsync(int loanId);
+
+    Task<User?> GetUserWithRoleAsync(int userId);
 
     Task<int> CreateSchedulesAsync(
         List<RepaymentSchedule> schedules);

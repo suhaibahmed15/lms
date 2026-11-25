@@ -98,6 +98,8 @@ public class LoanApplicationRepository : ILoanApplicationRepository
             .Include(a => a.LoanType)
             .Include(a => a.Status)
             .Include(a => a.AssignedToUser)
+            .Include(a => a.Guarantors)
+                .ThenInclude(g => g.Status)
             .Where(a => !a.IsDeleted);
 
         // ADMIN can view all applications

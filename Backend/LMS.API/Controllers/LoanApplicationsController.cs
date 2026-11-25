@@ -47,7 +47,9 @@ public class LoanApplicationsController : ControllerBase
             return Ok(new
             {
                 message = "Loan application submitted successfully.",
-                applicationId
+                id = applicationId,
+                applicationId,
+                data = new { id = applicationId, applicationId }
             });
         }
         catch (KeyNotFoundException ex)

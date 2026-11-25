@@ -1,4 +1,3 @@
-﻿
 using LMS.Domain.Entities;
 
 namespace LMS.Application.Repositories.Interfaces;
@@ -14,7 +13,10 @@ public interface ILoanApprovalRepository
         string statusKey,
         string category);
 
+    Task<bool> HasExistingLoanAsync(int applicationId);
+
     Task<int> SaveDecisionAsync(
         LoanApplication application,
-        LoanApproval approval);
+        LoanApproval approval,
+        Loan? loan = null);
 }

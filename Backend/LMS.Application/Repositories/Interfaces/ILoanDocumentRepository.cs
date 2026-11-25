@@ -1,4 +1,4 @@
-﻿using LMS.Domain.Entities;
+using LMS.Domain.Entities;
 
 namespace LMS.Application.Repositories.Interfaces;
 
@@ -16,10 +16,9 @@ public interface ILoanDocumentRepository
 
     Task<LoanDocument?> GetDocumentByIdAsync(int documentId);
 
-    Task<Status?> GetStatusByCategoryAndKeyAsync(
-        string category,
-        string key);
+    Task<Status?> GetStatusByCategoryAndKeyAsync(string category, string key);
 
+    Task<User?> GetUserWithRoleAsync(int userId);
 
     Task AddAsync(LoanDocument document);
 

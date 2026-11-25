@@ -19,4 +19,19 @@ public class LoanDocumentResponseDto
     public bool IsVerified { get; set; }
 
     public DateTime CreatedAt { get; set; }
+
+    // Status Information
+    public int StatusId { get; set; }
+    public string StatusName { get; set; } = string.Empty;
+    public string StatusKey { get; set; } = string.Empty;
+
+    // Verification Information
+    public int? VerifiedByUserId { get; set; }
+    public DateTime? VerifiedAt { get; set; }
+    public string? VerificationRemarks { get; set; }
+
+    // Rejection Information
+    public int? RejectedByUserId { get; set; }
+    public DateTime? RejectedAt { get; set; }
+    public string? RejectionRemarks { get; set; }
 }

@@ -133,6 +133,7 @@ if (app.Environment.IsDevelopment())
 
 // Middleware
 app.UseHttpsRedirection();
+app.UseStaticFiles();
 
 app.UseAuthentication();
 app.UseAuthorization();

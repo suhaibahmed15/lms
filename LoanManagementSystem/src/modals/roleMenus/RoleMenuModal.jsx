@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { X } from "lucide-react";
+import { Modal, Select, Button } from "../../components/common";
 
-function RoleMenuModal({
+export default function RoleMenuModal({
     isOpen,
     onClose,
     onSubmit,
@@ -31,8 +31,8 @@ function RoleMenuModal({
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-        setFormData((previous) => ({
-            ...previous,
+        setFormData((prev) => ({
+            ...prev,
             [name]: value
         }));
     };
@@ -65,120 +65,73 @@ function RoleMenuModal({
         }
     };
 
-    const inputClass =
-        "w-full rounded-xl border border-white/10 bg-white/[0.07] px-4 py-2.5 text-sm text-white placeholder:text-zinc-500 outline-none transition focus:border-orange-500/70 focus:bg-white/[0.10] focus:ring-4 focus:ring-orange-500/10";
+    const roleOptions = roles
+        .filter((role) => role.isActive && !role.isDeleted)
+        .map((role) => ({
+            value: role.id,
+            label: `${role.name} (${role.key})`
+        }));
 
-    const labelClass = "mb-1.5 block text-sm font-medium text-zinc-300";
+    const menuOptions = menus
+        .filter((menu) => menu.isActive && !menu.isDeleted)
+        .map((menu) => ({
+            value: menu.id,
+            label: `${menu.name} (${menu.key})`
+        }));
 
     return (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/75 p-4 backdrop-blur-sm">
-            <div className="w-full max-w-lg overflow-hidden rounded-2xl border border-white/15 bg-[#121212] shadow-2xl shadow-black/80">
-                {/* Header */}
-                <div className="flex items-center justify-between border-b border-white/10 px-6 py-5">
-                    <div>
-                        <h2 className="text-xl font-bold text-white">
-                            Assign Menu to Role
-                        </h2>
-
-                        <p className="mt-1 text-sm text-zinc-400">
-                            Select a role and menu to create a role menu assignment.
-                        </p>
+        <Modal
+            isOpen={isOpen}
+            onClose={onClose}
+            title="Assign Menu to Role"
+            subtitle="Select a role and menu to create a role menu assignment."
+        >
+            <form onSubmit={handleSubmit} className="space-y-4">
+                {error && (
+                    <div className="rounded-xl border border-red-500/25 bg-red-500/10 px-4 py-3 text-sm text-red-400">
+                        {error}
                     </div>
+                )}
 
-                    <button
-                        type="button"
+                <Select
+                    label="Select Role"
+                    name="roleId"
+                    value={formData.roleId}
+                    onChange={handleChange}
+                    placeholder="Choose a role"
+                    options={roleOptions}
+                    required
+                />
+
+                <Select
+                    label="Select Menu"
+                    name="menuId"
+                    value={formData.menuId}
+                    onChange={handleChange}
+                    placeholder="Choose a menu"
+                    options={menuOptions}
+                    required
+                />
+
+                <div className="flex justify-end gap-3 border-t border-white/10 pt-5">
+                    <Button
+                        variant="secondary"
                         onClick={onClose}
-                        className="rounded-xl p-2 text-zinc-400 transition hover:bg-white/10 hover:text-white"
+                        disabled={loading}
                     >
-                        <X size={20} />
-                    </button>
+                        Cancel
+                    </Button>
+
+                    <Button
+                        type="submit"
+                        variant="primary"
+                        loading={loading}
+                        loadingText="Assigning..."
+                    >
+                        Assign Menu
+                    </Button>
                 </div>
-
-                {/* Form */}
-                <form onSubmit={handleSubmit} className="space-y-4 p-6">
-                    {error && (
-                        <div className="rounded-xl border border-red-500/25 bg-red-500/10 px-4 py-3 text-sm text-red-400">
-                            {error}
-                        </div>
-                    )}
-
-                    {/* Role */}
-                    <div>
-                        <label className={labelClass}>
-                            Select Role <span className="text-orange-400">*</span>
-                        </label>
-
-                        <select
-                            name="roleId"
-                            value={formData.roleId}
-                            onChange={handleChange}
-                            required
-                            className={inputClass}
-                        >
-                            <option value="">Choose a role</option>
-                            {roles
-                                .filter((role) => role.isActive)
-                                .map((role) => (
-                                    <option key={role.id} value={role.id}>
-                                        {role.name} ({role.key})
-                                    </option>
-                                ))}
-                        </select>
-                    </div>
-
-                    {/* Menu */}
-                    <div>
-                        <label className={labelClass}>
-                            Select Menu <span className="text-orange-400">*</span>
-                        </label>
-
-                        <select
-                            name="menuId"
-                            value={formData.menuId}
-                            onChange={handleChange}
-                            required
-                            className={inputClass}
-                        >
-                            <option value="">Choose a menu</option>
-                            {menus
-                                .filter(
-                                    (menu) =>
-                                        menu.isActive &&
-                                        menu.key?.toUpperCase() !== "AUDIT_LOGS"
-                                )
-                                .map((menu) => (
-                                    <option key={menu.id} value={menu.id}>
-                                        {menu.parentMenuName
-                                            ? `${menu.parentMenuName} → ${menu.name}`
-                                            : `${menu.name} (Parent)`}
-                                    </option>
-                                ))}
-                        </select>
-                    </div>
-
-                    {/* Buttons */}
-                    <div className="flex justify-end gap-3 border-t border-white/10 pt-5">
-                        <button
-                            type="button"
-                            onClick={onClose}
-                            disabled={loading}
-                            className="rounded-xl border border-white/10 bg-white/[0.05] px-5 py-2.5 text-sm font-medium text-zinc-300 transition hover:bg-white/[0.10] hover:text-white"
-                        >
-                            Cancel
-                        </button>
-
-                        <button
-                            type="submit"
-                            disabled={loading}
-                            className="rounded-xl bg-gradient-to-r from-orange-600 to-orange-500 px-5 py-2.5 text-sm font-semibold text-white shadow-lg shadow-orange-500/20 transition hover:from-orange-500 hover:to-orange-400 disabled:cursor-not-allowed disabled:opacity-60"
-                        >
-                            {loading ? "Assigning..." : "Assign Menu"}
-                        </button>
-                    </div>
-                </form>
-            </div>
-        </div>
+            </form>
+        </Modal>
     );
 }
-
-export default RoleMenuModal;

@@ -117,6 +117,18 @@ public static class DependencyInjection
         services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<IUserService, UserService>();
         services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
+        services.AddScoped<IReportRepository, ReportRepository>();
+        services.AddScoped<IReportService, ReportService>();
+
+        services.AddScoped<ILoanRepository, LoanRepository>();
+        services.AddScoped<ILoanService, LoanService>();
+
+        services.AddScoped<ILoanTypeRepository, LoanTypeRepository>();
+        services.AddScoped<ILoanTypeService, LoanTypeService>();
+
+        services.AddScoped<IAuditLogRepository, AuditLogRepository>();
+        services.AddScoped<IAuditLogService, AuditLogService>();
+
         services.AddScoped<IRoleRepository, RoleRepository>();
         services.AddScoped<IRoleService, RoleService>();
         services.AddScoped<IAuthRepository, AuthRepository>();

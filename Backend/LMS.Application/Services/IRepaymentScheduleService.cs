@@ -1,4 +1,4 @@
-﻿using LMS.Application.DTO.Repayments;
+using LMS.Application.DTO.Repayments;
 
 namespace LMS.Application.Services.Interfaces;
 
@@ -8,4 +8,6 @@ public interface IRepaymentScheduleService
         int loanId,
         int userId,
         GenerateRepaymentScheduleDto dto);
+
+    Task<List<object>> GetByLoanIdAsync(int userId, int loanId);
 }

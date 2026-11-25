@@ -1,4 +1,4 @@
-﻿
+
 namespace LMS.Application.DTO.LoanApplications;
 
 public class LoanApplicationResponseDto
@@ -11,6 +11,9 @@ public class LoanApplicationResponseDto
 
     public int LoanTypeId { get; set; }
     public string LoanTypeName { get; set; } = string.Empty;
+    public bool RequiresGuarantor { get; set; }
+    public int GuarantorCount { get; set; }
+    public bool HasVerifiedGuarantor { get; set; }
 
     public int StatusId { get; set; }
     public string StatusName { get; set; } = string.Empty;

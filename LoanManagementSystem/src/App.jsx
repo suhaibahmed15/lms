@@ -1,4 +1,3 @@
-
 import {
     BrowserRouter,
     Routes,
@@ -15,6 +14,7 @@ import Signup from "./components/auth/Signup";
 
 // Common Components
 import ProtectedRoute from "./components/common/ProtectedRoute";
+import RouteDispatcher from "./components/common/RouteDispatcher";
 
 // Pages
 import Dashboard from "./pages/Dashboard";
@@ -26,6 +26,15 @@ import UserPermissions from "./pages/UserPermissions";
 import Permissions from "./pages/Permissions";
 import RoleMenus from "./pages/RoleMenus";
 import RolePermissions from "./pages/RolePermissions";
+import LoanTypes from "./pages/LoanTypes";
+import LoanApplications from "./pages/LoanApplications";
+import LoanDocuments from "./pages/LoanDocuments";
+import LoanGuarantors from "./pages/LoanGuarantors";
+import Loans from "./pages/Loans";
+import Repayments from "./pages/Repayments";
+import AuditLogs from "./pages/AuditLogs";
+import Reports from "./pages/Reports";
+import Statuses from "./pages/Statuses";
 
 // Utilities
 import {
@@ -36,7 +45,6 @@ import {
 
 function AuthPage({ onAuthChange }) {
     const [showLogin, setShowLogin] = useState(true);
-
     const navigate = useNavigate();
 
     const handleLoginSuccess = (authData) => {
@@ -85,7 +93,6 @@ function AppRoutes() {
 
     return (
         <Routes>
-
             <Route
                 path="/login"
                 element={
@@ -96,52 +103,62 @@ function AppRoutes() {
             />
 
             <Route element={<ProtectedRoute authenticated={authenticated} />}>
+                <Route path="/dashboard" element={<Dashboard />} />
+                <Route path="/roles" element={<Roles />} />
+                <Route path="/menus" element={<Menus />} />
+                <Route path="/users" element={<Users />} />
+                <Route path="/user-menus" element={<UserMenus />} />
+                <Route path="/user-permissions" element={<UserPermissions />} />
+                <Route path="/permissions" element={<Permissions />} />
+                <Route path="/role-menus" element={<RoleMenus />} />
+                <Route path="/role-permissions" element={<RolePermissions />} />
+                <Route path="/loan-types" element={<LoanTypes />} />
 
-                <Route
-                    path="/dashboard"
-                    element={<Dashboard />}
-                />
+                {/* Loans & Workflow */}
+                <Route path="/loans" element={<Loans />} />
+                <Route path="/loans/all" element={<Loans />} />
+                <Route path="/loans/list" element={<Loans />} />
+                <Route path="/my-loans" element={<Loans />} />
+                <Route path="/loans/my-loans" element={<Loans />} />
 
-                <Route
-                    path="/roles"
-                    element={<Roles />}
-                />
+                {/* Applications */}
+                <Route path="/loans/applications" element={<LoanApplications />} />
+                <Route path="/loan-applications" element={<LoanApplications />} />
+                <Route path="/applications" element={<LoanApplications />} />
+                <Route path="/apply" element={<LoanApplications />} />
 
-                <Route
-                    path="/menus"
-                    element={<Menus />}
-                />
+                {/* Documents */}
+                <Route path="/loan-documents" element={<LoanDocuments />} />
+                <Route path="/loans/documents" element={<LoanDocuments />} />
+                <Route path="/documents" element={<LoanDocuments />} />
 
-                <Route
-                    path="/users"
-                    element={<Users />}
-                />
+                {/* Guarantors */}
+                <Route path="/loan-guarantors" element={<LoanGuarantors />} />
+                <Route path="/loans/guarantors" element={<LoanGuarantors />} />
+                <Route path="/guarantors" element={<LoanGuarantors />} />
 
-                <Route
-                    path="/user-menus"
-                    element={<UserMenus />}
-                />
+                {/* Repayments */}
+                <Route path="/repayments" element={<Repayments />} />
+                <Route path="/loans/repayments" element={<Repayments />} />
+                <Route path="/payments" element={<Repayments />} />
+                <Route path="/loans/payments" element={<Repayments />} />
+                <Route path="/repayment-schedules" element={<Repayments />} />
+                <Route path="/schedules" element={<Repayments />} />
 
-                <Route
-                    path="/user-permissions"
-                    element={<UserPermissions />}
-                />
+                {/* Audit & Reports */}
+                <Route path="/audit-logs" element={<AuditLogs />} />
+                <Route path="/auditlogs" element={<AuditLogs />} />
+                <Route path="/reports" element={<Reports />} />
+                <Route path="/reports/loans" element={<Reports />} />
+                <Route path="/reports/repayments" element={<Reports />} />
 
-                <Route
-                    path="/permissions"
-                    element={<Permissions />}
-                />
+                {/* Statuses */}
+                <Route path="/statuses" element={<Statuses />} />
+                <Route path="/status" element={<Statuses />} />
+                <Route path="/workflow-statuses" element={<Statuses />} />
 
-                <Route
-                    path="/role-menus"
-                    element={<RoleMenus />}
-                />
-
-                <Route
-                    path="/role-permissions"
-                    element={<RolePermissions />}
-                />
-
+                {/* Smart catch-all dispatcher for any database menu route */}
+                <Route path="*" element={<RouteDispatcher />} />
             </Route>
 
             <Route
@@ -158,7 +175,6 @@ function AppRoutes() {
                 path="*"
                 element={<Navigate to={authenticated ? "/dashboard" : "/login"} replace />}
             />
-
         </Routes>
     );
 }

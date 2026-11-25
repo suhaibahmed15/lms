@@ -1,4 +1,4 @@
-﻿
+
 using LMS.Application.DTO.Loans;
 using LMS.Application.Repositories.Interfaces;
 using LMS.Application.Services.Interfaces;
@@ -135,6 +135,44 @@ public class LoanDisbursementService : ILoanDisbursementService
             CreatedBy = disbursingUser.Id,
             IsDeleted = false
         };
+
+        // Automatically generate repayment schedule for the disbursed loan
+        var pendingRepaymentStatus = await _repository.GetStatusByKeyAsync(
+            "REPAYMENT_PENDING",
+            "Repayment");
+
+        if (pendingRepaymentStatus != null && application.RequestedTermMonths > 0)
+        {
+            var monthlyPrincipal = decimal.Round(
+                principalAmount / application.RequestedTermMonths,
+                2,
+                MidpointRounding.AwayFromZero);
+
+            var monthlyInterest = decimal.Round(
+                interestAmount / application.RequestedTermMonths,
+                2,
+                MidpointRounding.AwayFromZero);
+
+            var monthlyTotal = monthlyPrincipal + monthlyInterest;
+            var firstDueDate = DateTime.UtcNow.AddMonths(1);
+
+            for (var i = 1; i <= application.RequestedTermMonths; i++)
+            {
+                loan.RepaymentSchedules.Add(new RepaymentSchedule
+                {
+                    InstallmentNumber = i,
+                    DueDate = firstDueDate.AddMonths(i - 1),
+                    PrincipalDue = monthlyPrincipal,
+                    InterestDue = monthlyInterest,
+                    TotalDue = monthlyTotal,
+                    PaidAmount = 0m,
+                    StatusId = pendingRepaymentStatus.Id,
+                    CreatedBy = disbursingUser.Id,
+                    CreatedAt = DateTime.UtcNow,
+                    IsDeleted = false
+                });
+            }
+        }
 
         // Save Loan
         return await _repository.CreateLoanAsync(loan);

@@ -1,4 +1,4 @@
-﻿using LMS.Application.DTO.Repayments;
+using LMS.Application.DTO.Repayments;
 using LMS.Application.Repositories.Interfaces;
 using LMS.Application.Services.Interfaces;
 using LMS.Domain.Entities;
@@ -25,9 +25,12 @@ public class RepaymentScheduleService : IRepaymentScheduleService
         if (loan == null)
             throw new KeyNotFoundException("Loan not found.");
 
-        if (loan.StatusId != 16)
+        var activeStatus = await _repository.GetStatusByKeyAsync("LOAN_ACTIVE", "Loan");
+        if (activeStatus == null || loan.StatusId != activeStatus.Id)
+        {
             throw new InvalidOperationException(
                 "Repayment schedule can only be generated for an active loan.");
+        }
 
         if (loan.TermMonths <= 0 ||
             loan.PrincipalAmount <= 0 ||
@@ -111,5 +114,46 @@ public class RepaymentScheduleService : IRepaymentScheduleService
         }
 
         return await _repository.CreateSchedulesAsync(schedules);
+    }
+
+    public async Task<List<object>> GetByLoanIdAsync(int userId, int loanId)
+    {
+        var user = await _repository.GetUserWithRoleAsync(userId);
+        if (user == null)
+            throw new UnauthorizedAccessException("User not found or inactive.");
+
+        var loan = await _repository.GetLoanByIdAsync(loanId);
+        if (loan == null)
+            throw new KeyNotFoundException("Loan not found.");
+
+        var roleKey = user.Role.Key.ToUpperInvariant();
+        if (roleKey == "CUSTOMER" && loan.BorrowerUserId != userId)
+            throw new UnauthorizedAccessException("You can only access repayment schedules for your own loans.");
+
+        if ((roleKey == "OFFICER" || roleKey == "LOAN_OFFICER") &&
+            loan.LoanApplication != null &&
+            loan.LoanApplication.AssignedToUserId != userId &&
+            loan.LoanApplication.AssignedToUserId != null)
+        {
+            throw new UnauthorizedAccessException("You can only access schedules for loans assigned to you.");
+        }
+
+        var items = await _repository.GetByLoanIdAsync(loanId);
+
+        return items.Select(x => (object)new
+        {
+            x.Id,
+            x.LoanId,
+            x.InstallmentNumber,
+            x.DueDate,
+            x.PrincipalDue,
+            x.InterestDue,
+            x.TotalDue,
+            x.PaidAmount,
+            x.StatusId,
+            StatusName = x.Status?.Name,
+            StatusKey = x.Status?.Key,
+            x.PaidAt
+        }).ToList();
     }
 }

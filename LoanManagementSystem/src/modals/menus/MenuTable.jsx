@@ -15,6 +15,7 @@ import {
 } from "lucide-react";
 
 import MenuModal from "./MenuModal";
+import { Button } from "../../components/common";
 
 function MenuTable({
     menus,
@@ -77,14 +78,9 @@ function MenuTable({
                 </div>
 
                 {canManage && (
-                    <button
-                        type="button"
-                        onClick={onAdd}
-                        className="flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-orange-600 to-orange-500 px-4 py-2.5 text-sm font-semibold text-white shadow-lg shadow-orange-500/20 transition hover:from-orange-500 hover:to-orange-400"
-                    >
-                        <Plus size={18} />
+                    <Button onClick={onAdd} icon={Plus}>
                         Add Menu
-                    </button>
+                    </Button>
                 )}
             </div>
 
@@ -419,29 +415,29 @@ function MenuTable({
                     </p>
 
                     <div className="flex items-center gap-2">
-                        <button
-                            type="button"
+                        <Button
+                            variant="secondary"
+                            size="sm"
                             onClick={() => onPageChange(Math.max(1, pageNumber - 1))}
                             disabled={pageNumber <= 1 || loading}
-                            className="inline-flex items-center gap-1 rounded-xl border border-white/10 bg-white/[0.05] px-3 py-1.5 text-xs font-medium text-zinc-300 transition hover:bg-white/[0.10] disabled:cursor-not-allowed disabled:opacity-40"
+                            icon={ChevronLeft}
                         >
-                            <ChevronLeft size={15} />
                             Previous
-                        </button>
+                        </Button>
 
                         <span className="px-2 text-xs font-medium text-zinc-300">
                             Page {totalPages === 0 ? 0 : pageNumber} of {totalPages}
                         </span>
 
-                        <button
-                            type="button"
+                        <Button
+                            variant="secondary"
+                            size="sm"
                             onClick={() => onPageChange(Math.min(totalPages, pageNumber + 1))}
                             disabled={pageNumber >= totalPages || loading}
-                            className="inline-flex items-center gap-1 rounded-xl border border-white/10 bg-white/[0.05] px-3 py-1.5 text-xs font-medium text-zinc-300 transition hover:bg-white/[0.10] disabled:cursor-not-allowed disabled:opacity-40"
+                            iconRight={ChevronRight}
                         >
                             Next
-                            <ChevronRight size={15} />
-                        </button>
+                        </Button>
                     </div>
                 </div>
             </div>

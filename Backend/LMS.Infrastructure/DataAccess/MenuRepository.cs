@@ -19,7 +19,7 @@ public class MenuRepository : IMenuRepository
         return await _context.Menus
             .AsNoTracking()
             .Include(m => m.ParentMenu)
-            .Where(m => !m.IsDeleted && m.Key != "AUDIT_LOGS")
+            .Where(m => !m.IsDeleted)
             .OrderBy(m => m.DisplayOrder)
             .ToListAsync();
     }
@@ -36,7 +36,7 @@ public class MenuRepository : IMenuRepository
         var baseQuery = _context.Menus
             .AsNoTracking()
             .Include(m => m.ParentMenu)
-            .Where(m => !m.IsDeleted && m.Key != "AUDIT_LOGS");
+            .Where(m => !m.IsDeleted);
 
         var activeCount = await baseQuery.CountAsync(m => m.IsActive);
         var inactiveCount = await baseQuery.CountAsync(m => !m.IsActive);
@@ -162,8 +162,7 @@ public class MenuRepository : IMenuRepository
             .AsNoTracking()
             .Where(m =>
                 m.IsActive &&
-                !m.IsDeleted &&
-                m.Key != "AUDIT_LOGS")
+                !m.IsDeleted)
             .OrderBy(m => m.DisplayOrder)
             .ThenBy(m => m.Name)
             .ToListAsync();
@@ -259,7 +258,6 @@ public class MenuRepository : IMenuRepository
             .AsNoTracking()
             .Where(rm =>
                 rm.RoleId == user.RoleId &&
-                rm.IsActive &&
                 !rm.IsDeleted &&
                 rm.Menu.IsActive &&
                 !rm.Menu.IsDeleted)
@@ -268,16 +266,17 @@ public class MenuRepository : IMenuRepository
             .ToListAsync();
 
         // Step 9: Menus directly assigned to the individual user
-       var roleMenuIds = await _context.RoleMenus
-    .AsNoTracking()
-    .Where(rm =>
-        rm.RoleId == user.RoleId &&
-        !rm.IsDeleted &&
-        rm.Menu.IsActive &&
-        !rm.Menu.IsDeleted)
-    .Select(rm => rm.MenuId)
-    .Distinct()
-    .ToListAsync();
+        var userMenuIds = await _context.UserMenus
+            .AsNoTracking()
+            .Where(um =>
+                um.UserId == user.Id &&
+                um.IsActive &&
+                !um.IsDeleted &&
+                um.Menu.IsActive &&
+                !um.Menu.IsDeleted)
+            .Select(um => um.MenuId)
+            .Distinct()
+            .ToListAsync();
 
         // Step 10: Combine all four access sources
         var allowedMenuIds = roleMenuIds

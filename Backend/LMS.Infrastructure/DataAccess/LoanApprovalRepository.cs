@@ -1,4 +1,3 @@
-﻿
 using LMS.Application.Repositories.Interfaces;
 using LMS.Domain.Entities;
 using LMS.Infrastructure.Data;
@@ -29,12 +28,15 @@ public class LoanApprovalRepository : ILoanApprovalRepository
                 !u.Role.IsDeleted);
     }
 
-    // Get application with current status
+    // Get application with current status, loan type, and guarantors
     public async Task<LoanApplication?> GetApplicationForDecisionAsync(
         int applicationId)
     {
         return await _context.LoanApplications
             .Include(a => a.Status)
+            .Include(a => a.LoanType)
+            .Include(a => a.Guarantors)
+                .ThenInclude(g => g.Status)
             .FirstOrDefaultAsync(a =>
                 a.Id == applicationId &&
                 !a.IsDeleted);
@@ -53,10 +55,18 @@ public class LoanApprovalRepository : ILoanApprovalRepository
                 !s.IsDeleted);
     }
 
-    // Save application decision and approval history together
+    // Check if a loan record already exists for the given application
+    public async Task<bool> HasExistingLoanAsync(int applicationId)
+    {
+        return await _context.Loans
+            .AnyAsync(l => l.LoanApplicationId == applicationId && !l.IsDeleted);
+    }
+
+    // Save application decision, approval history, and optional loan facility together
     public async Task<int> SaveDecisionAsync(
-     LoanApplication application,
-     LoanApproval approval)
+        LoanApplication application,
+        LoanApproval approval,
+        Loan? loan = null)
     {
         await using var transaction =
             await _context.Database.BeginTransactionAsync();
@@ -65,8 +75,12 @@ public class LoanApprovalRepository : ILoanApprovalRepository
         {
             await _context.LoanApprovals.AddAsync(approval);
 
-            await _context.SaveChangesAsync();
+            if (loan != null)
+            {
+                await _context.Loans.AddAsync(loan);
+            }
 
+            await _context.SaveChangesAsync();
             await transaction.CommitAsync();
 
             return approval.Id;

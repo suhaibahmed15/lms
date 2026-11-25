@@ -78,11 +78,7 @@ function Sidebar({ menus = [], onClose }) {
     const activeMenus = useMemo(
         () =>
             menus
-                .filter(
-                    (menu) =>
-                        menu.isActive &&
-                        menu.key?.toUpperCase() !== "AUDIT_LOGS"
-                )
+                .filter((menu) => menu.isActive)
                 .sort((a, b) => a.displayOrder - b.displayOrder),
         [menus]
     );
