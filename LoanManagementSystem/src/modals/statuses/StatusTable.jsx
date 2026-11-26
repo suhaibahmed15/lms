@@ -118,7 +118,7 @@ export default function StatusTable({
                                         <td className="px-5 py-4 text-xs font-mono text-zinc-500">
                                             #{item.sortOrder || 1}
                                         </td>
-                                        <td className="px-5 py-4 font-medium text-orange-400">
+                                        <td className="px-5 py-4 font-medium text-pink-400">
                                             {item.category}
                                         </td>
                                         <td className="px-5 py-4 font-semibold text-white">

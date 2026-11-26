@@ -89,7 +89,7 @@ export default function LoanTable({
                                 value={search}
                                 onChange={(e) => onSearchChange(e.target.value)}
                                 placeholder="Search by loan # or borrower..."
-                                className="w-full rounded-xl border border-white/10 bg-[#181818] py-2.5 pl-10 pr-4 text-sm text-white placeholder:text-zinc-500 outline-none focus:border-orange-500/70"
+                                className="w-full rounded-xl border border-white/10 bg-[#181818] py-2.5 pl-10 pr-4 text-sm text-white placeholder:text-zinc-500 outline-none focus:border-pink-500/70"
                             />
                         </div>
 
@@ -180,7 +180,7 @@ export default function LoanTable({
                                             {loan.termMonths} mos
                                         </td>
 
-                                        <td className="px-5 py-4 text-sm font-bold text-orange-400">
+                                        <td className="px-5 py-4 text-sm font-bold text-pink-400">
                                             {formatAmount(loan.outstandingBalance)}
                                         </td>
 
@@ -216,7 +216,7 @@ export default function LoanTable({
                                                     icon={FileText}
                                                     onClick={() => onDownloadAgreement ? onDownloadAgreement(loan) : onViewSchedule(loan)}
                                                     title="View & Download Loan Agreement"
-                                                    className="text-amber-400 hover:text-amber-300 hover:bg-amber-500/10"
+                                                    className="text-pink-400 hover:text-pink-300 hover:bg-pink-500/10"
                                                 />
                                                 <Button
                                                     size="sm"

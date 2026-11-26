@@ -65,12 +65,12 @@ export default function Modal({
             aria-modal="true"
         >
             <div
-                className={`relative flex flex-col w-full ${widthClass} max-h-[92vh] rounded-2xl border border-slate-700/80 bg-[#0b1329] shadow-2xl shadow-black/90 animate-in fade-in zoom-in-95 duration-200 overflow-hidden ${className}`}
+                className={`relative flex flex-col w-full ${widthClass} max-h-[92vh] rounded-2xl border border-pink-500/20 bg-neutral-950 shadow-2xl shadow-pink-500/5 animate-in fade-in zoom-in-95 duration-200 overflow-hidden ${className}`}
                 onClick={(e) => e.stopPropagation()}
             >
                 {/* Fixed Header */}
                 {(title || onClose) && (
-                    <div className="flex shrink-0 items-center justify-between border-b border-slate-800/90 px-6 py-4.5 bg-[#0f172a]/95 backdrop-blur-md">
+                    <div className="flex shrink-0 items-center justify-between border-b border-neutral-800/90 px-6 py-4.5 bg-neutral-900/95 backdrop-blur-md">
                         <div className="pr-4">
                             {title && (
                                 <h2 className="text-lg sm:text-xl font-bold tracking-tight text-white">
@@ -79,7 +79,7 @@ export default function Modal({
                             )}
 
                             {subtitle && (
-                                <p className="mt-0.5 text-xs sm:text-sm text-slate-400">
+                                <p className="mt-0.5 text-xs sm:text-sm text-neutral-400">
                                     {subtitle}
                                 </p>
                             )}
@@ -89,7 +89,7 @@ export default function Modal({
                             <button
                                 type="button"
                                 onClick={onClose}
-                                className="shrink-0 rounded-xl p-2 text-slate-400 transition hover:bg-slate-800 hover:text-white"
+                                className="shrink-0 rounded-xl p-2 text-neutral-400 transition hover:bg-neutral-800 hover:text-white"
                                 aria-label="Close dialog"
                             >
                                 <X size={18} />
@@ -105,7 +105,7 @@ export default function Modal({
 
                 {/* Optional Fixed Footer */}
                 {footer && (
-                    <div className="flex shrink-0 items-center justify-end gap-3 border-t border-slate-800/90 px-6 py-3.5 bg-[#0f172a]/95">
+                    <div className="flex shrink-0 items-center justify-end gap-3 border-t border-neutral-800/90 px-6 py-3.5 bg-neutral-900/95">
                         {footer}
                     </div>
                 )}

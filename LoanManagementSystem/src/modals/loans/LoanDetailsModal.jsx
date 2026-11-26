@@ -44,7 +44,7 @@ export default function LoanDetailsModal({
                     </div>
                     <div>
                         <span className="text-xs text-slate-400">Outstanding Balance</span>
-                        <p className="font-bold text-lg text-amber-400">PKR {formatAmount(loan.outstandingBalance)}</p>
+                        <p className="font-bold text-lg text-pink-400">PKR {formatAmount(loan.outstandingBalance)}</p>
                     </div>
                     <div>
                         <span className="text-xs text-slate-400">Interest Rate</span>
@@ -70,7 +70,7 @@ export default function LoanDetailsModal({
                         variant="primary"
                         icon={FileText}
                         onClick={() => setIsAgreementOpen(true)}
-                        className="bg-amber-600 hover:bg-amber-500 text-white"
+                        className="bg-pink-600 hover:bg-pink-500 text-white"
                     >
                         View & Download Agreement
                     </Button>

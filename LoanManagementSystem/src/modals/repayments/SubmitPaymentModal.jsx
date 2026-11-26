@@ -209,7 +209,7 @@ export default function SubmitPaymentModal({
                     <div className="rounded-xl border border-slate-700/80 bg-slate-900/60 p-4 text-xs space-y-2">
                         <div className="flex items-center justify-between text-slate-300">
                             <span className="font-semibold text-white flex items-center gap-1.5">
-                                <Wallet size={14} className="text-amber-400" />
+                                <Wallet size={14} className="text-pink-400" />
                                 Account: {selectedLoan.loanNumber}
                             </span>
                             <span className="text-emerald-400 font-medium">
@@ -223,7 +223,7 @@ export default function SubmitPaymentModal({
                             </div>
                             <div>
                                 <span>Outstanding Balance:</span>
-                                <strong className="block text-amber-400">PKR {formatAmount(selectedLoan.outstandingBalance)}</strong>
+                                <strong className="block text-pink-400">PKR {formatAmount(selectedLoan.outstandingBalance)}</strong>
                             </div>
                             <div>
                                 <span>Sanctioned Principal:</span>
@@ -235,12 +235,12 @@ export default function SubmitPaymentModal({
 
                 {/* Schedule Status & Installment Selector */}
                 {loanId && !scheduleLoading && schedules.length === 0 ? (
-                    <div className="rounded-xl border border-amber-500/30 bg-amber-500/10 p-4 space-y-3">
-                        <div className="flex items-start gap-3 text-amber-300">
+                    <div className="rounded-xl border border-pink-500/30 bg-pink-500/10 p-4 space-y-3">
+                        <div className="flex items-start gap-3 text-pink-300">
                             <AlertCircle size={18} className="mt-0.5 shrink-0" />
                             <div className="space-y-1">
                                 <p className="font-semibold text-sm">Amortization Schedule Not Initiated</p>
-                                <p className="text-xs text-amber-200/80 leading-relaxed">
+                                <p className="text-xs text-pink-200/80 leading-relaxed">
                                     This active loan has not yet had its installment schedule initialized. Initialize the schedule to generate the monthly installments and proceed with recording payments.
                                 </p>
                             </div>
@@ -254,7 +254,7 @@ export default function SubmitPaymentModal({
                                 loading={generatingSchedule}
                                 loadingText="Generating..."
                                 onClick={handleInitializeSchedule}
-                                className="bg-amber-600 hover:bg-amber-500 text-white"
+                                className="bg-pink-600 hover:bg-pink-500 text-white"
                             >
                                 Initialize Installment Schedule
                             </Button>
@@ -351,7 +351,7 @@ export default function SubmitPaymentModal({
                         loading={loading}
                         loadingText="Submitting..."
                         disabled={!repaymentScheduleId || schedules.length === 0}
-                        className="bg-amber-600 hover:bg-amber-500 text-white shadow-lg shadow-amber-600/20"
+                        className="bg-pink-600 hover:bg-pink-500 text-white shadow-lg shadow-pink-600/20"
                     >
                         Submit Payment for Verification
                     </Button>

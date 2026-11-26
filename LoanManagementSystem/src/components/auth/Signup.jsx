@@ -90,7 +90,7 @@ export default function Signup({ onSwitch, onLoginSuccess }) {
         >
             {/* Form Heading */}
             <div className="mb-7">
-                <p className="mb-2 text-xs font-semibold uppercase tracking-[2px] text-orange-400">
+                <p className="mb-2 text-xs font-semibold uppercase tracking-[2px] text-pink-400">
                     Registration
                 </p>
 
@@ -166,7 +166,7 @@ export default function Signup({ onSwitch, onLoginSuccess }) {
                             <button
                                 type="button"
                                 onClick={() => setShowPassword(!showPassword)}
-                                className="cursor-pointer text-zinc-500 hover:text-orange-400"
+                                className="cursor-pointer text-zinc-500 hover:text-pink-400"
                                 aria-label="Toggle password visibility"
                             >
                                 {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
@@ -190,7 +190,7 @@ export default function Signup({ onSwitch, onLoginSuccess }) {
                             <button
                                 type="button"
                                 onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                                className="cursor-pointer text-zinc-500 hover:text-orange-400"
+                                className="cursor-pointer text-zinc-500 hover:text-pink-400"
                                 aria-label="Toggle confirm password visibility"
                             >
                                 {showConfirmPassword ? <EyeOff size={18} /> : <Eye size={18} />}
@@ -204,7 +204,7 @@ export default function Signup({ onSwitch, onLoginSuccess }) {
                     <div className="rounded-xl border border-white/10 bg-white/[0.04] px-4 py-3">
                         <div className="mb-2 flex items-center justify-between text-xs">
                             <span className="text-zinc-400">Password Strength</span>
-                            <span className="font-semibold text-orange-400">
+                            <span className="font-semibold text-pink-400">
                                 {strengthLabels[strength]}
                             </span>
                         </div>
@@ -216,10 +216,10 @@ export default function Signup({ onSwitch, onLoginSuccess }) {
                                     className={`h-1.5 rounded-full transition-all ${
                                         strength >= level
                                             ? level === 1
-                                                ? "bg-red-500"
+                                                ? "bg-rose-500"
                                                 : level === 2
-                                                ? "bg-amber-500"
-                                                : "bg-orange-500"
+                                                ? "bg-pink-400"
+                                                : "bg-pink-500"
                                             : "bg-zinc-700"
                                     }`}
                                 />
@@ -228,7 +228,7 @@ export default function Signup({ onSwitch, onLoginSuccess }) {
 
                         {formData.confirmPassword && (
                             <p className={`mt-2 text-xs ${
-                                passwordsMatch ? "text-emerald-400" : "text-red-400"
+                                passwordsMatch ? "text-pink-300" : "text-rose-400"
                             }`}>
                                 {passwordsMatch ? "Passwords match" : "Passwords do not match"}
                             </p>
@@ -242,7 +242,7 @@ export default function Signup({ onSwitch, onLoginSuccess }) {
                     size="lg"
                     loading={loading}
                     loadingText="Creating Account..."
-                    className="w-full py-3.5 text-sm font-bold shadow-lg shadow-orange-500/20"
+                    className="w-full py-3.5 text-sm font-bold shadow-lg shadow-pink-500/25"
                 >
                     Create Account
                 </Button>
@@ -255,7 +255,7 @@ export default function Signup({ onSwitch, onLoginSuccess }) {
                     <button
                         type="button"
                         onClick={onSwitch}
-                        className="font-semibold text-orange-400 transition hover:text-orange-300"
+                        className="font-semibold text-pink-400 transition hover:text-pink-300"
                     >
                         Sign In
                     </button>

@@ -178,7 +178,7 @@ export default function LoanScheduleModal({
                         type="button"
                         variant="primary"
                         onClick={() => setShowPreview(true)}
-                        className="bg-amber-600 hover:bg-amber-500 text-white flex items-center gap-2"
+                        className="bg-pink-600 hover:bg-pink-500 text-white flex items-center gap-2"
                     >
                         <Eye size={16} />
                         View & Download Loan Agreement

@@ -27,8 +27,7 @@ public class UserMenuRepository : IUserMenuRepository
                 um.User.IsActive &&
                 !um.User.IsDeleted &&
                 um.Menu.IsActive &&
-                !um.Menu.IsDeleted &&
-                um.Menu.Key != "AUDIT_LOGS")
+                !um.Menu.IsDeleted)
             .OrderByDescending(um => um.CreatedAt)
             .ToListAsync();
     }
@@ -52,8 +51,7 @@ public class UserMenuRepository : IUserMenuRepository
                 um.User.IsActive &&
                 !um.User.IsDeleted &&
                 um.Menu.IsActive &&
-                !um.Menu.IsDeleted &&
-                um.Menu.Key != "AUDIT_LOGS");
+                !um.Menu.IsDeleted);
 
         if (userId.HasValue)
         {
@@ -117,8 +115,7 @@ public class UserMenuRepository : IUserMenuRepository
                 !um.IsDeleted &&
                 um.IsActive &&
                 um.Menu.IsActive &&
-                !um.Menu.IsDeleted &&
-                um.Menu.Key != "AUDIT_LOGS")
+                !um.Menu.IsDeleted)
             .OrderBy(um => um.Menu.DisplayOrder)
             .ToListAsync();
     }
@@ -140,8 +137,7 @@ public class UserMenuRepository : IUserMenuRepository
                 !um.IsDeleted &&
                 um.IsActive &&
                 um.Menu.IsActive &&
-                !um.Menu.IsDeleted &&
-                um.Menu.Key != "AUDIT_LOGS");
+                !um.Menu.IsDeleted);
 
         if (!string.IsNullOrWhiteSpace(search))
         {

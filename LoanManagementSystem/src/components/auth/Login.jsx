@@ -49,7 +49,7 @@ export default function Login({ onSwitch, onLoginSuccess }) {
         >
             {/* Form Heading */}
             <div className="mb-7">
-                <p className="mb-2 text-xs font-semibold uppercase tracking-[2px] text-orange-400">
+                <p className="mb-2 text-xs font-semibold uppercase tracking-[2px] text-pink-400">
                     Secure Login
                 </p>
 
@@ -97,7 +97,7 @@ export default function Login({ onSwitch, onLoginSuccess }) {
                         <button
                             type="button"
                             onClick={() => setShowPassword(!showPassword)}
-                            className="cursor-pointer text-zinc-500 transition hover:text-orange-400"
+                            className="cursor-pointer text-zinc-500 transition hover:text-pink-400"
                             aria-label="Toggle password visibility"
                         >
                             {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
@@ -112,7 +112,7 @@ export default function Login({ onSwitch, onLoginSuccess }) {
                             type="checkbox"
                             checked={remember}
                             onChange={(e) => setRemember(e.target.checked)}
-                            className="h-4 w-4 cursor-pointer accent-orange-500"
+                            className="h-4 w-4 cursor-pointer accent-pink-500"
                         />
                         Remember me
                     </label>
@@ -125,7 +125,7 @@ export default function Login({ onSwitch, onLoginSuccess }) {
                     size="lg"
                     loading={loading}
                     loadingText="Signing In..."
-                    className="w-full py-3.5 text-sm font-bold shadow-lg shadow-orange-500/20"
+                    className="w-full py-3.5 text-sm font-bold shadow-lg shadow-pink-500/25"
                 >
                     Sign In
                 </Button>
@@ -138,7 +138,7 @@ export default function Login({ onSwitch, onLoginSuccess }) {
                     <button
                         type="button"
                         onClick={onSwitch}
-                        className="font-semibold text-orange-400 transition hover:text-orange-300"
+                        className="font-semibold text-pink-400 transition hover:text-pink-300"
                     >
                         Create Account
                     </button>

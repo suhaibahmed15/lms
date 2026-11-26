@@ -173,7 +173,7 @@ export default function Reports() {
                 <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-center">
                     <div>
                         <h1 className="text-2xl font-bold text-white flex items-center gap-2">
-                            <PieChart className="text-orange-500" size={24} />
+                            <PieChart className="text-pink-500" size={24} />
                             Financial & Portfolio Reports
                         </h1>
                         <p className="mt-1 text-sm text-zinc-400">
@@ -187,7 +187,7 @@ export default function Reports() {
                             icon={FileText}
                             onClick={handleExportPdf}
                             disabled={loading || reportData.length === 0}
-                            className="bg-orange-600 hover:bg-orange-500 text-white shadow-lg shadow-orange-600/20"
+                            className="bg-gradient-to-r from-pink-600 via-pink-500 to-rose-400 text-white shadow-lg shadow-pink-500/25"
                         >
                             Export PDF
                         </Button>
@@ -236,7 +236,7 @@ export default function Reports() {
                                 onClick={() => { setActiveTab(tab.id); setReportData([]); }}
                                 className={`flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-semibold transition ${
                                     isCurrent
-                                        ? "bg-orange-500 text-white shadow-lg shadow-orange-500/20"
+                                        ? "bg-gradient-to-r from-pink-600 via-pink-500 to-rose-400 text-white shadow-lg shadow-pink-500/25"
                                         : "text-zinc-400 hover:bg-white/5 hover:text-white"
                                 }`}
                             >
@@ -252,7 +252,7 @@ export default function Reports() {
                     <div className="rounded-2xl border border-white/10 bg-[#111111] p-5">
                         <div className="flex items-center justify-between text-zinc-400 text-sm">
                             <span>Total Volume ({activeTab})</span>
-                            <Wallet size={18} className="text-orange-400" />
+                            <Wallet size={18} className="text-pink-400" />
                         </div>
                         <p className="mt-2 text-2xl font-bold text-white font-mono">
                             PKR {formatAmount(totalVolume)}
@@ -263,9 +263,9 @@ export default function Reports() {
                     <div className="rounded-2xl border border-white/10 bg-[#111111] p-5">
                         <div className="flex items-center justify-between text-zinc-400 text-sm">
                             <span>Outstanding Balance</span>
-                            <TrendingUp size={18} className="text-yellow-400" />
+                            <TrendingUp size={18} className="text-pink-400" />
                         </div>
-                        <p className="mt-2 text-2xl font-bold text-yellow-400 font-mono">
+                        <p className="mt-2 text-2xl font-bold text-pink-400 font-mono">
                             PKR {formatAmount(totalBalance)}
                         </p>
                         <p className="mt-1 text-xs text-zinc-500">Unpaid portfolio exposure</p>
@@ -274,9 +274,9 @@ export default function Reports() {
                     <div className="rounded-2xl border border-white/10 bg-[#111111] p-5">
                         <div className="flex items-center justify-between text-zinc-400 text-sm">
                             <span>Count</span>
-                            <Calendar size={18} className="text-blue-400" />
+                            <Calendar size={18} className="text-white" />
                         </div>
-                        <p className="mt-2 text-2xl font-bold text-blue-400 font-mono">
+                        <p className="mt-2 text-2xl font-bold text-white font-mono">
                             {reportData.length}
                         </p>
                         <p className="mt-1 text-xs text-zinc-500">Filtered data rows</p>

@@ -26,7 +26,7 @@ const Textarea = forwardRef(function Textarea(
                     className="mb-1.5 block text-sm font-medium text-zinc-300"
                 >
                     {label}
-                    {required && <span className="ml-1 text-orange-400">*</span>}
+                    {required && <span className="ml-1 text-pink-400">*</span>}
                 </label>
             )}
 
@@ -43,7 +43,7 @@ const Textarea = forwardRef(function Textarea(
                 className={`w-full resize-none rounded-xl border bg-white/[0.07] px-4 py-2.5 text-sm text-white placeholder:text-zinc-500 outline-none transition duration-150 focus:bg-white/[0.10] focus:ring-4 disabled:cursor-not-allowed disabled:opacity-50 ${
                     error
                         ? "border-red-500/70 focus:border-red-500 focus:ring-red-500/15"
-                        : "border-white/10 focus:border-orange-500/70 focus:ring-orange-500/10"
+                        : "border-white/10 focus:border-pink-500/70 focus:ring-pink-500/10"
                 } ${textareaClassName}`}
                 {...props}
             />

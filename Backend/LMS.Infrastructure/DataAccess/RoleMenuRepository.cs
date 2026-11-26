@@ -50,7 +50,7 @@ public class RoleMenuRepository : IRoleMenuRepository
         return await _context.RoleMenus
             .AsNoTracking()
             .Include(rm => rm.Menu)
-            .Where(rm => !rm.IsDeleted && rm.Menu.IsActive && !rm.Menu.IsDeleted && rm.Menu.Key != "AUDIT_LOGS")
+            .Where(rm => !rm.IsDeleted && rm.Menu.IsActive && !rm.Menu.IsDeleted)
             .OrderBy(rm => rm.RoleId)
             .ThenBy(rm => rm.Menu.DisplayOrder)
             .ToListAsync();
@@ -69,7 +69,7 @@ public class RoleMenuRepository : IRoleMenuRepository
         var query = _context.RoleMenus
             .AsNoTracking()
             .Include(rm => rm.Menu)
-            .Where(rm => !rm.IsDeleted && !rm.Menu.IsDeleted && rm.Menu.Key != "AUDIT_LOGS");
+            .Where(rm => !rm.IsDeleted && !rm.Menu.IsDeleted);
 
         if (roleId.HasValue)
         {
@@ -130,8 +130,7 @@ public class RoleMenuRepository : IRoleMenuRepository
                 rm.RoleId == roleId &&
                 !rm.IsDeleted &&
                 rm.Menu.IsActive &&
-                !rm.Menu.IsDeleted &&
-                rm.Menu.Key != "AUDIT_LOGS")
+                !rm.Menu.IsDeleted)
             .OrderBy(rm => rm.Menu.DisplayOrder)
             .ToListAsync();
     }

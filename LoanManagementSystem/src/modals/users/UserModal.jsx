@@ -5,8 +5,11 @@ export default function UserModal({
     isOpen,
     onClose,
     onSubmit,
-    roles = []
+    roles = [],
+    user = null
 }) {
+    const isEdit = Boolean(user);
+
     const [formData, setFormData] = useState({
         fullName: "",
         email: "",
@@ -20,16 +23,26 @@ export default function UserModal({
 
     useEffect(() => {
         if (isOpen) {
-            setFormData({
-                fullName: "",
-                email: "",
-                phoneNumber: "",
-                password: "",
-                roleId: ""
-            });
+            if (user) {
+                setFormData({
+                    fullName: user.fullName || "",
+                    email: user.email || "",
+                    phoneNumber: user.phoneNumber || "",
+                    password: "",
+                    roleId: user.roleId ? String(user.roleId) : ""
+                });
+            } else {
+                setFormData({
+                    fullName: "",
+                    email: "",
+                    phoneNumber: "",
+                    password: "",
+                    roleId: ""
+                });
+            }
             setError("");
         }
-    }, [isOpen]);
+    }, [isOpen, user]);
 
     if (!isOpen) return null;
 
@@ -52,16 +65,19 @@ export default function UserModal({
                 fullName: formData.fullName.trim(),
                 email: formData.email.trim(),
                 phoneNumber: formData.phoneNumber.trim() || null,
-                password: formData.password,
                 roleId: Number(formData.roleId)
             };
+
+            if (!isEdit) {
+                userData.password = formData.password;
+            }
 
             await onSubmit(userData);
             onClose();
         } catch (err) {
             setError(
                 err.response?.data?.message ||
-                "Unable to create user. Please try again."
+                (isEdit ? "Unable to update user. Please try again." : "Unable to create user. Please try again.")
             );
         } finally {
             setLoading(false);
@@ -79,8 +95,8 @@ export default function UserModal({
         <Modal
             isOpen={isOpen}
             onClose={onClose}
-            title="Add New User"
-            subtitle="Enter user details below."
+            title={isEdit ? "Edit User" : "Add New User"}
+            subtitle={isEdit ? "Update user profile details below." : "Enter user details below."}
         >
             <form onSubmit={handleSubmit} className="space-y-4">
                 {error && (
@@ -117,15 +133,17 @@ export default function UserModal({
                     placeholder="e.g. +1 234 567 890"
                 />
 
-                <Input
-                    label="Password"
-                    type="password"
-                    name="password"
-                    value={formData.password}
-                    onChange={handleChange}
-                    placeholder="Minimum 6 characters"
-                    required
-                />
+                {!isEdit && (
+                    <Input
+                        label="Password"
+                        type="password"
+                        name="password"
+                        value={formData.password}
+                        onChange={handleChange}
+                        placeholder="Minimum 6 characters"
+                        required
+                    />
+                )}
 
                 <Select
                     label="Role"
@@ -150,9 +168,9 @@ export default function UserModal({
                         type="submit"
                         variant="primary"
                         loading={loading}
-                        loadingText="Creating..."
+                        loadingText={isEdit ? "Saving..." : "Creating..."}
                     >
-                        Create User
+                        {isEdit ? "Save Changes" : "Create User"}
                     </Button>
                 </div>
             </form>

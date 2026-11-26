@@ -57,7 +57,7 @@ BEGIN TRY
     VALUES
         ('ADMIN', 'System Administrator', 'Full system access and security governance.'),
         ('MANAGER', 'Branch / Credit Manager', 'Oversees loan pipeline, case assignments, approvals, disbursements, and payment verifications.'),
-        ('LOAN_OFFICER', 'Loan Officer / Underwriter', 'Underwriting, field investigation, document verification, and assessment recommendations.'),
+        ('OFFICER', 'Loan Officer', 'Evaluates applications, reviews files, verifies documents, and manages loan processing.'),
         ('CUSTOMER', 'Customer / Borrower', 'Applicant who applies for loans, uploads documents, tracks status, and submits repayments.');
 
     -- Upsert Roles
@@ -146,6 +146,7 @@ BEGIN TRY
 
         -- Applications
         ('LOAN_APPLICATION_CREATE', 'Create Loan Application', 'Submit new loan application.', 'LOAN_APPLICATIONS'),
+        ('LOAN_APPLICATION_UPDATE', 'Update Loan Application', 'Update existing loan application details.', 'LOAN_APPLICATIONS'),
         ('LOAN_APPLICATION_VIEW', 'View Loan Applications', 'Browse and inspect loan applications.', 'LOAN_APPLICATIONS'),
         ('LOAN_APPLICATION_REVIEW', 'Review Loan Applications', 'Perform underwriting review and recommend decision.', 'LOAN_APPLICATIONS'),
         ('LOAN_APPLICATION_ASSIGN', 'Assign Loan Applications', 'Assign applications to loan officers.', 'LOAN_APPLICATIONS'),
@@ -153,18 +154,29 @@ BEGIN TRY
         ('LOAN_APPLICATION_REJECT', 'Reject Loan Application', 'Final rejection of loan application.', 'LOAN_APPLICATIONS'),
 
         -- Documents
+        ('LOAN_DOCUMENT_CREATE', 'Create Loan Document', 'Register and initialize borrower documents.', 'LOAN_DOCUMENTS'),
         ('LOAN_DOCUMENT_UPLOAD', 'Upload Loan Documents', 'Upload borrower identification and income proofs.', 'LOAN_DOCUMENTS'),
         ('LOAN_DOCUMENT_VIEW', 'View Loan Documents', 'Inspect and download applicant documentation.', 'LOAN_DOCUMENTS'),
+        ('LOAN_DOCUMENT_VERIFY', 'Verify Loan Document', 'Review and approve submitted borrower documents.', 'LOAN_DOCUMENTS'),
+        ('LOAN_DOCUMENT_REJECT', 'Reject Loan Document', 'Reject invalid or insufficient documents.', 'LOAN_DOCUMENTS'),
+
+        -- Guarantors
+        ('LOAN_GUARANTOR_MANAGE', 'Manage Loan Guarantors', 'Add, update, or remove loan guarantors.', 'LOAN_GUARANTORS'),
 
         -- Loans & Disbursement
         ('LOAN_DISBURSE', 'Disburse Loans', 'Execute disbursement and initiate amortization schedule.', 'LOANS'),
         ('LOAN_VIEW', 'View Loans', 'Inspect active and closed loan accounts.', 'LOANS'),
+        ('LOAN_MANAGE', 'Manage Loans', 'Modify loan terms, statuses, or configurations.', 'LOANS'),
 
         -- Repayments
         ('REPAYMENT_SCHEDULE_VIEW', 'View Repayment Schedule', 'Inspect installment schedules and due dates.', 'REPAYMENTS'),
         ('REPAYMENT_CREATE', 'Submit Repayment', 'Record an installment payment receipt.', 'REPAYMENTS'),
         ('REPAYMENT_VIEW', 'View Repayments', 'Browse repayment transaction records.', 'REPAYMENTS'),
         ('REPAYMENT_VERIFY', 'Verify Repayments', 'Approve or reject customer submitted payments.', 'REPAYMENTS'),
+        ('REPAYMENT_MANAGE', 'Manage Repayments', 'Adjust, waive, or manage repayment entries.', 'REPAYMENTS'),
+
+        -- Audit Logs
+        ('AUDIT_LOG_VIEW', 'View Audit Logs', 'Browse and inspect security and system audit logs.', 'AUDIT_LOGS'),
 
         -- Loan Types
         ('LOAN_TYPE_VIEW', 'View Loan Types', 'Browse active loan schemes and interest parameters.', 'LOAN_TYPES'),
@@ -242,21 +254,21 @@ BEGIN TRY
         ('MANAGER', 'REPORTS'),
         ('MANAGER', 'LOAN_TYPES');
 
-    -- LOAN_OFFICER: 8 Operational Menus
+    -- OFFICER: 8 Operational Menus
     INSERT INTO @RoleMenusMap (RoleKey, MenuKey)
     VALUES
-        ('LOAN_OFFICER', 'DASHBOARD'),
-        ('LOAN_OFFICER', 'LOAN_APPLICATIONS'),
-        ('LOAN_OFFICER', 'LOAN_DOCUMENTS'),
-        ('LOAN_OFFICER', 'LOAN_GUARANTORS'),
-        ('LOAN_OFFICER', 'LOANS'),
-        ('LOAN_OFFICER', 'REPAYMENTS'),
-        ('LOAN_OFFICER', 'REPORTS'),
-        ('LOAN_OFFICER', 'LOAN_TYPES');
+        ('OFFICER', 'DASHBOARD'),
+        ('OFFICER', 'LOAN_APPLICATIONS'),
+        ('OFFICER', 'LOAN_DOCUMENTS'),
+        ('OFFICER', 'LOAN_GUARANTORS'),
+        ('OFFICER', 'LOANS'),
+        ('OFFICER', 'REPAYMENTS'),
+        ('OFFICER', 'REPORTS'),
+        ('OFFICER', 'LOAN_TYPES');
 
-    -- Also support alias 'OFFICER' if present
+    -- Also support alias 'LOAN_OFFICER' if present
     INSERT INTO @RoleMenusMap (RoleKey, MenuKey)
-    SELECT 'OFFICER', MenuKey FROM @RoleMenusMap WHERE RoleKey = 'LOAN_OFFICER';
+    SELECT 'LOAN_OFFICER', MenuKey FROM @RoleMenusMap WHERE RoleKey = 'OFFICER';
 
     -- CUSTOMER: 8 Borrower Menus
     INSERT INTO @RoleMenusMap (RoleKey, MenuKey)
@@ -311,24 +323,29 @@ BEGIN TRY
         ('MANAGER', 'LOAN_TYPE_VIEW'),
         ('MANAGER', 'USER_VIEW');
 
-    -- LOAN_OFFICER: 11 Permissions
+    -- OFFICER: 16 Permissions (including all document verification and loan processing)
     INSERT INTO @RolePermsMap (RoleKey, PermKey)
     VALUES
-        ('LOAN_OFFICER', 'DASHBOARD_VIEW'),
-        ('LOAN_OFFICER', 'LOAN_APPLICATION_VIEW'),
-        ('LOAN_OFFICER', 'LOAN_APPLICATION_REVIEW'),
-        ('LOAN_OFFICER', 'LOAN_DOCUMENT_VIEW'),
-        ('LOAN_OFFICER', 'LOAN_DOCUMENT_UPLOAD'),
-        ('LOAN_OFFICER', 'LOAN_VIEW'),
-        ('LOAN_OFFICER', 'REPAYMENT_SCHEDULE_VIEW'),
-        ('LOAN_OFFICER', 'REPAYMENT_VIEW'),
-        ('LOAN_OFFICER', 'REPAYMENT_CREATE'),
-        ('LOAN_OFFICER', 'LOAN_TYPE_VIEW'),
-        ('LOAN_OFFICER', 'USER_VIEW');
+        ('OFFICER', 'DASHBOARD_VIEW'),
+        ('OFFICER', 'LOAN_APPLICATION_VIEW'),
+        ('OFFICER', 'LOAN_APPLICATION_REVIEW'),
+        ('OFFICER', 'LOAN_DOCUMENT_VIEW'),
+        ('OFFICER', 'LOAN_DOCUMENT_UPLOAD'),
+        ('OFFICER', 'LOAN_DOCUMENT_CREATE'),
+        ('OFFICER', 'LOAN_DOCUMENT_VERIFY'),
+        ('OFFICER', 'LOAN_DOCUMENT_REJECT'),
+        ('OFFICER', 'LOAN_GUARANTOR_MANAGE'),
+        ('OFFICER', 'LOAN_VIEW'),
+        ('OFFICER', 'REPAYMENT_SCHEDULE_VIEW'),
+        ('OFFICER', 'REPAYMENT_VIEW'),
+        ('OFFICER', 'REPAYMENT_CREATE'),
+        ('OFFICER', 'REPAYMENT_VERIFY'),
+        ('OFFICER', 'LOAN_TYPE_VIEW'),
+        ('OFFICER', 'USER_VIEW');
 
-    -- Also support alias 'OFFICER' if present
+    -- Also support alias 'LOAN_OFFICER' if present
     INSERT INTO @RolePermsMap (RoleKey, PermKey)
-    SELECT 'OFFICER', PermKey FROM @RolePermsMap WHERE RoleKey = 'LOAN_OFFICER';
+    SELECT 'LOAN_OFFICER', PermKey FROM @RolePermsMap WHERE RoleKey = 'OFFICER';
 
     -- CUSTOMER: 10 Permissions
     INSERT INTO @RolePermsMap (RoleKey, PermKey)
@@ -350,6 +367,20 @@ BEGIN TRY
     FROM @RolePermsMap rpm
     INNER JOIN Roles r ON rpm.RoleKey = r.[Key] AND r.IsDeleted = 0
     INNER JOIN Permissions p ON rpm.PermKey = p.[Key] AND p.IsDeleted = 0;
+
+    -- Ensure ADMIN always receives ALL active Permissions by default
+    INSERT INTO RolePermissions (RoleId, PermissionId, CreatedAt, CreatedBy, IsDeleted)
+    SELECT r.Id, p.Id, @Now, @AdminUserId, 0
+    FROM Roles r
+    CROSS JOIN Permissions p
+    WHERE r.[Key] = 'ADMIN' 
+      AND r.IsDeleted = 0 
+      AND p.IsActive = 1 
+      AND p.IsDeleted = 0
+      AND NOT EXISTS (
+          SELECT 1 FROM RolePermissions rp 
+          WHERE rp.RoleId = r.Id AND rp.PermissionId = p.Id AND rp.IsDeleted = 0
+      );
 
     COMMIT TRANSACTION;
     PRINT '>>> SUCCESS! RBAC roles, menus, and permissions reset and synced perfectly.';

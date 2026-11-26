@@ -341,7 +341,7 @@ function LoanGuarantors() {
                     {canManage && selectedApplicationId && (
                         <button
                             onClick={openAddModal}
-                            className="rounded-lg bg-orange-500 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-orange-600"
+                            className="rounded-lg bg-gradient-to-r from-pink-600 via-pink-500 to-rose-400 px-5 py-2.5 text-sm font-semibold text-white shadow-md shadow-pink-500/25 transition hover:opacity-95"
                         >
                             + Add Guarantor
                         </button>
@@ -384,7 +384,7 @@ function LoanGuarantors() {
                         onChange={(e) =>
                             setSelectedApplicationId(e.target.value)
                         }
-                        className="w-full max-w-xl rounded-lg border border-slate-700 bg-slate-900 px-3 py-3 text-sm text-white outline-none focus:border-orange-500"
+                        className="w-full max-w-xl rounded-lg border border-slate-700 bg-slate-900 px-3 py-3 text-sm text-white outline-none focus:border-pink-500"
                     >
                         <option value="">Select an application</option>
 

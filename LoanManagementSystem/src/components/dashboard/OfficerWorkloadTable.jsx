@@ -8,7 +8,7 @@ export default function OfficerWorkloadTable({ workload = [] }) {
             <div className="flex items-center justify-between">
                 <div>
                     <h3 className="text-base font-bold text-white flex items-center gap-2">
-                        <UserCheck size={18} className="text-orange-400" />
+                        <UserCheck size={18} className="text-pink-400" />
                         Loan Officer Performance & Workload
                     </h3>
                     <p className="text-xs text-zinc-400 mt-0.5">
@@ -48,7 +48,7 @@ export default function OfficerWorkloadTable({ workload = [] }) {
                                         <div className="flex items-center justify-end gap-2">
                                             <div className="w-24 bg-white/5 h-2 rounded-full overflow-hidden">
                                                 <div
-                                                    className="bg-orange-500 h-full rounded-full transition-all"
+                                                    className="bg-gradient-to-r from-pink-600 via-pink-500 to-rose-400 h-full rounded-full transition-all"
                                                     style={{ width: `${percentage}%` }}
                                                 />
                                             </div>

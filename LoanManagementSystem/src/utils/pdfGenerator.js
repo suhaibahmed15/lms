@@ -37,7 +37,7 @@ export const generateLoanAgreementPdf = (loan, schedules = [], options = {}) => 
     const contentWidth = pageWidth - (margin * 2);
 
     const primaryColor = [18, 24, 38]; // Dark Charcoal/Navy
-    const accentColor = [234, 88, 12]; // Orange Accent (#ea580c)
+    const accentColor = [219, 39, 119]; // Pink Accent (#db2777)
     const textDark = [30, 41, 59];
     const textMuted = [100, 116, 139];
     const borderGray = [226, 232, 240];
@@ -178,18 +178,18 @@ export const generateLoanAgreementPdf = (loan, schedules = [], options = {}) => 
     // -------------------------------------------------------------------------
     // 4. Terms, Grace Period & Overdue Penalty Clause
     // -------------------------------------------------------------------------
-    doc.setFillColor(255, 247, 237); // Light amber
-    doc.setDrawColor(254, 215, 170);
+    doc.setFillColor(253, 242, 248); // Subtle pink tint
+    doc.setDrawColor(244, 114, 182); // Pink-400 border
     doc.roundedRect(margin, currentY, contentWidth, 54, 4, 4, "FD");
 
     doc.setFont("helvetica", "bold");
     doc.setFontSize(8);
-    doc.setTextColor(194, 65, 12); // Amber 800
+    doc.setTextColor(190, 24, 93); // Pink-700
     doc.text("TERMS, REPAYMENT SCHEDULE & OVERDUE PENALTY CLAUSE", margin + 10, currentY + 14);
 
     doc.setFont("helvetica", "normal");
     doc.setFontSize(7.5);
-    doc.setTextColor(124, 45, 18);
+    doc.setTextColor(131, 24, 67); // Pink-900
     doc.text(
         "1. Installments must be paid on or before the designated Due Date. A standard grace period of 7 calendar days is granted.\n" +
         "2. If payment is delayed beyond 7 days, an overdue surcharge penalty of 2.0% per month shall accrue on the delinquent amount.\n" +

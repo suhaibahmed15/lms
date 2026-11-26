@@ -89,11 +89,7 @@ export default function UserPermissions() {
             ]);
 
             setUsers(extractData(usersResponse));
-            setPermissions(
-                extractData(permissionsResponse).filter(
-                    (p) => !p.key?.toUpperCase().startsWith("AUDIT_LOG")
-                )
-            );
+            setPermissions(extractData(permissionsResponse));
         } catch (err) {
             setError(
                 err.response?.data?.message ||
@@ -120,9 +116,7 @@ export default function UserPermissions() {
             if (statusFilter !== "") params.isActive = statusFilter === "true";
 
             const response = await getAllUserPermissions(params);
-            const data = extractData(response).filter(
-                (a) => !a.permissionKey?.toUpperCase().startsWith("AUDIT_LOG")
-            );
+            const data = extractData(response);
 
             setAssignments(data);
             setTotalRecords(response.totalRecords ?? data.length);

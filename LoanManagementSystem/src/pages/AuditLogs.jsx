@@ -21,9 +21,9 @@ const getActionBadge = (action) => {
         return "bg-red-500/10 text-red-400 border border-red-500/20";
     }
     if (act.includes("UPDATE") || act.includes("ASSIGN") || act.includes("REVIEW")) {
-        return "bg-orange-500/10 text-orange-400 border border-orange-500/20";
+        return "bg-pink-500/10 text-pink-400 border border-pink-500/20";
     }
-    return "bg-blue-500/10 text-blue-400 border border-blue-500/20";
+    return "bg-white/10 text-white border border-white/20";
 };
 
 export default function AuditLogs() {
@@ -84,7 +84,7 @@ export default function AuditLogs() {
                 <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-center">
                     <div>
                         <h1 className="text-2xl font-bold text-white flex items-center gap-2">
-                            <ShieldAlert className="text-orange-500" size={24} />
+                            <ShieldAlert className="text-pink-500" size={24} />
                             System Audit Logs
                         </h1>
                         <p className="mt-1 text-sm text-zinc-400">
@@ -122,7 +122,7 @@ export default function AuditLogs() {
                                     value={search}
                                     onChange={(e) => { setSearch(e.target.value); setPageNumber(1); }}
                                     placeholder="Search logs by keyword..."
-                                    className="w-full rounded-xl border border-white/10 bg-[#181818] py-2.5 pl-10 pr-4 text-sm text-white placeholder:text-zinc-500 outline-none focus:border-orange-500/70"
+                                    className="w-full rounded-xl border border-white/10 bg-[#181818] py-2.5 pl-10 pr-4 text-sm text-white placeholder:text-zinc-500 outline-none focus:border-pink-500/70"
                                 />
                             </div>
 

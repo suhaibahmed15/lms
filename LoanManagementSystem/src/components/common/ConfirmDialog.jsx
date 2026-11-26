@@ -14,8 +14,8 @@ export default function ConfirmDialog({
     if (!isOpen) return null;
 
     return (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/75 p-4 backdrop-blur-sm">
-            <div className="w-full max-w-md rounded-2xl border border-white/15 bg-[#121212] p-6 shadow-2xl shadow-black/80">
+        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 p-4 backdrop-blur-sm">
+            <div className="w-full max-w-md rounded-2xl border border-pink-500/20 bg-neutral-950 p-6 shadow-2xl shadow-pink-500/5">
                 {/* Header */}
                 <div className="mb-4 flex items-center gap-3">
                     <div className="flex h-12 w-12 items-center justify-center rounded-2xl border border-red-500/25 bg-red-500/15 text-red-400">

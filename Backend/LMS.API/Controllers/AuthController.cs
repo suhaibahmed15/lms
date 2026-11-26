@@ -1,4 +1,4 @@
-﻿
+
 using LMS.Application.DTO.Auth;
 using LMS.Application.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
@@ -12,10 +12,14 @@ namespace LMS.API.Controllers
     public class AuthController : ControllerBase
     {
         private readonly IAuthService _authService;
+        private readonly IAuditLogService _auditLogService;
 
-        public AuthController(IAuthService authService)
+        public AuthController(
+            IAuthService authService,
+            IAuditLogService auditLogService)
         {
             _authService = authService;
+            _auditLogService = auditLogService;
         }
 
         //POST : api/auth/register
@@ -27,6 +31,12 @@ namespace LMS.API.Controllers
             {
                 var result = await _authService.RegisterAsync(request);
 
+                await _auditLogService.LogAsync(
+                    result.UserId,
+                    "REGISTER",
+                    "User",
+                    result.UserId,
+                    $"New customer account registered: {request.Email}.");
 
                 return Ok(new
                 {
@@ -40,12 +50,8 @@ namespace LMS.API.Controllers
                 {
                     message = ex.Message
                 });
-
-
             }
         }
-
-
 
         [HttpPost("login")]
         public async Task<IActionResult> Login(
@@ -55,16 +61,28 @@ namespace LMS.API.Controllers
             {
                 var result = await _authService.LoginAsync(request);
 
+                await _auditLogService.LogAsync(
+                    result.UserId,
+                    "LOGIN",
+                    "User",
+                    result.UserId,
+                    $"User {request.Email} successfully logged in.");
+
                 return Ok(new
                 {
                     message = "Login Successful",
                     data = result
-                }
-                    );
-
+                });
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
+                await _auditLogService.LogAsync(
+                    null,
+                    "LOGIN_FAILED",
+                    "User",
+                    null,
+                    $"Failed login attempt for {request.Email}: {ex.Message}");
+
                 return BadRequest(new
                 {
                     message = ex.Message

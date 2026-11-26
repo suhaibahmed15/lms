@@ -80,9 +80,7 @@ function Permissions() {
             if (statusFilter !== "") params.isActive = statusFilter === "true";
 
             const response = await getAllPermissions(params);
-            const data = (Array.isArray(response) ? response : response.data || []).filter(
-                (p) => !p.key?.toUpperCase().startsWith("AUDIT_LOG")
-            );
+            const data = Array.isArray(response) ? response : response.data || [];
 
             setPermissions(data);
             setTotalRecords(response.totalRecords ?? data.length);

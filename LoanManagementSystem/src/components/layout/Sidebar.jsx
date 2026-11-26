@@ -155,23 +155,11 @@ function Sidebar({ menus = [], onClose }) {
     };
 
     return (
-        <aside className="flex h-screen w-64 flex-col border-r border-white/10 bg-[#0d0d0d] text-zinc-100 shadow-2xl shadow-black/50">
+        <aside className="flex h-screen w-64 flex-col border-r border-pink-500/20 bg-black text-zinc-100 shadow-2xl shadow-pink-950/20">
             {/* Brand Header */}
-            <div className="flex h-20 shrink-0 items-center justify-between border-b border-white/10 px-5">
-                <div className="flex items-center gap-3">
-                    <div className="flex h-10 w-10 items-center justify-center rounded-xl border border-orange-400/30 bg-orange-500/15 text-orange-400 shadow-lg shadow-orange-500/10">
-                        <ShieldCheck size={22} />
-                    </div>
-
-                    <div>
-                        <h2 className="text-base font-extrabold tracking-wider text-white">
-                            LMS <span className="text-orange-500">CAPITAL</span>
-                        </h2>
-
-                        <p className="text-[11px] tracking-wide text-zinc-400">
-                            Loan Management
-                        </p>
-                    </div>
+            <div className="flex h-20 shrink-0 items-center justify-between border-b border-white/10 px-4">
+                <div className="flex items-center gap-2.5">
+                    <img src="/logo.png" alt="LMS Logo" className="h-10 w-auto max-w-[170px] object-contain drop-shadow" />
                 </div>
 
                 {onClose && (
@@ -209,17 +197,16 @@ function Sidebar({ menus = [], onClose }) {
                                 key={parent.id}
                                 type="button"
                                 onClick={() => handleNavigation(parent.route)}
-                                className={`flex w-full items-center gap-3 rounded-xl px-3.5 py-3 text-left text-sm font-medium transition ${
-                                    isParentDirectlyActive
-                                        ? "bg-gradient-to-r from-orange-600 to-orange-500 text-white shadow-lg shadow-orange-500/20"
-                                        : "text-zinc-300 hover:bg-white/[0.06] hover:text-white"
-                                }`}
+                                className={`flex w-full items-center gap-3 rounded-xl px-3.5 py-3 text-left text-sm font-medium transition ${isParentDirectlyActive
+                                    ? "bg-gradient-to-r from-pink-600 via-pink-500 to-rose-400 text-white shadow-lg shadow-pink-500/25"
+                                    : "text-zinc-300 hover:bg-white/[0.06] hover:text-white"
+                                    }`}
                             >
                                 <span
                                     className={
                                         isParentDirectlyActive
                                             ? "text-white"
-                                            : "text-orange-400/80"
+                                            : "text-pink-400/80"
                                     }
                                 >
                                     {getMenuIcon(parent.icon)}
@@ -237,17 +224,16 @@ function Sidebar({ menus = [], onClose }) {
                                 type="button"
                                 onClick={() => toggleParent(parent.id)}
                                 aria-expanded={isExpanded}
-                                className={`flex w-full items-center justify-between gap-2 rounded-xl px-3.5 py-3 text-left text-sm font-semibold transition ${
-                                    hasActiveChild
-                                        ? "border border-orange-500/25 bg-orange-500/10 text-orange-300"
-                                        : "text-zinc-200 hover:bg-white/[0.06] hover:text-white"
-                                }`}
+                                className={`flex w-full items-center justify-between gap-2 rounded-xl px-3.5 py-3 text-left text-sm font-semibold transition ${hasActiveChild
+                                    ? "border border-pink-500/30 bg-pink-500/10 text-pink-300"
+                                    : "text-zinc-200 hover:bg-white/[0.06] hover:text-white"
+                                    }`}
                             >
                                 <span className="flex min-w-0 items-center gap-3">
                                     <span
                                         className={
                                             hasActiveChild
-                                                ? "text-orange-400"
+                                                ? "text-pink-400"
                                                 : "text-zinc-400"
                                         }
                                     >
@@ -258,9 +244,8 @@ function Sidebar({ menus = [], onClose }) {
                                 </span>
 
                                 <span
-                                    className={`shrink-0 transition-transform duration-200 ${
-                                        hasActiveChild ? "text-orange-400" : "text-zinc-500"
-                                    }`}
+                                    className={`shrink-0 transition-transform duration-200 ${hasActiveChild ? "text-pink-400" : "text-zinc-500"
+                                        }`}
                                 >
                                     {isExpanded ? (
                                         <ChevronDown size={16} />
@@ -283,11 +268,10 @@ function Sidebar({ menus = [], onClose }) {
                                                 onClick={() =>
                                                     handleNavigation(child.route)
                                                 }
-                                                className={`flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-left text-sm font-medium transition ${
-                                                    isActive
-                                                        ? "bg-gradient-to-r from-orange-600 to-orange-500 text-white shadow-md shadow-orange-500/20"
-                                                        : "text-zinc-400 hover:bg-white/[0.06] hover:text-zinc-100"
-                                                }`}
+                                                className={`flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-left text-sm font-medium transition ${isActive
+                                                    ? "bg-gradient-to-r from-pink-600 via-pink-500 to-rose-400 text-white shadow-md shadow-pink-500/20"
+                                                    : "text-zinc-400 hover:bg-white/[0.06] hover:text-zinc-100"
+                                                    }`}
                                             >
                                                 <span
                                                     className={
@@ -329,17 +313,16 @@ function Sidebar({ menus = [], onClose }) {
                                         onClick={() =>
                                             handleNavigation(menu.route)
                                         }
-                                        className={`flex w-full items-center gap-3 rounded-xl px-3.5 py-2.5 text-left text-sm font-medium transition ${
-                                            isActive
-                                                ? "bg-gradient-to-r from-orange-600 to-orange-500 text-white shadow-md shadow-orange-500/20"
-                                                : "text-zinc-300 hover:bg-white/[0.06] hover:text-white"
-                                        }`}
+                                        className={`flex w-full items-center gap-3 rounded-xl px-3.5 py-2.5 text-left text-sm font-medium transition ${isActive
+                                            ? "bg-gradient-to-r from-pink-600 via-pink-500 to-rose-400 text-white shadow-md shadow-pink-500/20"
+                                            : "text-zinc-300 hover:bg-white/[0.06] hover:text-white"
+                                            }`}
                                     >
                                         <span
                                             className={
                                                 isActive
                                                     ? "text-white"
-                                                    : "text-orange-400/80"
+                                                    : "text-pink-400/80"
                                             }
                                         >
                                             {getMenuIcon(menu.icon)}

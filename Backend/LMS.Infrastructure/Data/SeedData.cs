@@ -40,6 +40,114 @@ public static class SeedData
             await context.SaveChangesAsync(cancellationToken);
         }
 
+        // Ensure ADMIN role always has all active permissions assigned by default
+        var allActivePermissions = await context.Permissions
+            .IgnoreQueryFilters()
+            .Where(p => p.IsActive && !p.IsDeleted)
+            .ToListAsync(cancellationToken);
+
+        if (allActivePermissions.Any())
+        {
+            var existingAdminPermIds = await context.RolePermissions
+                .IgnoreQueryFilters()
+                .Where(rp => rp.RoleId == adminRole.Id && !rp.IsDeleted)
+                .Select(rp => rp.PermissionId)
+                .ToListAsync(cancellationToken);
+
+            var missingPerms = allActivePermissions
+                .Where(p => !existingAdminPermIds.Contains(p.Id))
+                .ToList();
+
+            if (missingPerms.Any())
+            {
+                var adminUserId = await context.Users
+                    .IgnoreQueryFilters()
+                    .Where(u => u.RoleId == adminRole.Id && !u.IsDeleted)
+                    .Select(u => (int?)u.Id)
+                    .FirstOrDefaultAsync(cancellationToken) ?? 1;
+
+                foreach (var perm in missingPerms)
+                {
+                    var existingSoftDeleted = await context.RolePermissions
+                        .IgnoreQueryFilters()
+                        .FirstOrDefaultAsync(rp => rp.RoleId == adminRole.Id && rp.PermissionId == perm.Id, cancellationToken);
+
+                    if (existingSoftDeleted != null)
+                    {
+                        existingSoftDeleted.IsDeleted = false;
+                        existingSoftDeleted.UpdatedAt = DateTime.UtcNow;
+                        existingSoftDeleted.UpdatedBy = adminUserId;
+                    }
+                    else
+                    {
+                        context.RolePermissions.Add(new RolePermission
+                        {
+                            RoleId = adminRole.Id,
+                            PermissionId = perm.Id,
+                            CreatedAt = DateTime.UtcNow,
+                            CreatedBy = adminUserId,
+                            IsDeleted = false
+                        });
+                    }
+                }
+                await context.SaveChangesAsync(cancellationToken);
+            }
+        }
+
+        // Ensure ADMIN role always has all active menus assigned by default
+        var allActiveMenus = await context.Menus
+            .IgnoreQueryFilters()
+            .Where(m => m.IsActive && !m.IsDeleted)
+            .ToListAsync(cancellationToken);
+
+        if (allActiveMenus.Any())
+        {
+            var existingAdminMenuIds = await context.RoleMenus
+                .IgnoreQueryFilters()
+                .Where(rm => rm.RoleId == adminRole.Id && !rm.IsDeleted)
+                .Select(rm => rm.MenuId)
+                .ToListAsync(cancellationToken);
+
+            var missingMenus = allActiveMenus
+                .Where(m => !existingAdminMenuIds.Contains(m.Id))
+                .ToList();
+
+            if (missingMenus.Any())
+            {
+                var adminUserId = await context.Users
+                    .IgnoreQueryFilters()
+                    .Where(u => u.RoleId == adminRole.Id && !u.IsDeleted)
+                    .Select(u => (int?)u.Id)
+                    .FirstOrDefaultAsync(cancellationToken) ?? 1;
+
+                foreach (var menu in missingMenus)
+                {
+                    var existingSoftDeleted = await context.RoleMenus
+                        .IgnoreQueryFilters()
+                        .FirstOrDefaultAsync(rm => rm.RoleId == adminRole.Id && rm.MenuId == menu.Id, cancellationToken);
+
+                    if (existingSoftDeleted != null)
+                    {
+                        existingSoftDeleted.IsDeleted = false;
+                        existingSoftDeleted.UpdatedAt = DateTime.UtcNow;
+                        existingSoftDeleted.UpdatedBy = adminUserId;
+                    }
+                    else
+                    {
+                        context.RoleMenus.Add(new RoleMenu
+                        {
+                            RoleId = adminRole.Id,
+                            MenuId = menu.Id,
+                            CreatedAt = DateTime.UtcNow,
+                            CreatedBy = adminUserId,
+                            IsDeleted = false
+                        });
+                    }
+                }
+                await context.SaveChangesAsync(cancellationToken);
+            }
+        }
+
         // Seed only the initial Admin user credentials if no Admin user exists yet.
         var hasAdminUser = await context.Users
             .IgnoreQueryFilters()
@@ -64,7 +172,7 @@ public static class SeedData
 
         if (string.IsNullOrWhiteSpace(fullName))
         {
-            fullName = "System Adminstration";
+            fullName = "System Administration";
         }
 
         if (string.IsNullOrWhiteSpace(password))

@@ -6,7 +6,7 @@ namespace LMS.API.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-[Authorize(Roles = "ADMIN")]
+[Authorize(Policy = "Permission:AUDIT_LOG_VIEW")]
 public class AuditLogsController : ControllerBase
 {
     private readonly IAuditLogService _auditLogService;

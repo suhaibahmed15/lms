@@ -34,10 +34,17 @@ public class JwtTokenGenerator : IJwtTokenGenerator
         var claims = new List<Claim>
         {
             new Claim("UserId", user.Id.ToString()),
+            new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
             new Claim("RoleId", user.RoleId.ToString()),
             new Claim("Username", user.FullName),
             new Claim("Email", user.Email)
         };
+
+        if (user.Role != null && !string.IsNullOrWhiteSpace(user.Role.Key))
+        {
+            claims.Add(new Claim(ClaimTypes.Role, user.Role.Key));
+            claims.Add(new Claim("role", user.Role.Key));
+        }
 
         var securityKey = new SymmetricSecurityKey(
             Encoding.UTF8.GetBytes(key));

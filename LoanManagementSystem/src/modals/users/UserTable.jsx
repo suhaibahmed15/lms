@@ -2,6 +2,7 @@ import {
     Plus,
     Search,
     Trash2,
+    Pencil,
     RefreshCw,
     Users as UsersIcon,
     ArrowUpDown,
@@ -19,6 +20,7 @@ export default function UserTable({
     loading,
     error,
     canCreate,
+    canUpdate,
     canDelete,
     summary,
     searchInput,
@@ -38,6 +40,7 @@ export default function UserTable({
     onPageSizeChange,
     onRefresh,
     onAdd,
+    onEdit,
     onDelete
 }) {
     const getRoleName = (item) => {
@@ -51,14 +54,14 @@ export default function UserTable({
             return <ArrowUpDown size={14} className="text-zinc-500" />;
         }
         return sortDirection === "asc" ? (
-            <ArrowUp size={14} className="text-orange-400" />
+            <ArrowUp size={14} className="text-pink-400" />
         ) : (
-            <ArrowDown size={14} className="text-orange-400" />
+            <ArrowDown size={14} className="text-pink-400" />
         );
     };
 
     const controlClass =
-        "rounded-xl border border-white/10 bg-white/[0.07] px-3.5 py-2 text-sm text-white placeholder:text-zinc-500 outline-none transition focus:border-orange-500/70 focus:bg-white/[0.10] focus:ring-4 focus:ring-orange-500/10";
+        "rounded-xl border border-white/10 bg-white/[0.07] px-3.5 py-2 text-sm text-white placeholder:text-zinc-500 outline-none transition focus:border-pink-500/70 focus:bg-white/[0.10] focus:ring-4 focus:ring-pink-500/10";
 
     const startRecord = totalRecords === 0 ? 0 : (pageNumber - 1) * pageSize + 1;
     const endRecord = Math.min(pageNumber * pageSize, totalRecords);
@@ -96,7 +99,7 @@ export default function UserTable({
                     <div className="rounded-2xl border border-white/10 bg-[#111111] p-5 shadow-xl shadow-black/40">
                         <div className="flex items-center justify-between">
                             <p className="text-sm text-zinc-400">Total Users</p>
-                            <UsersIcon size={20} className="text-orange-400" />
+                            <UsersIcon size={20} className="text-pink-400" />
                         </div>
                         <p className="mt-3 text-2xl font-bold text-white">
                             {summary.total}
@@ -208,7 +211,7 @@ export default function UserTable({
                                     <button
                                         type="button"
                                         onClick={() => onSort("fullName")}
-                                        className="inline-flex items-center gap-1.5 font-semibold uppercase hover:text-orange-400"
+                                        className="inline-flex items-center gap-1.5 font-semibold uppercase hover:text-pink-400"
                                     >
                                         Name / Email {renderSortIcon("fullName")}
                                     </button>
@@ -219,7 +222,7 @@ export default function UserTable({
                                     <button
                                         type="button"
                                         onClick={() => onSort("isActive")}
-                                        className="inline-flex items-center gap-1.5 font-semibold uppercase hover:text-orange-400"
+                                        className="inline-flex items-center gap-1.5 font-semibold uppercase hover:text-pink-400"
                                     >
                                         Status {renderSortIcon("isActive")}
                                     </button>
@@ -228,12 +231,12 @@ export default function UserTable({
                                     <button
                                         type="button"
                                         onClick={() => onSort("createdAt")}
-                                        className="inline-flex items-center gap-1.5 font-semibold uppercase hover:text-orange-400"
+                                        className="inline-flex items-center gap-1.5 font-semibold uppercase hover:text-pink-400"
                                     >
                                         Created At {renderSortIcon("createdAt")}
                                     </button>
                                 </th>
-                                {canDelete && (
+                                {(canUpdate || canDelete) && (
                                     <th className="px-5 py-4 text-center">Actions</th>
                                 )}
                             </tr>
@@ -242,13 +245,13 @@ export default function UserTable({
                         <tbody className="divide-y divide-white/[0.07]">
                             {loading ? (
                                 <tr>
-                                    <td colSpan={canDelete ? 6 : 5} className="px-5 py-10 text-center text-zinc-400">
+                                    <td colSpan={(canUpdate || canDelete) ? 6 : 5} className="px-5 py-10 text-center text-zinc-400">
                                         Loading users...
                                     </td>
                                 </tr>
                             ) : users.length === 0 ? (
                                 <tr>
-                                    <td colSpan={canDelete ? 6 : 5} className="px-5 py-10 text-center text-zinc-500">
+                                    <td colSpan={(canUpdate || canDelete) ? 6 : 5} className="px-5 py-10 text-center text-zinc-500">
                                         No users found matching your criteria.
                                     </td>
                                 </tr>
@@ -272,7 +275,7 @@ export default function UserTable({
                                         </td>
 
                                         <td className="px-5 py-4">
-                                            <span className="rounded-full border border-orange-500/25 bg-orange-500/10 px-3 py-1 text-xs font-medium text-orange-300">
+                                            <span className="rounded-full border border-pink-500/25 bg-pink-500/10 px-3 py-1 text-xs font-medium text-pink-300">
                                                 {getRoleName(item)}
                                             </span>
                                         </td>
@@ -295,10 +298,20 @@ export default function UserTable({
                                                 : "-"}
                                         </td>
 
-                                        {canDelete && (
+                                        {(canUpdate || canDelete) && (
                                             <td className="px-5 py-4">
-                                                <div className="flex items-center justify-center">
-                                                    {item.isActive && (
+                                                <div className="flex items-center justify-center gap-1.5">
+                                                    {canUpdate && item.isActive && (
+                                                        <button
+                                                            type="button"
+                                                            onClick={() => onEdit(item)}
+                                                            title="Edit User"
+                                                            className="rounded-lg p-2 text-pink-400 transition hover:bg-pink-500/15 hover:text-pink-300"
+                                                        >
+                                                            <Pencil size={17} />
+                                                        </button>
+                                                    )}
+                                                    {canDelete && item.isActive && (
                                                         <button
                                                             type="button"
                                                             onClick={() => onDelete(item.id)}

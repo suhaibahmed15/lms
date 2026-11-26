@@ -161,7 +161,7 @@ export default function LoanApplicationModal({
                                     </span>
                                     <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-medium ${
                                         selectedLoanType.requiresGuarantor
-                                            ? "bg-amber-500/10 text-amber-400 border border-amber-500/20"
+                                            ? "bg-pink-500/10 text-pink-400 border border-pink-500/20"
                                             : "bg-emerald-500/10 text-emerald-400 border border-emerald-500/20"
                                     }`}>
                                         {selectedLoanType.requiresGuarantor ? "Guarantor Mandatory" : "No Guarantor Needed"}
@@ -175,7 +175,7 @@ export default function LoanApplicationModal({
                                         Term: <strong className="text-white block">{selectedLoanType.minTermMonths} - {selectedLoanType.maxTermMonths} mos</strong>
                                     </p>
                                     <p>
-                                        Interest Rate: <strong className="text-amber-400 block">{selectedLoanType.interestRate}% Fixed APR</strong>
+                                        Interest Rate: <strong className="text-pink-400 block">{selectedLoanType.interestRate}% Fixed APR</strong>
                                     </p>
                                 </div>
                             </div>
@@ -220,14 +220,14 @@ export default function LoanApplicationModal({
 
                         {/* Guarantor Section when Loan Product requires one */}
                         {requiresGuarantor && (
-                            <div className="rounded-xl border border-amber-500/30 bg-amber-500/[0.04] p-4.5 space-y-4">
-                                <div className="flex items-start gap-2.5 text-amber-300 border-b border-amber-500/20 pb-3">
-                                    <ShieldAlert size={18} className="mt-0.5 shrink-0 text-amber-400" />
+                            <div className="rounded-xl border border-pink-500/30 bg-pink-500/[0.04] p-4.5 space-y-4">
+                                <div className="flex items-start gap-2.5 text-pink-300 border-b border-pink-500/20 pb-3">
+                                    <ShieldAlert size={18} className="mt-0.5 shrink-0 text-pink-400" />
                                     <div>
                                         <h4 className="font-semibold text-sm text-white">
                                             Guarantor Particulars Required
                                         </h4>
-                                        <p className="text-xs text-amber-200/80 mt-0.5">
+                                        <p className="text-xs text-pink-200/80 mt-0.5">
                                             This loan scheme requires a verified guarantor. Please provide your guarantor's details below to ensure seamless underwriting approval.
                                         </p>
                                     </div>
@@ -332,7 +332,7 @@ export default function LoanApplicationModal({
                         type="submit"
                         loading={loading}
                         loadingText="Submitting..."
-                        className="bg-amber-600 hover:bg-amber-500 text-white shadow-lg shadow-amber-600/20"
+                        className="bg-pink-600 hover:bg-pink-500 text-white shadow-lg shadow-pink-600/20"
                     >
                         {mode === "create" ? "Submit Application" : "Submit Review"}
                     </Button>

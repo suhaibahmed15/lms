@@ -82,7 +82,7 @@ export default function LoanDocumentTable({
                             type="button"
                             onClick={onUpload}
                             disabled={!selectedApplication}
-                            className="rounded-xl bg-orange-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-orange-500 disabled:opacity-40"
+                            className="rounded-xl bg-pink-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-pink-500 disabled:opacity-40"
                         >
                             Upload Document
                         </button>
@@ -154,7 +154,7 @@ export default function LoanDocumentTable({
                                             <div className="flex max-w-[220px] items-center gap-3">
                                                 <FileText
                                                     size={20}
-                                                    className="shrink-0 text-orange-400"
+                                                    className="shrink-0 text-pink-400"
                                                 />
 
                                                 <span className="truncate font-medium text-white">
@@ -197,7 +197,7 @@ export default function LoanDocumentTable({
                                                     type="button"
                                                     onClick={() => onDownload(document)}
                                                     title="Download document"
-                                                    className="rounded-lg border border-white/10 p-2 text-zinc-300 hover:border-orange-500/40 hover:text-orange-400"
+                                                    className="rounded-lg border border-white/10 p-2 text-zinc-300 hover:border-pink-500/40 hover:text-pink-400"
                                                 >
                                                     <Download size={16} />
                                                 </button>

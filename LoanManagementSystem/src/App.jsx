@@ -3,7 +3,8 @@ import {
     Routes,
     Route,
     Navigate,
-    useNavigate
+    useNavigate,
+    useSearchParams
 } from "react-router-dom";
 
 import { useEffect, useState } from "react";
@@ -17,6 +18,7 @@ import ProtectedRoute from "./components/common/ProtectedRoute";
 import RouteDispatcher from "./components/common/RouteDispatcher";
 
 // Pages
+import LandingPage from "./pages/LandingPage";
 import Dashboard from "./pages/Dashboard";
 import Roles from "./pages/Roles";
 import Menus from "./pages/Menus";
@@ -43,9 +45,24 @@ import {
     setAuthSession
 } from "./utils/auth";
 
-function AuthPage({ onAuthChange }) {
-    const [showLogin, setShowLogin] = useState(true);
+function AuthPage({ onAuthChange, initialMode }) {
+    const [searchParams] = useSearchParams();
+    const mode = searchParams.get("mode");
+    const [showLogin, setShowLogin] = useState(() => {
+        if (initialMode === "signup" || mode === "signup") {
+            return false;
+        }
+        return true;
+    });
     const navigate = useNavigate();
+
+    useEffect(() => {
+        if (mode === "signup") {
+            setShowLogin(false);
+        } else if (mode === "login") {
+            setShowLogin(true);
+        }
+    }, [mode]);
 
     const handleLoginSuccess = (authData) => {
         setAuthSession(authData);
@@ -99,6 +116,22 @@ function AppRoutes() {
                     authenticated
                         ? <Navigate to="/dashboard" replace />
                         : <AuthPage onAuthChange={setAuthenticated} />
+                }
+            />
+            <Route
+                path="/signup"
+                element={
+                    authenticated
+                        ? <Navigate to="/dashboard" replace />
+                        : <AuthPage onAuthChange={setAuthenticated} initialMode="signup" />
+                }
+            />
+            <Route
+                path="/register"
+                element={
+                    authenticated
+                        ? <Navigate to="/dashboard" replace />
+                        : <AuthPage onAuthChange={setAuthenticated} initialMode="signup" />
                 }
             />
 
@@ -163,12 +196,7 @@ function AppRoutes() {
 
             <Route
                 path="/"
-                element={
-                    <Navigate
-                        to={authenticated ? "/dashboard" : "/login"}
-                        replace
-                    />
-                }
+                element={<LandingPage />}
             />
 
             <Route

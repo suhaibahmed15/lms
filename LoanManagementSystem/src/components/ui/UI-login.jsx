@@ -35,8 +35,8 @@ const VideoBackground = ({ videoUrl }) => {
             {/* Dark overlay */}
             <div className="absolute inset-0 bg-black/35 pointer-events-none" />
 
-            {/* Orange cinematic lighting */}
-            <div className="absolute inset-0 bg-gradient-to-br from-orange-950/20 via-transparent to-black/40 pointer-events-none" />
+            {/* Pink cinematic lighting */}
+            <div className="absolute inset-0 bg-gradient-to-br from-pink-950/20 via-transparent to-black/40 pointer-events-none" />
 
         </div>
     );
@@ -59,7 +59,7 @@ const FormInput = ({
     return (
         <div className="relative group">
 
-            <div className="absolute left-4 top-1/2 -translate-y-1/2 text-zinc-500 transition-colors group-focus-within:text-orange-500">
+            <div className="absolute left-4 top-1/2 -translate-y-1/2 text-zinc-500 transition-colors group-focus-within:text-pink-500">
                 {icon}
             </div>
 
@@ -71,7 +71,7 @@ const FormInput = ({
                 placeholder={placeholder}
                 required={required}
                 autoComplete={autoComplete}
-                className="h-12 w-full rounded-xl border border-white/10 bg-white/[0.06] pl-12 pr-12 text-sm text-white outline-none transition-all duration-300 placeholder:text-zinc-500 hover:border-white/20 focus:border-orange-500/70 focus:bg-white/[0.09] focus:ring-4 focus:ring-orange-500/10"
+                className="h-12 w-full rounded-xl border border-white/10 bg-white/[0.06] pl-12 pr-12 text-sm text-white outline-none transition-all duration-300 placeholder:text-zinc-500 hover:border-white/20 focus:border-pink-500/70 focus:bg-white/[0.09] focus:ring-4 focus:ring-pink-500/10"
             />
 
         </div>
@@ -117,20 +117,22 @@ const LoginForm = ({ onSubmit, onSwitch }) => {
         <div className="relative overflow-hidden rounded-3xl border border-white/10 bg-[#101010]/90 p-6 shadow-2xl shadow-black/50 backdrop-blur-2xl sm:p-9">
 
             {/* Card Glow */}
-            <div className="pointer-events-none absolute -right-24 -top-24 h-64 w-64 rounded-full bg-orange-500/10 blur-[90px]" />
+            <div className="pointer-events-none absolute -right-24 -top-24 h-64 w-64 rounded-full bg-pink-500/15 blur-[90px]" />
 
             <div className="relative z-10">
 
                 {/* Brand */}
                 <div className="mb-8 flex items-center gap-3">
 
-                    <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-orange-400 to-orange-600 text-white shadow-lg shadow-orange-500/20">
-                        <Lock size={23} />
-                    </div>
+                    <img
+                        src="/logo.png"
+                        alt="LMS Logo"
+                        className="h-12 w-auto object-contain rounded-xl p-1 bg-white/5 border border-pink-500/20"
+                    />
 
                     <div>
                         <h2 className="text-lg font-extrabold tracking-wide text-white">
-                            LMS <span className="text-orange-500">CAPITAL</span>
+                            LMS <span className="text-pink-500">CAPITAL</span>
                         </h2>
 
                         <p className="text-xs text-zinc-500">
@@ -143,11 +145,11 @@ const LoginForm = ({ onSubmit, onSwitch }) => {
                 {/* Heading */}
                 <div className="mb-8">
 
-                    <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-orange-500/20 bg-orange-500/10 px-3 py-1">
+                    <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-pink-500/20 bg-pink-500/10 px-3 py-1">
 
-                        <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-orange-500" />
+                        <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-pink-500" />
 
-                        <span className="text-[10px] font-semibold uppercase tracking-[2px] text-orange-400">
+                        <span className="text-[10px] font-semibold uppercase tracking-[2px] text-pink-400">
                             Secure Access
                         </span>
 
@@ -216,7 +218,7 @@ const LoginForm = ({ onSubmit, onSwitch }) => {
                             <button
                                 type="button"
                                 onClick={() => setShowPassword(!showPassword)}
-                                className="absolute right-4 top-1/2 -translate-y-1/2 text-zinc-500 transition hover:text-orange-500"
+                                className="absolute right-4 top-1/2 -translate-y-1/2 text-zinc-500 transition hover:text-pink-500"
                                 aria-label={showPassword ? "Hide password" : "Show password"}
                             >
                                 {showPassword ? (
@@ -239,7 +241,7 @@ const LoginForm = ({ onSubmit, onSwitch }) => {
                                 type="checkbox"
                                 checked={remember}
                                 onChange={(e) => setRemember(e.target.checked)}
-                                className="h-4 w-4 cursor-pointer accent-orange-500"
+                                className="h-4 w-4 cursor-pointer accent-pink-500"
                             />
 
                             Remember me
@@ -248,7 +250,7 @@ const LoginForm = ({ onSubmit, onSwitch }) => {
 
                         <button
                             type="button"
-                            className="text-sm font-medium text-orange-500 transition hover:text-orange-400"
+                            className="text-sm font-medium text-pink-400 transition hover:text-pink-300"
                         >
                             Forgot Password?
                         </button>
@@ -259,14 +261,12 @@ const LoginForm = ({ onSubmit, onSwitch }) => {
                     <button
                         type="submit"
                         disabled={isSubmitting}
-                        className="group flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-orange-600 to-orange-500 py-3.5 text-sm font-bold text-white shadow-lg shadow-orange-500/20 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-orange-500/30 disabled:cursor-not-allowed disabled:opacity-60"
+                        className="group flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-pink-600 via-pink-500 to-rose-400 py-3.5 text-sm font-bold text-white shadow-lg shadow-pink-500/25 transition-all duration-300 hover:opacity-95 disabled:cursor-not-allowed disabled:opacity-60 cursor-pointer"
                     >
 
                         <span>
                             {isSubmitting ? "Signing In..." : "Sign In"}
                         </span>
-
-                        {!isSubmitting }
 
                     </button>
 
@@ -283,7 +283,7 @@ const LoginForm = ({ onSubmit, onSwitch }) => {
                     <button
                         type="button"
                         onClick={onSwitch}
-                        className="font-semibold text-orange-500 transition hover:text-orange-400"
+                        className="font-semibold text-pink-400 transition hover:text-pink-300 cursor-pointer"
                     >
                         Create Account
                     </button>

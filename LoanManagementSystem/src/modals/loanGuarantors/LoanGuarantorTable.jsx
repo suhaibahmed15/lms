@@ -111,7 +111,7 @@ function LoanGuarantorTable({
                                                 <>
                                                     <button
                                                         onClick={() => onEdit(guarantor)}
-                                                        className="rounded-md border border-slate-700 px-3 py-1.5 text-xs text-slate-300 hover:border-orange-500 hover:text-orange-400"
+                                                        className="rounded-md border border-slate-700 px-3 py-1.5 text-xs text-slate-300 hover:border-pink-500 hover:text-pink-400"
                                                     >
                                                         Edit
                                                     </button>

@@ -39,14 +39,14 @@ export default function UserMenuTable({
             return <ArrowUpDown size={14} className="text-zinc-500" />;
         }
         return assignedSortDirection === "asc" ? (
-            <ArrowUp size={14} className="text-orange-400" />
+            <ArrowUp size={14} className="text-pink-400" />
         ) : (
-            <ArrowDown size={14} className="text-orange-400" />
+            <ArrowDown size={14} className="text-pink-400" />
         );
     };
 
     const controlClass =
-        "rounded-xl border border-white/10 bg-white/[0.07] px-3.5 py-2 text-sm text-white placeholder:text-zinc-500 outline-none transition focus:border-orange-500/70 focus:bg-white/[0.10] focus:ring-4 focus:ring-orange-500/10";
+        "rounded-xl border border-white/10 bg-white/[0.07] px-3.5 py-2 text-sm text-white placeholder:text-zinc-500 outline-none transition focus:border-pink-500/70 focus:bg-white/[0.10] focus:ring-4 focus:ring-pink-500/10";
 
     const startRecord =
         assignedTotalRecords === 0
@@ -64,19 +64,19 @@ export default function UserMenuTable({
                 <div className="mb-4 flex items-center justify-between">
                     <div>
                         <div className="flex items-center gap-2">
-                            <ShieldCheck size={20} className="text-orange-400" />
+                            <ShieldCheck size={20} className="text-pink-400" />
                             <h2 className="font-semibold text-white">
                                 Inherited Role Menus
                             </h2>
                         </div>
                         <p className="mt-1 text-sm text-zinc-400">
                             Menus available automatically through user's role:{" "}
-                            <span className="font-medium text-orange-400">
+                            <span className="font-medium text-pink-400">
                                 {selectedUser.roleName || selectedUser.roleKey}
                             </span>
                         </p>
                     </div>
-                    <span className="rounded-full border border-orange-500/30 bg-orange-500/10 px-3 py-1 text-xs font-semibold text-orange-400">
+                    <span className="rounded-full border border-pink-500/30 bg-pink-500/10 px-3 py-1 text-xs font-semibold text-pink-400">
                         {roleMenus.length} Menus
                     </span>
                 </div>
@@ -90,11 +90,11 @@ export default function UserMenuTable({
                         {roleMenus.map((item) => (
                             <div
                                 key={item.id}
-                                className="flex items-center gap-3 rounded-xl border border-orange-500/20 bg-orange-500/10 p-3"
+                                className="flex items-center gap-3 rounded-xl border border-pink-500/20 bg-pink-500/10 p-3"
                             >
                                 <CheckCircle
                                     size={17}
-                                    className="shrink-0 text-orange-400"
+                                    className="shrink-0 text-pink-400"
                                 />
                                 <span className="text-sm font-medium text-zinc-200">
                                     {item.menuName}
@@ -110,7 +110,7 @@ export default function UserMenuTable({
                 <div className="flex flex-col gap-3 border-b border-white/10 p-5 sm:flex-row sm:items-center sm:justify-between">
                     <div>
                         <div className="flex items-center gap-2">
-                            <UserRound size={20} className="text-orange-400" />
+                            <UserRound size={20} className="text-pink-400" />
                             <h2 className="font-semibold text-white">
                                 Individual Menu Assignments
                             </h2>
@@ -155,7 +155,7 @@ export default function UserMenuTable({
                                     <button
                                         type="button"
                                         onClick={() => onAssignedSort("menuName")}
-                                        className="inline-flex items-center gap-1.5 font-semibold uppercase hover:text-orange-400"
+                                        className="inline-flex items-center gap-1.5 font-semibold uppercase hover:text-pink-400"
                                     >
                                         Menu Name {renderSortIcon("menuName")}
                                     </button>
@@ -164,7 +164,7 @@ export default function UserMenuTable({
                                     <button
                                         type="button"
                                         onClick={() => onAssignedSort("menuKey")}
-                                        className="inline-flex items-center gap-1.5 font-semibold uppercase hover:text-orange-400"
+                                        className="inline-flex items-center gap-1.5 font-semibold uppercase hover:text-pink-400"
                                     >
                                         Menu Key {renderSortIcon("menuKey")}
                                     </button>
@@ -173,7 +173,7 @@ export default function UserMenuTable({
                                     <button
                                         type="button"
                                         onClick={() => onAssignedSort("route")}
-                                        className="inline-flex items-center gap-1.5 font-semibold uppercase hover:text-orange-400"
+                                        className="inline-flex items-center gap-1.5 font-semibold uppercase hover:text-pink-400"
                                     >
                                         Route {renderSortIcon("route")}
                                     </button>
@@ -204,7 +204,7 @@ export default function UserMenuTable({
                                             {item.menuName}
                                         </td>
                                         <td className="px-5 py-3.5">
-                                            <span className="rounded-lg border border-white/10 bg-white/[0.06] px-2.5 py-1 text-xs font-semibold text-orange-300">
+                                            <span className="rounded-lg border border-white/10 bg-white/[0.06] px-2.5 py-1 text-xs font-semibold text-pink-300">
                                                 {item.menuKey}
                                             </span>
                                         </td>

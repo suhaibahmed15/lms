@@ -27,13 +27,13 @@ const getStatusStyle = (statusKey) => {
         case "APPLICATION_REJECTED":
             return "bg-red-500/10 text-red-400 border border-red-500/20";
         case "APPLICATION_SUBMITTED":
-            return "bg-blue-500/10 text-blue-400 border border-blue-500/20";
+            return "bg-white/10 text-white border border-white/20";
         case "APPLICATION_UNDER_REVIEW":
-            return "bg-orange-500/10 text-orange-400 border border-orange-500/20";
+            return "bg-pink-500/10 text-pink-400 border border-pink-500/20";
         case "APPLICATION_DOCUMENTS_REQUIRED":
-            return "bg-yellow-500/10 text-yellow-400 border border-yellow-500/20";
+            return "bg-pink-500/15 text-pink-300 border border-pink-500/30";
         case "APPLICATION_DISBURSED":
-            return "bg-purple-500/10 text-purple-400 border border-purple-500/20";
+            return "bg-gradient-to-r from-pink-500/20 to-rose-500/20 text-pink-300 border border-pink-500/30";
         default:
             return "bg-zinc-500/10 text-zinc-400 border border-zinc-500/20";
     }
@@ -111,7 +111,7 @@ export default function LoanApplicationTable({
                             value={search}
                             onChange={(e) => onSearchChange(e.target.value)}
                             placeholder="Search by number or applicant..."
-                            className="w-full rounded-xl border border-white/10 bg-[#181818] py-2.5 pl-10 pr-4 text-sm text-white placeholder:text-zinc-500 outline-none focus:border-orange-500/70"
+                            className="w-full rounded-xl border border-white/10 bg-[#181818] py-2.5 pl-10 pr-4 text-sm text-white placeholder:text-zinc-500 outline-none focus:border-pink-500/70 focus:ring-2 focus:ring-pink-500/20"
                         />
                     </div>
 
@@ -241,7 +241,7 @@ export default function LoanApplicationTable({
                                                             Verified
                                                         </span>
                                                     ) : (application.guarantorCount || 0) > 0 ? (
-                                                        <span className="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium bg-yellow-500/10 text-yellow-400 border border-yellow-500/20">
+                                                        <span className="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium bg-pink-500/10 text-pink-300 border border-pink-500/20">
                                                             Pending Verification
                                                         </span>
                                                     ) : (
@@ -253,7 +253,7 @@ export default function LoanApplicationTable({
                                                                 <button
                                                                     type="button"
                                                                     onClick={() => onAddGuarantor(application)}
-                                                                    className="text-xs font-medium text-amber-400 hover:text-amber-300 underline"
+                                                                    className="text-xs font-medium text-pink-400 hover:text-pink-300 underline cursor-pointer"
                                                                     title="Submit Guarantor for this application"
                                                                 >
                                                                     + Add
@@ -334,7 +334,7 @@ export default function LoanApplicationTable({
                                                         </Button>
                                                     )}
 
-                                                    {statusKey === "APPLICATION_APPROVED" && onViewLoan && (
+                                                    {(application.statusKey === "APPLICATION_APPROVED" || application.statusKey === "APPLICATION_DISBURSED") && onViewLoan && (
                                                         <Button
                                                             size="sm"
                                                             variant="secondary"

@@ -315,7 +315,7 @@ export default function LoanDocuments() {
                                 setError("");
                                 setSuccess("");
                             }}
-                            className="w-full rounded-xl border border-white/10 bg-[#0d0d0d] px-4 py-3 text-sm text-white outline-none focus:border-orange-500"
+                            className="w-full rounded-xl border border-white/10 bg-[#0d0d0d] px-4 py-3 text-sm text-white outline-none focus:border-pink-500"
                         >
                             <option value="">
                                 Select an application

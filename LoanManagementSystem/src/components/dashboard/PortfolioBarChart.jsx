@@ -10,9 +10,9 @@ export default function PortfolioBarChart({
     collected = 0
 }) {
     const values = [
-        { label: "Disbursed Capital", value: Number(disbursed) || 0, color: "from-blue-600 to-blue-400", barBg: "bg-blue-500" },
-        { label: "Outstanding Balance", value: Number(outstanding) || 0, color: "from-amber-600 to-amber-400", barBg: "bg-amber-500" },
-        { label: "Collected Repayments", value: Number(collected) || 0, color: "from-emerald-600 to-emerald-400", barBg: "bg-emerald-500" }
+        { label: "Disbursed Capital", value: Number(disbursed) || 0, color: "from-pink-600 via-pink-500 to-rose-400", barBg: "bg-pink-500" },
+        { label: "Outstanding Balance", value: Number(outstanding) || 0, color: "from-neutral-600 via-neutral-400 to-white", barBg: "bg-neutral-400" },
+        { label: "Collected Repayments", value: Number(collected) || 0, color: "from-pink-500 to-pink-300", barBg: "bg-pink-400" }
     ];
 
     const maxValue = Math.max(...values.map((v) => v.value), 1);

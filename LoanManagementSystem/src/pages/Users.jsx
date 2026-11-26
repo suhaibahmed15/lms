@@ -6,6 +6,7 @@ import UserModal from "../modals/users/UserModal";
 import {
     getAllUsers,
     createUser,
+    updateUser,
     deleteUser
 } from "../services/userService";
 
@@ -37,7 +38,9 @@ export default function Users() {
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     const [canCreate, setCanCreate] = useState(false);
+    const [canUpdate, setCanUpdate] = useState(false);
     const [canDelete, setCanDelete] = useState(false);
+    const [selectedUser, setSelectedUser] = useState(null);
 
     useEffect(() => {
         const fetchCurrentUserAccess = async () => {
@@ -61,9 +64,11 @@ export default function Users() {
                 );
 
                 setCanCreate(isAdmin || permKeys.has("USER_CREATE"));
+                setCanUpdate(isAdmin || permKeys.has("USER_UPDATE"));
                 setCanDelete(isAdmin || permKeys.has("USER_DELETE"));
             } catch {
                 setCanCreate(false);
+                setCanUpdate(false);
                 setCanDelete(false);
             }
         };
@@ -152,10 +157,30 @@ export default function Users() {
         setPageNumber(1);
     };
 
-    const handleCreateUser = async (userData) => {
-        await createUser(userData);
+    const handleAddUser = () => {
+        setSelectedUser(null);
+        setIsModalOpen(true);
+    };
+
+    const handleEditUser = (userItem) => {
+        setSelectedUser(userItem);
+        setIsModalOpen(true);
+    };
+
+    const handleSaveUser = async (userData) => {
+        if (selectedUser) {
+            await updateUser(selectedUser.id, userData);
+        } else {
+            await createUser(userData);
+        }
         setIsModalOpen(false);
+        setSelectedUser(null);
         await fetchUsers();
+    };
+
+    const handleCloseModal = () => {
+        setIsModalOpen(false);
+        setSelectedUser(null);
     };
 
     const handleDelete = async (id) => {
@@ -183,6 +208,7 @@ export default function Users() {
                 loading={loading}
                 error={error}
                 canCreate={canCreate}
+                canUpdate={canUpdate}
                 canDelete={canDelete}
                 summary={summary}
                 searchInput={searchInput}
@@ -210,15 +236,17 @@ export default function Users() {
                     setPageNumber(1);
                 }}
                 onRefresh={fetchUsers}
-                onAdd={() => setIsModalOpen(true)}
+                onAdd={handleAddUser}
+                onEdit={handleEditUser}
                 onDelete={handleDelete}
             />
 
             <UserModal
                 isOpen={isModalOpen}
-                onClose={() => setIsModalOpen(false)}
-                onSubmit={handleCreateUser}
+                onClose={handleCloseModal}
+                onSubmit={handleSaveUser}
                 roles={roles}
+                user={selectedUser}
             />
         </MainLayout>
     );

@@ -49,7 +49,7 @@ public class RolePermissionRepository : IRolePermissionRepository
         return await _context.RolePermissions
             .AsNoTracking()
             .Include(rp => rp.Permission)
-            .Where(rp => !rp.IsDeleted && rp.Permission.IsActive && !rp.Permission.IsDeleted && !rp.Permission.Key.StartsWith("AUDIT_LOG"))
+            .Where(rp => !rp.IsDeleted && rp.Permission.IsActive && !rp.Permission.IsDeleted)
             .OrderBy(rp => rp.RoleId)
             .ThenBy(rp => rp.Permission.Name)
             .ToListAsync();
@@ -68,7 +68,7 @@ public class RolePermissionRepository : IRolePermissionRepository
         var query = _context.RolePermissions
             .AsNoTracking()
             .Include(rp => rp.Permission)
-            .Where(rp => !rp.IsDeleted && !rp.Permission.IsDeleted && !rp.Permission.Key.StartsWith("AUDIT_LOG"));
+            .Where(rp => !rp.IsDeleted && !rp.Permission.IsDeleted);
 
         if (roleId.HasValue)
         {
@@ -122,7 +122,7 @@ public class RolePermissionRepository : IRolePermissionRepository
         return await _context.RolePermissions
             .AsNoTracking()
             .Include(rp => rp.Permission)
-            .Where(rp => rp.RoleId == roleId && !rp.IsDeleted && rp.Permission.IsActive && !rp.Permission.IsDeleted && !rp.Permission.Key.StartsWith("AUDIT_LOG"))
+            .Where(rp => rp.RoleId == roleId && !rp.IsDeleted && rp.Permission.IsActive && !rp.Permission.IsDeleted)
             .OrderBy(rp => rp.Permission.Name)
             .ToListAsync();
     }

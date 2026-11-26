@@ -79,9 +79,7 @@ function RoleMenus() {
             ]);
 
             const roleList = Array.isArray(rolesResp) ? rolesResp : rolesResp.data || [];
-            const menuList = (Array.isArray(menusResp) ? menusResp : menusResp.data || []).filter(
-                (m) => m.key?.toUpperCase() !== "AUDIT_LOGS"
-            );
+            const menuList = Array.isArray(menusResp) ? menusResp : menusResp.data || [];
 
             setRoles(roleList);
             setMenus(menuList);
@@ -101,9 +99,7 @@ function RoleMenus() {
             if (roleFilter) params.roleId = Number(roleFilter);
 
             const response = await getAllRoleMenus(params);
-            const data = (Array.isArray(response) ? response : response.data || []).filter(
-                (item) => item.menuKey?.toUpperCase() !== "AUDIT_LOGS"
-            );
+            const data = Array.isArray(response) ? response : response.data || [];
 
             setRoleMenus(data);
             setTotalRecords(response.totalRecords ?? data.length);

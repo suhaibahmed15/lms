@@ -9,17 +9,17 @@ import { Loader2 } from "lucide-react";
 
 const variants = {
     primary:
-        "bg-gradient-to-r from-orange-600 to-orange-500 text-white shadow-lg shadow-orange-500/20 hover:from-orange-500 hover:to-orange-400 border border-orange-500/30 active:scale-[0.98]",
+        "bg-gradient-to-r from-pink-600 via-pink-500 to-rose-400 text-white shadow-lg shadow-pink-500/25 hover:from-pink-500 hover:to-rose-300 border border-pink-400/40 active:scale-[0.98]",
     secondary:
-        "border border-white/10 bg-white/[0.05] text-zinc-300 hover:bg-white/[0.10] hover:text-white active:scale-[0.98]",
+        "border border-white/15 bg-white/[0.06] text-white hover:bg-white/[0.12] hover:border-pink-500/30 active:scale-[0.98]",
     danger:
         "border border-red-500/30 bg-red-500/15 text-red-400 hover:bg-red-500/25 hover:text-red-300 active:scale-[0.98]",
     outline:
-        "border border-orange-500/40 text-orange-400 hover:bg-orange-500/15 hover:border-orange-500/70 active:scale-[0.98]",
+        "border border-pink-500/50 text-pink-400 hover:bg-pink-500/15 hover:border-pink-400 active:scale-[0.98]",
     ghost:
-        "text-zinc-400 hover:bg-white/10 hover:text-white active:scale-[0.98]",
+        "text-white/80 hover:bg-white/10 hover:text-white active:scale-[0.98]",
     success:
-        "border border-emerald-500/30 bg-emerald-500/15 text-emerald-400 hover:bg-emerald-500/25 hover:text-emerald-300 active:scale-[0.98]"
+        "border border-pink-500/30 bg-pink-500/15 text-pink-300 hover:bg-pink-500/25 hover:text-white active:scale-[0.98]"
 };
 
 const sizes = {

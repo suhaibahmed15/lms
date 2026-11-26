@@ -97,9 +97,7 @@ function Menus() {
             if (parentFilter !== "") params.parentMenuId = Number(parentFilter);
 
             const response = await getAllMenus(params);
-            const menuData = (Array.isArray(response) ? response : response.data || []).filter(
-                (m) => m.key?.toUpperCase() !== "AUDIT_LOGS"
-            );
+            const menuData = Array.isArray(response) ? response : response.data || [];
 
             setMenus(menuData);
             setTotalRecords(response.totalRecords ?? menuData.length);

@@ -48,14 +48,14 @@ export default function UserPermissionTable({
             return <ArrowUpDown size={14} className="text-zinc-500" />;
         }
         return sortDirection === "asc" ? (
-            <ArrowUp size={14} className="text-orange-400" />
+            <ArrowUp size={14} className="text-pink-400" />
         ) : (
-            <ArrowDown size={14} className="text-orange-400" />
+            <ArrowDown size={14} className="text-pink-400" />
         );
     };
 
     const controlClass =
-        "rounded-xl border border-white/10 bg-white/[0.07] px-3.5 py-2 text-sm text-white placeholder:text-zinc-500 outline-none transition focus:border-orange-500/70 focus:bg-white/[0.10] focus:ring-4 focus:ring-orange-500/10";
+        "rounded-xl border border-white/10 bg-white/[0.07] px-3.5 py-2 text-sm text-white placeholder:text-zinc-500 outline-none transition focus:border-pink-500/70 focus:bg-white/[0.10] focus:ring-4 focus:ring-pink-500/10";
 
     const startRecord = totalRecords === 0 ? 0 : (pageNumber - 1) * pageSize + 1;
     const endRecord = Math.min(pageNumber * pageSize, totalRecords);
@@ -99,7 +99,7 @@ export default function UserPermissionTable({
                     <div className="rounded-2xl border border-white/10 bg-[#111111] p-5 shadow-xl shadow-black/40">
                         <div className="flex items-center justify-between">
                             <p className="text-sm text-zinc-400">Total Assignments</p>
-                            <KeyRound size={20} className="text-orange-400" />
+                            <KeyRound size={20} className="text-pink-400" />
                         </div>
                         <p className="mt-3 text-2xl font-bold text-white">
                             {summary.total}
@@ -228,7 +228,7 @@ export default function UserPermissionTable({
                                     <button
                                         type="button"
                                         onClick={() => onSort("userName")}
-                                        className="inline-flex items-center gap-1.5 font-semibold uppercase hover:text-orange-400"
+                                        className="inline-flex items-center gap-1.5 font-semibold uppercase hover:text-pink-400"
                                     >
                                         User {renderSortIcon("userName")}
                                     </button>
@@ -237,7 +237,7 @@ export default function UserPermissionTable({
                                     <button
                                         type="button"
                                         onClick={() => onSort("permissionName")}
-                                        className="inline-flex items-center gap-1.5 font-semibold uppercase hover:text-orange-400"
+                                        className="inline-flex items-center gap-1.5 font-semibold uppercase hover:text-pink-400"
                                     >
                                         Permission {renderSortIcon("permissionName")}
                                     </button>
@@ -246,7 +246,7 @@ export default function UserPermissionTable({
                                     <button
                                         type="button"
                                         onClick={() => onSort("assignedAt")}
-                                        className="inline-flex items-center gap-1.5 font-semibold uppercase hover:text-orange-400"
+                                        className="inline-flex items-center gap-1.5 font-semibold uppercase hover:text-pink-400"
                                     >
                                         Assigned At {renderSortIcon("assignedAt")}
                                     </button>
@@ -255,7 +255,7 @@ export default function UserPermissionTable({
                                     <button
                                         type="button"
                                         onClick={() => onSort("isActive")}
-                                        className="inline-flex items-center gap-1.5 font-semibold uppercase hover:text-orange-400"
+                                        className="inline-flex items-center gap-1.5 font-semibold uppercase hover:text-pink-400"
                                     >
                                         Status {renderSortIcon("isActive")}
                                     </button>
@@ -301,7 +301,7 @@ export default function UserPermissionTable({
                                                 <div className="font-medium text-white">
                                                     {item.permissionName || `Permission ${item.permissionId}`}
                                                 </div>
-                                                <div className="mt-1 text-xs text-orange-300/80">
+                                                <div className="mt-1 text-xs text-pink-300/80">
                                                     {item.permissionKey || `ID: ${item.permissionId}`}
                                                 </div>
                                             </td>

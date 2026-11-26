@@ -47,14 +47,14 @@ export default function LoanTypeTable({
         }
 
         return sortDirection === "asc" ? (
-            <ArrowUp size={14} className="text-orange-400" />
+            <ArrowUp size={14} className="text-pink-400" />
         ) : (
-            <ArrowDown size={14} className="text-orange-400" />
+            <ArrowDown size={14} className="text-pink-400" />
         );
     };
 
     const controlClass =
-        "rounded-xl border border-white/10 bg-white/[0.07] px-3.5 py-2 text-sm text-white placeholder:text-zinc-500 outline-none transition focus:border-orange-500/70 focus:bg-white/[0.10] focus:ring-4 focus:ring-orange-500/10";
+        "rounded-xl border border-white/10 bg-white/[0.07] px-3.5 py-2 text-sm text-white placeholder:text-zinc-500 outline-none transition focus:border-pink-500/70 focus:bg-white/[0.10] focus:ring-4 focus:ring-pink-500/10";
 
     const startRecord =
         totalRecords === 0 ? 0 : (pageNumber - 1) * pageSize + 1;
@@ -172,7 +172,7 @@ export default function LoanTypeTable({
                                     <button
                                         type="button"
                                         onClick={() => onSort("name")}
-                                        className="inline-flex items-center gap-1.5 font-semibold uppercase hover:text-orange-400"
+                                        className="inline-flex items-center gap-1.5 font-semibold uppercase hover:text-pink-400"
                                     >
                                         Loan Type {renderSortIcon("name")}
                                     </button>
@@ -182,7 +182,7 @@ export default function LoanTypeTable({
                                     <button
                                         type="button"
                                         onClick={() => onSort("code")}
-                                        className="inline-flex items-center gap-1.5 font-semibold uppercase hover:text-orange-400"
+                                        className="inline-flex items-center gap-1.5 font-semibold uppercase hover:text-pink-400"
                                     >
                                         Code {renderSortIcon("code")}
                                     </button>
@@ -196,7 +196,7 @@ export default function LoanTypeTable({
                                     <button
                                         type="button"
                                         onClick={() => onSort("interestRate")}
-                                        className="inline-flex items-center gap-1.5 font-semibold uppercase hover:text-orange-400"
+                                        className="inline-flex items-center gap-1.5 font-semibold uppercase hover:text-pink-400"
                                     >
                                         Interest {renderSortIcon("interestRate")}
                                     </button>
@@ -214,7 +214,7 @@ export default function LoanTypeTable({
                                     <button
                                         type="button"
                                         onClick={() => onSort("isActive")}
-                                        className="inline-flex items-center gap-1.5 font-semibold uppercase hover:text-orange-400"
+                                        className="inline-flex items-center gap-1.5 font-semibold uppercase hover:text-pink-400"
                                     >
                                         Status {renderSortIcon("isActive")}
                                     </button>
@@ -253,7 +253,7 @@ export default function LoanTypeTable({
                                     >
                                         <td className="px-6 py-4">
                                             <div className="flex items-center gap-3">
-                                                <div className="flex h-10 w-10 items-center justify-center rounded-xl border border-orange-500/25 bg-orange-500/15 text-orange-400">
+                                                <div className="flex h-10 w-10 items-center justify-center rounded-xl border border-pink-500/25 bg-pink-500/15 text-pink-400">
                                                     <Banknote size={19} />
                                                 </div>
 
@@ -269,7 +269,7 @@ export default function LoanTypeTable({
                                         </td>
 
                                         <td className="px-6 py-4">
-                                            <span className="rounded-lg border border-white/10 bg-white/[0.06] px-3 py-1 text-xs font-semibold text-orange-300">
+                                            <span className="rounded-lg border border-white/10 bg-white/[0.06] px-3 py-1 text-xs font-semibold text-pink-300">
                                                 {loanType.code}
                                             </span>
                                         </td>
@@ -296,7 +296,7 @@ export default function LoanTypeTable({
                                         <td className="px-6 py-4">
                                             <span className={
                                                 loanType.requiresGuarantor
-                                                    ? "text-orange-400"
+                                                    ? "text-pink-400"
                                                     : "text-zinc-500"
                                             }>
                                                 {loanType.requiresGuarantor ? "Required" : "Not required"}
@@ -322,7 +322,7 @@ export default function LoanTypeTable({
                                                         <button
                                                             type="button"
                                                             onClick={() => onEdit(loanType)}
-                                                            className="rounded-lg p-2 text-orange-400 transition hover:bg-orange-500/15 hover:text-orange-300"
+                                                            className="rounded-lg p-2 text-pink-400 transition hover:bg-pink-500/15 hover:text-pink-300"
                                                             title="Edit loan type"
                                                         >
                                                             <Pencil size={17} />
@@ -333,7 +333,7 @@ export default function LoanTypeTable({
                                                             onClick={() => onStatusChange(loanType)}
                                                             className={`rounded-lg p-2 transition ${
                                                                 loanType.isActive
-                                                                    ? "text-amber-400 hover:bg-amber-500/15"
+                                                                    ? "text-pink-400 hover:bg-pink-500/15"
                                                                     : "text-emerald-400 hover:bg-emerald-500/15"
                                                             }`}
                                                             title={loanType.isActive ? "Deactivate" : "Activate"}

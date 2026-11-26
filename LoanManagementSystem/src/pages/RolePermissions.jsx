@@ -81,9 +81,7 @@ function RolePermissions() {
             ]);
 
             const roleList = Array.isArray(rolesResp) ? rolesResp : rolesResp.data || [];
-            const permList = (Array.isArray(permsResp) ? permsResp : permsResp.data || []).filter(
-                (p) => !p.key?.toUpperCase().startsWith("AUDIT_LOG")
-            );
+            const permList = Array.isArray(permsResp) ? permsResp : permsResp.data || [];
 
             setRoles(roleList);
             setPermissions(permList);
@@ -105,9 +103,7 @@ function RolePermissions() {
             if (statusFilter !== "") params.isActive = statusFilter === "true";
 
             const response = await getAllRolePermissions(params);
-            const data = (Array.isArray(response) ? response : response.data || []).filter(
-                (item) => !item.permissionKey?.toUpperCase().startsWith("AUDIT_LOG")
-            );
+            const data = Array.isArray(response) ? response : response.data || [];
 
             setRolePermissions(data);
             setTotalRecords(response.totalRecords ?? data.length);

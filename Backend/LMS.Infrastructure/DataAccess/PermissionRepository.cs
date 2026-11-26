@@ -19,7 +19,7 @@ public class PermissionRepository : IPermissionRepository
     {
         return await _context.Permissions
             .AsNoTracking()
-            .Where(p => !p.IsDeleted && !p.Key.StartsWith("AUDIT_LOG"))
+            .Where(p => !p.IsDeleted)
             .OrderBy(p => p.Name)
             .ToListAsync();
     }
@@ -35,7 +35,7 @@ public class PermissionRepository : IPermissionRepository
     {
         var query = _context.Permissions
             .AsNoTracking()
-            .Where(p => !p.IsDeleted && !p.Key.StartsWith("AUDIT_LOG"));
+            .Where(p => !p.IsDeleted);
 
         if (isActive.HasValue)
         {
@@ -117,12 +117,12 @@ public class PermissionRepository : IPermissionRepository
         if (user == null)
             throw new InvalidOperationException("User not found or inactive.");
 
-        // Admin gets all active non-deleted permissions (excluding database-only Audit Log permissions)
+        // Admin gets all active non-deleted permissions
         if (user.Role.Key.Equals("ADMIN", StringComparison.OrdinalIgnoreCase))
         {
             return await _context.Permissions
                 .AsNoTracking()
-                .Where(p => p.IsActive && !p.IsDeleted && !p.Key.StartsWith("AUDIT_LOG"))
+                .Where(p => p.IsActive && !p.IsDeleted)
                 .OrderBy(p => p.Name)
                 .ToListAsync();
         }
@@ -204,8 +204,7 @@ public class PermissionRepository : IPermissionRepository
             .Where(p =>
                 effectivePermissionIds.Contains(p.Id) &&
                 p.IsActive &&
-                !p.IsDeleted &&
-                !p.Key.StartsWith("AUDIT_LOG"))
+                !p.IsDeleted)
             .OrderBy(p => p.Name)
             .ToListAsync();
     }

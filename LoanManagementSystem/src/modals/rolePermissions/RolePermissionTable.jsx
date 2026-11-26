@@ -57,12 +57,12 @@ function RolePermissionTable({
             return <ArrowUpDown size={14} className="text-zinc-500" />;
         }
         return sortDirection === "asc"
-            ? <ArrowUp size={14} className="text-orange-400" />
-            : <ArrowDown size={14} className="text-orange-400" />;
+            ? <ArrowUp size={14} className="text-pink-400" />
+            : <ArrowDown size={14} className="text-pink-400" />;
     };
 
     const controlClass =
-        "rounded-xl border border-white/10 bg-white/[0.07] px-3.5 py-2 text-sm text-white placeholder:text-zinc-500 outline-none transition focus:border-orange-500/70 focus:bg-white/[0.10] focus:ring-4 focus:ring-orange-500/10";
+        "rounded-xl border border-white/10 bg-white/[0.07] px-3.5 py-2 text-sm text-white placeholder:text-zinc-500 outline-none transition focus:border-pink-500/70 focus:bg-white/[0.10] focus:ring-4 focus:ring-pink-500/10";
 
     const startRecord = totalRecords === 0 ? 0 : (pageNumber - 1) * pageSize + 1;
     const endRecord = Math.min(pageNumber * pageSize, totalRecords);
@@ -112,7 +112,7 @@ function RolePermissionTable({
                             </h2>
                         </div>
 
-                        <div className="rounded-xl border border-orange-500/25 bg-orange-500/15 p-3 text-orange-400">
+                        <div className="rounded-xl border border-pink-500/25 bg-pink-500/15 p-3 text-pink-400">
                             <ShieldCheck size={22} />
                         </div>
                     </div>
@@ -225,7 +225,7 @@ function RolePermissionTable({
                                     <button
                                         type="button"
                                         onClick={() => onSort("permissionName")}
-                                        className="inline-flex items-center gap-1.5 font-semibold uppercase hover:text-orange-400"
+                                        className="inline-flex items-center gap-1.5 font-semibold uppercase hover:text-pink-400"
                                     >
                                         Permission {renderSortIcon("permissionName")}
                                     </button>
@@ -234,7 +234,7 @@ function RolePermissionTable({
                                     <button
                                         type="button"
                                         onClick={() => onSort("permissionKey")}
-                                        className="inline-flex items-center gap-1.5 font-semibold uppercase hover:text-orange-400"
+                                        className="inline-flex items-center gap-1.5 font-semibold uppercase hover:text-pink-400"
                                     >
                                         Key {renderSortIcon("permissionKey")}
                                     </button>
@@ -245,7 +245,7 @@ function RolePermissionTable({
                                     <button
                                         type="button"
                                         onClick={() => onSort("createdAt")}
-                                        className="inline-flex items-center gap-1.5 font-semibold uppercase hover:text-orange-400"
+                                        className="inline-flex items-center gap-1.5 font-semibold uppercase hover:text-pink-400"
                                     >
                                         Assigned At {renderSortIcon("createdAt")}
                                     </button>
@@ -289,7 +289,7 @@ function RolePermissionTable({
                                             className="transition hover:bg-white/[0.04]"
                                         >
                                             <td className="px-5 py-4">
-                                                <span className="rounded-full border border-orange-500/25 bg-orange-500/10 px-3 py-1 text-xs font-medium text-orange-300">
+                                                <span className="rounded-full border border-pink-500/25 bg-pink-500/10 px-3 py-1 text-xs font-medium text-pink-300">
                                                     {getRoleName(item.roleId)}
                                                 </span>
                                             </td>
@@ -299,7 +299,7 @@ function RolePermissionTable({
                                             </td>
 
                                             <td className="px-5 py-4">
-                                                <span className="rounded-lg border border-white/10 bg-white/[0.06] px-2.5 py-1 text-xs font-medium text-orange-300">
+                                                <span className="rounded-lg border border-white/10 bg-white/[0.06] px-2.5 py-1 text-xs font-medium text-pink-300">
                                                     {item.permissionKey}
                                                 </span>
                                             </td>

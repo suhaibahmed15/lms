@@ -76,8 +76,7 @@ export default function RolePermissionModal({
         .filter(
             (perm) =>
                 perm.isActive &&
-                !perm.isDeleted &&
-                !perm.key?.toUpperCase().startsWith("AUDIT_LOG")
+                !perm.isDeleted
         )
         .map((perm) => ({
             value: perm.id,

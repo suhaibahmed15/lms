@@ -70,11 +70,11 @@ function Dashboard() {
     // Prepare chart data for Application Status Donut
     const totalApps = dashboardData?.totalApplications || 0;
     const applicationStatusData = [
-        { label: "Approved", value: dashboardData?.approvedApplications || 0, color: "#10b981" },
-        { label: "Under Review", value: dashboardData?.applicationsUnderReview || 0, color: "#f59e0b" },
-        { label: "Docs Required", value: dashboardData?.applicationsAwaitingDocuments || 0, color: "#3b82f6" },
-        { label: "Pending", value: dashboardData?.pendingApplications || 0, color: "#6366f1" },
-        { label: "Rejected", value: dashboardData?.rejectedApplications || 0, color: "#ef4444" }
+        { label: "Approved", value: dashboardData?.approvedApplications || 0, color: "#ffffff" },
+        { label: "Under Review", value: dashboardData?.applicationsUnderReview || 0, color: "#ec4899" },
+        { label: "Docs Required", value: dashboardData?.applicationsAwaitingDocuments || 0, color: "#f472b6" },
+        { label: "Pending", value: dashboardData?.pendingApplications || 0, color: "#db2777" },
+        { label: "Rejected", value: dashboardData?.rejectedApplications || 0, color: "#9d174d" }
     ];
 
     // Compute key rates
@@ -96,7 +96,7 @@ function Dashboard() {
                             <h1 className="text-2xl font-black tracking-tight text-white">
                                 Executive Overview
                             </h1>
-                            <span className="inline-flex rounded-full border border-orange-500/30 bg-orange-500/10 px-3 py-0.5 text-xs font-semibold uppercase tracking-wider text-orange-400">
+                            <span className="inline-flex rounded-full border border-pink-500/30 bg-pink-500/10 px-3 py-0.5 text-xs font-semibold uppercase tracking-wider text-pink-400">
                                 {roleKey || "Authorized"}
                             </span>
                         </div>
@@ -125,7 +125,7 @@ function Dashboard() {
                         <button
                             type="button"
                             onClick={fetchDashboard}
-                            className="mt-3 rounded-xl bg-gradient-to-r from-orange-600 to-orange-500 px-4 py-2 text-sm font-semibold text-white shadow-lg transition hover:from-orange-500 hover:to-orange-400"
+                            className="mt-3 rounded-xl bg-gradient-to-r from-pink-600 via-pink-500 to-rose-400 px-4 py-2 text-sm font-semibold text-white shadow-lg shadow-pink-500/25 transition hover:opacity-95"
                         >
                             Try Again
                         </button>
@@ -135,10 +135,10 @@ function Dashboard() {
                         {/* 1. Primary Capital KPI Cards */}
                         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
                             {/* Total Disbursed */}
-                            <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-[#111111] p-5 shadow-xl transition hover:border-blue-500/30">
+                            <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-[#111111] p-5 shadow-xl transition hover:border-pink-500/30">
                                 <div className="flex items-center justify-between text-zinc-400 text-xs font-medium">
                                     <span>Total Capital Disbursed</span>
-                                    <div className="flex h-9 w-9 items-center justify-center rounded-xl border border-blue-500/20 bg-blue-500/10 text-blue-400">
+                                    <div className="flex h-9 w-9 items-center justify-center rounded-xl border border-pink-500/20 bg-pink-500/10 text-pink-400">
                                         <Landmark size={18} />
                                     </div>
                                 </div>
@@ -151,14 +151,14 @@ function Dashboard() {
                             </div>
 
                             {/* Total Outstanding */}
-                            <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-[#111111] p-5 shadow-xl transition hover:border-amber-500/30">
+                            <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-[#111111] p-5 shadow-xl transition hover:border-pink-500/40">
                                 <div className="flex items-center justify-between text-zinc-400 text-xs font-medium">
                                     <span>Outstanding Portfolio Balance</span>
-                                    <div className="flex h-9 w-9 items-center justify-center rounded-xl border border-amber-500/20 bg-amber-500/10 text-amber-400">
+                                    <div className="flex h-9 w-9 items-center justify-center rounded-xl border border-white/20 bg-white/10 text-white">
                                         <Wallet size={18} />
                                     </div>
                                 </div>
-                                <h3 className="mt-3 text-2xl font-black text-amber-400 font-mono">
+                                <h3 className="mt-3 text-2xl font-black text-pink-400 font-mono">
                                     PKR {formatAmount(outstanding)}
                                 </h3>
                                 <p className="mt-1 text-xs text-zinc-500">
@@ -167,14 +167,14 @@ function Dashboard() {
                             </div>
 
                             {/* Total Collected */}
-                            <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-[#111111] p-5 shadow-xl transition hover:border-emerald-500/30">
+                            <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-[#111111] p-5 shadow-xl transition hover:border-pink-500/30">
                                 <div className="flex items-center justify-between text-zinc-400 text-xs font-medium">
                                     <span>Repayment Collections</span>
-                                    <div className="flex h-9 w-9 items-center justify-center rounded-xl border border-emerald-500/20 bg-emerald-500/10 text-emerald-400">
+                                    <div className="flex h-9 w-9 items-center justify-center rounded-xl border border-pink-500/20 bg-pink-500/10 text-pink-300">
                                         <TrendingUp size={18} />
                                     </div>
                                 </div>
-                                <h3 className="mt-3 text-2xl font-black text-emerald-400 font-mono">
+                                <h3 className="mt-3 text-2xl font-black text-white font-mono">
                                     PKR {formatAmount(collected)}
                                 </h3>
                                 <p className="mt-1 text-xs text-zinc-500">
@@ -183,10 +183,10 @@ function Dashboard() {
                             </div>
 
                             {/* Applications Flow */}
-                            <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-[#111111] p-5 shadow-xl transition hover:border-orange-500/30">
+                            <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-[#111111] p-5 shadow-xl transition hover:border-pink-500/30">
                                 <div className="flex items-center justify-between text-zinc-400 text-xs font-medium">
                                     <span>Active Pipeline Cases</span>
-                                    <div className="flex h-9 w-9 items-center justify-center rounded-xl border border-orange-500/20 bg-orange-500/10 text-orange-400">
+                                    <div className="flex h-9 w-9 items-center justify-center rounded-xl border border-pink-500/20 bg-pink-500/10 text-pink-400">
                                         <FileText size={18} />
                                     </div>
                                 </div>
@@ -214,7 +214,7 @@ function Dashboard() {
                                 <div className="flex items-center justify-between border-b border-white/10 pb-4 mb-4">
                                     <div>
                                         <h3 className="text-base font-bold text-white flex items-center gap-2">
-                                            <PieChart size={18} className="text-orange-400" />
+                                            <PieChart size={18} className="text-pink-400" />
                                             Application Lifecycle Distribution
                                         </h3>
                                         <p className="text-xs text-zinc-400 mt-0.5">
@@ -237,14 +237,14 @@ function Dashboard() {
                                 <div className="flex items-center justify-between border-b border-white/10 pb-4 mb-4">
                                     <div>
                                         <h3 className="text-base font-bold text-white flex items-center gap-2">
-                                            <Activity size={18} className="text-blue-400" />
+                                            <Activity size={18} className="text-white" />
                                             Capital Portfolio Dynamics
                                         </h3>
                                         <p className="text-xs text-zinc-400 mt-0.5">
                                             Disbursed loans vs outstanding risk vs collected revenue.
                                         </p>
                                     </div>
-                                    <span className="text-xs font-mono font-bold text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-2.5 py-1 rounded-lg">
+                                    <span className="text-xs font-mono font-bold text-pink-300 bg-pink-500/10 border border-pink-500/20 px-2.5 py-1 rounded-lg">
                                         {recoveryRate.toFixed(1)}% Recovered
                                     </span>
                                 </div>
@@ -270,10 +270,10 @@ function Dashboard() {
                             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                                 <Link
                                     to="/loans/applications"
-                                    className="group flex items-center justify-between p-4 rounded-xl border border-white/10 bg-white/[0.02] hover:bg-white/[0.06] hover:border-orange-500/40 transition"
+                                    className="group flex items-center justify-between p-4 rounded-xl border border-white/10 bg-white/[0.02] hover:bg-white/[0.06] hover:border-pink-500/40 transition"
                                 >
                                     <div className="flex items-center gap-3">
-                                        <div className="p-2.5 rounded-xl bg-orange-500/10 text-orange-400 group-hover:scale-110 transition">
+                                        <div className="p-2.5 rounded-xl bg-pink-500/10 text-pink-400 group-hover:scale-110 transition">
                                             <FileText size={20} />
                                         </div>
                                         <div>
@@ -286,10 +286,10 @@ function Dashboard() {
 
                                 <Link
                                     to="/loans"
-                                    className="group flex items-center justify-between p-4 rounded-xl border border-white/10 bg-white/[0.02] hover:bg-white/[0.06] hover:border-blue-500/40 transition"
+                                    className="group flex items-center justify-between p-4 rounded-xl border border-white/10 bg-white/[0.02] hover:bg-white/[0.06] hover:border-pink-500/40 transition"
                                 >
                                     <div className="flex items-center gap-3">
-                                        <div className="p-2.5 rounded-xl bg-blue-500/10 text-blue-400 group-hover:scale-110 transition">
+                                        <div className="p-2.5 rounded-xl bg-white/10 text-white group-hover:scale-110 transition">
                                             <Landmark size={20} />
                                         </div>
                                         <div>
@@ -302,10 +302,10 @@ function Dashboard() {
 
                                 <Link
                                     to="/repayments"
-                                    className="group flex items-center justify-between p-4 rounded-xl border border-white/10 bg-white/[0.02] hover:bg-white/[0.06] hover:border-emerald-500/40 transition"
+                                    className="group flex items-center justify-between p-4 rounded-xl border border-white/10 bg-white/[0.02] hover:bg-white/[0.06] hover:border-pink-500/40 transition"
                                 >
                                     <div className="flex items-center gap-3">
-                                        <div className="p-2.5 rounded-xl bg-emerald-500/10 text-emerald-400 group-hover:scale-110 transition">
+                                        <div className="p-2.5 rounded-xl bg-pink-500/15 text-pink-300 group-hover:scale-110 transition">
                                             <CreditCard size={20} />
                                         </div>
                                         <div>
@@ -318,10 +318,10 @@ function Dashboard() {
 
                                 <Link
                                     to="/reports"
-                                    className="group flex items-center justify-between p-4 rounded-xl border border-white/10 bg-white/[0.02] hover:bg-white/[0.06] hover:border-purple-500/40 transition"
+                                    className="group flex items-center justify-between p-4 rounded-xl border border-white/10 bg-white/[0.02] hover:bg-white/[0.06] hover:border-pink-500/40 transition"
                                 >
                                     <div className="flex items-center gap-3">
-                                        <div className="p-2.5 rounded-xl bg-purple-500/10 text-purple-400 group-hover:scale-110 transition">
+                                        <div className="p-2.5 rounded-xl bg-pink-500/10 text-pink-400 group-hover:scale-110 transition">
                                             <FileSpreadsheet size={20} />
                                         </div>
                                         <div>

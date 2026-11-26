@@ -141,7 +141,7 @@ export default function PermissionModal({
                             name="isActive"
                             checked={formData.isActive}
                             onChange={handleChange}
-                            className="h-4 w-4 cursor-pointer accent-orange-500"
+                            className="h-4 w-4 cursor-pointer accent-pink-500"
                         />
                         <label
                             htmlFor="permIsActive"

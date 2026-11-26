@@ -1,7 +1,9 @@
 using LMS.Domain.Entities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System.Security.Claims;
+using System.Text.Json;
 
 namespace LMS.Infrastructure.Data;
 
@@ -45,6 +47,8 @@ public class ApplicationDbContext : DbContext
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(ApplicationDbContext).Assembly);
     }
 
+    private bool _isAuditing = false;
+
     public override int SaveChanges()
     {
         return SaveChanges(true);
@@ -54,7 +58,29 @@ public class ApplicationDbContext : DbContext
     {
         ApplyAuditTimestamps();
 
-        return base.SaveChanges(acceptAllChangesOnSuccess);
+        if (_isAuditing)
+        {
+            return base.SaveChanges(acceptAllChangesOnSuccess);
+        }
+
+        try
+        {
+            _isAuditing = true;
+            var auditEntries = OnBeforeSaveChanges();
+            var result = base.SaveChanges(acceptAllChangesOnSuccess);
+
+            if (auditEntries.Count > 0)
+            {
+                OnAfterSaveChanges(auditEntries);
+                base.SaveChanges(acceptAllChangesOnSuccess);
+            }
+
+            return result;
+        }
+        finally
+        {
+            _isAuditing = false;
+        }
     }
 
     public override Task<int> SaveChangesAsync(
@@ -63,15 +89,235 @@ public class ApplicationDbContext : DbContext
         return SaveChangesAsync(true, cancellationToken);
     }
 
-    public override Task<int> SaveChangesAsync(
+    public override async Task<int> SaveChangesAsync(
         bool acceptAllChangesOnSuccess,
         CancellationToken cancellationToken = default)
     {
         ApplyAuditTimestamps();
 
-        return base.SaveChangesAsync(
-            acceptAllChangesOnSuccess,
-            cancellationToken);
+        if (_isAuditing)
+        {
+            return await base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
+        }
+
+        try
+        {
+            _isAuditing = true;
+            var auditEntries = OnBeforeSaveChanges();
+            var result = await base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
+
+            if (auditEntries.Count > 0)
+            {
+                await OnAfterSaveChangesAsync(auditEntries, cancellationToken);
+                await base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
+            }
+
+            return result;
+        }
+        finally
+        {
+            _isAuditing = false;
+        }
+    }
+
+    private List<AuditEntry> OnBeforeSaveChanges()
+    {
+        ChangeTracker.DetectChanges();
+        var auditEntries = new List<AuditEntry>();
+        var currentUserId = GetCurrentUserId();
+        var ip = GetClientIpAddress();
+
+        foreach (var entry in ChangeTracker.Entries())
+        {
+            if (entry.Entity is AuditLog || entry.State == EntityState.Detached || entry.State == EntityState.Unchanged)
+                continue;
+
+            var entityName = entry.Metadata.ClrType.Name;
+            var auditEntry = new AuditEntry(entry)
+            {
+                EntityName = entityName,
+                UserId = currentUserId,
+                IpAddress = ip
+            };
+
+            switch (entry.State)
+            {
+                case EntityState.Added:
+                    auditEntry.Action = "CREATE";
+                    foreach (var prop in entry.Properties)
+                    {
+                        if (prop.Metadata.IsPrimaryKey()) continue;
+                        var propName = prop.Metadata.Name;
+                        if (propName is "CreatedAt" or "UpdatedAt" or "CreatedBy" or "UpdatedBy" or "IsDeleted") continue;
+
+                        if (propName.Contains("Password", StringComparison.OrdinalIgnoreCase))
+                        {
+                            auditEntry.Changes[propName] = "[PROTECTED]";
+                        }
+                        else if (prop.CurrentValue != null)
+                        {
+                            auditEntry.Changes[propName] = prop.CurrentValue.ToString();
+                        }
+                    }
+                    auditEntries.Add(auditEntry);
+                    break;
+
+                case EntityState.Modified:
+                    var isDeletedProp = entry.Properties.FirstOrDefault(p => p.Metadata.Name == "IsDeleted");
+                    if (isDeletedProp != null && isDeletedProp.IsModified && Equals(isDeletedProp.CurrentValue, true) && !Equals(isDeletedProp.OriginalValue, true))
+                    {
+                        auditEntry.Action = "DELETE";
+                    }
+                    else
+                    {
+                        auditEntry.Action = "UPDATE";
+                    }
+
+                    if (entry.Entity is BaseEntity be)
+                    {
+                        auditEntry.EntityId = be.Id;
+                    }
+
+                    foreach (var prop in entry.Properties)
+                    {
+                        if (prop.IsModified && !Equals(prop.OriginalValue, prop.CurrentValue))
+                        {
+                            var propName = prop.Metadata.Name;
+                            if (propName is "UpdatedAt" or "UpdatedBy") continue;
+
+                            if (propName.Contains("Password", StringComparison.OrdinalIgnoreCase))
+                            {
+                                auditEntry.Changes[propName] = new { Old = "[PROTECTED]", New = "[PROTECTED]" };
+                            }
+                            else
+                            {
+                                auditEntry.Changes[propName] = new
+                                {
+                                    Old = prop.OriginalValue?.ToString(),
+                                    New = prop.CurrentValue?.ToString()
+                                };
+                            }
+                        }
+                    }
+
+                    if (auditEntry.Changes.Count > 0 || auditEntry.Action == "DELETE")
+                    {
+                        auditEntries.Add(auditEntry);
+                    }
+                    break;
+
+                case EntityState.Deleted:
+                    auditEntry.Action = "HARD_DELETE";
+                    if (entry.Entity is BaseEntity baseEnt)
+                    {
+                        auditEntry.EntityId = baseEnt.Id;
+                    }
+                    auditEntries.Add(auditEntry);
+                    break;
+            }
+        }
+
+        return auditEntries;
+    }
+
+    private void OnAfterSaveChanges(List<AuditEntry> auditEntries)
+    {
+        var logs = new List<AuditLog>();
+        foreach (var auditEntry in auditEntries)
+        {
+            if (auditEntry.EntityId == null && auditEntry.Entry.Entity is BaseEntity be && be.Id > 0)
+            {
+                auditEntry.EntityId = be.Id;
+            }
+
+            logs.Add(auditEntry.ToAuditLog());
+        }
+
+        if (logs.Count > 0)
+        {
+            AuditLogs.AddRange(logs);
+        }
+    }
+
+    private async Task OnAfterSaveChangesAsync(List<AuditEntry> auditEntries, CancellationToken cancellationToken)
+    {
+        var logs = new List<AuditLog>();
+        foreach (var auditEntry in auditEntries)
+        {
+            if (auditEntry.EntityId == null && auditEntry.Entry.Entity is BaseEntity be && be.Id > 0)
+            {
+                auditEntry.EntityId = be.Id;
+            }
+
+            logs.Add(auditEntry.ToAuditLog());
+        }
+
+        if (logs.Count > 0)
+        {
+            await AuditLogs.AddRangeAsync(logs, cancellationToken);
+        }
+    }
+
+    private string? GetClientIpAddress()
+    {
+        try
+        {
+            var httpContext = _httpContextAccessor?.HttpContext;
+            if (httpContext == null) return null;
+
+            var forwarded = httpContext.Request.Headers["X-Forwarded-For"].FirstOrDefault();
+            if (!string.IsNullOrWhiteSpace(forwarded))
+            {
+                return forwarded.Split(',')[0].Trim();
+            }
+
+            return httpContext.Connection.RemoteIpAddress?.ToString();
+        }
+        catch
+        {
+            return null;
+        }
+    }
+
+    private sealed class AuditEntry
+    {
+        public EntityEntry Entry { get; }
+        public string Action { get; set; } = string.Empty;
+        public string EntityName { get; set; } = string.Empty;
+        public int? EntityId { get; set; }
+        public int? UserId { get; set; }
+        public string? IpAddress { get; set; }
+        public Dictionary<string, object?> Changes { get; } = new();
+
+        public AuditEntry(EntityEntry entry)
+        {
+            Entry = entry;
+        }
+
+        public AuditLog ToAuditLog()
+        {
+            var details = Changes.Count > 0
+                ? JsonSerializer.Serialize(Changes)
+                : null;
+
+            if (details != null && details.Length > 2000)
+            {
+                details = details[..1997] + "...";
+            }
+
+            return new AuditLog
+            {
+                UserId = UserId,
+                Action = Action,
+                EntityName = EntityName,
+                EntityId = EntityId ?? (Entry.Entity is BaseEntity be && be.Id > 0 ? be.Id : null),
+                Details = details,
+                IpAddress = IpAddress,
+                OccurredAt = DateTime.UtcNow,
+                CreatedAt = DateTime.UtcNow,
+                IsDeleted = false
+            };
+        }
     }
 
     private int? GetCurrentUserId()

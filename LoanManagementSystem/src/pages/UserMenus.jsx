@@ -303,7 +303,7 @@ export default function UserMenus() {
     });
 
     const controlClass =
-        "rounded-xl border border-white/10 bg-white/[0.07] px-3.5 py-2 text-sm text-white placeholder:text-zinc-500 outline-none transition focus:border-orange-500/70 focus:bg-white/[0.10] focus:ring-4 focus:ring-orange-500/10";
+        "rounded-xl border border-white/10 bg-white/[0.07] px-3.5 py-2 text-sm text-white placeholder:text-zinc-500 outline-none transition focus:border-pink-500/70 focus:bg-white/[0.10] focus:ring-4 focus:ring-pink-500/10";
 
     return (
         <MainLayout user={user}>
@@ -353,7 +353,7 @@ export default function UserMenus() {
                         {/* User Selection */}
                         <div className="rounded-2xl border border-white/10 bg-[#111111] p-5 shadow-xl shadow-black/40">
                             <div className="mb-4 flex items-center gap-2">
-                                <UserRound size={20} className="text-orange-400" />
+                                <UserRound size={20} className="text-pink-400" />
                                 <h2 className="font-semibold text-white">Select User</h2>
                             </div>
 

@@ -66,7 +66,7 @@ public class UserPermissionRepository : IUserPermissionRepository
             .Include(x => x.Permission)
             .Include(x => x.AssignedByUser)
             .Include(x => x.RevokedByUser)
-            .Where(x => !x.IsDeleted && !x.Permission.Key.StartsWith("AUDIT_LOG"))
+            .Where(x => !x.IsDeleted)
             .OrderByDescending(x => x.Id)
             .ToListAsync();
     }
@@ -87,7 +87,7 @@ public class UserPermissionRepository : IUserPermissionRepository
             .Include(x => x.Permission)
             .Include(x => x.AssignedByUser)
             .Include(x => x.RevokedByUser)
-            .Where(x => !x.IsDeleted && !x.Permission.Key.StartsWith("AUDIT_LOG"));
+            .Where(x => !x.IsDeleted);
 
         var activeCount = await baseQuery.CountAsync(x => x.IsActive && x.RevokedAt == null);
         var revokedCount = await baseQuery.CountAsync(x => !x.IsActive || x.RevokedAt != null);
@@ -151,7 +151,7 @@ public class UserPermissionRepository : IUserPermissionRepository
             .Include(x => x.Permission)
             .Include(x => x.AssignedByUser)
             .Include(x => x.RevokedByUser)
-            .Where(x => x.UserId == userId && !x.IsDeleted && !x.Permission.Key.StartsWith("AUDIT_LOG"));
+            .Where(x => x.UserId == userId && !x.IsDeleted);
 
         if (activeOnly)
         {

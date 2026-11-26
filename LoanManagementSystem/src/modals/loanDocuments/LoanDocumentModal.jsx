@@ -80,11 +80,11 @@ export default function LoanDocumentModal({
 
                 <div>
                     <label className="mb-2 block text-sm font-medium text-zinc-300">
-                        Select File <span className="text-orange-400">*</span>
+                        Select File <span className="text-pink-400">*</span>
                     </label>
 
-                    <label className="flex cursor-pointer flex-col items-center justify-center rounded-xl border border-dashed border-white/20 bg-white/[0.03] px-5 py-8 transition hover:border-orange-500/60">
-                        <Upload size={28} className="mb-3 text-orange-400" />
+                    <label className="flex cursor-pointer flex-col items-center justify-center rounded-xl border border-dashed border-white/20 bg-white/[0.03] px-5 py-8 transition hover:border-pink-500/60">
+                        <Upload size={28} className="mb-3 text-pink-400" />
                         <span className="text-sm font-medium text-white">
                             Click to select a file
                         </span>
@@ -107,7 +107,7 @@ export default function LoanDocumentModal({
 
                     {file && (
                         <div className="mt-3 flex items-center gap-3 rounded-xl border border-white/10 bg-white/[0.02] p-3 text-sm text-zinc-300">
-                            <FileText size={18} className="text-orange-400 shrink-0" />
+                            <FileText size={18} className="text-pink-400 shrink-0" />
                             <div className="min-w-0 flex-1">
                                 <p className="truncate font-medium text-white">{file.name}</p>
                                 <p className="text-xs text-zinc-500">{(file.size / 1024).toFixed(1)} KB</p>

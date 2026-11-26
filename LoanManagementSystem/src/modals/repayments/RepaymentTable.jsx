@@ -103,7 +103,7 @@ export default function RepaymentTable({
                         onClick={() => onTabChange("all")}
                         className={`rounded-xl px-4 py-2 text-sm font-semibold transition ${
                             activeTab === "all"
-                                ? "bg-orange-500 text-white"
+                                ? "bg-pink-500 text-white"
                                 : "text-zinc-400 hover:bg-white/5 hover:text-white"
                         }`}
                     >
@@ -114,7 +114,7 @@ export default function RepaymentTable({
                         onClick={() => onTabChange("pending")}
                         className={`relative rounded-xl px-4 py-2 text-sm font-semibold transition ${
                             activeTab === "pending"
-                                ? "bg-orange-500 text-white"
+                                ? "bg-pink-500 text-white"
                                 : "text-zinc-400 hover:bg-white/5 hover:text-white"
                         }`}
                     >
@@ -142,7 +142,7 @@ export default function RepaymentTable({
                                     value={search}
                                     onChange={(e) => onSearchChange(e.target.value)}
                                     placeholder="Search by ref # or borrower..."
-                                    className="w-full rounded-xl border border-white/10 bg-[#181818] py-2.5 pl-10 pr-4 text-sm text-white placeholder:text-zinc-500 outline-none focus:border-orange-500/70"
+                                    className="w-full rounded-xl border border-white/10 bg-[#181818] py-2.5 pl-10 pr-4 text-sm text-white placeholder:text-zinc-500 outline-none focus:border-pink-500/70"
                                 />
                             </div>
 
