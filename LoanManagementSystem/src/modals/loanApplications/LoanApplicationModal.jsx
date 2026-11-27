@@ -154,25 +154,25 @@ export default function LoanApplicationModal({
                         />
 
                         {selectedLoanType && (
-                            <div className="rounded-xl border border-slate-700/80 bg-slate-900/60 p-4 text-xs text-slate-300 space-y-1.5">
+                            <div className="rounded-xl border border-slate-700/80 bg-slate-900/60 p-4 text-xs text-zinc-700 space-y-1.5">
                                 <div className="flex flex-wrap items-center justify-between gap-2 border-b border-slate-800 pb-2">
-                                    <span className="font-semibold text-white text-sm">
+                                    <span className="font-semibold text-zinc-900 text-sm">
                                         {selectedLoanType.name}
                                     </span>
                                     <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-medium ${
                                         selectedLoanType.requiresGuarantor
-                                            ? "bg-pink-500/10 text-pink-400 border border-pink-500/20"
-                                            : "bg-emerald-500/10 text-emerald-400 border border-emerald-500/20"
+                                            ? "bg-pink-100/70 text-pink-700 border border-pink-500/20"
+                                            : "bg-emerald-50 text-emerald-700 border border-emerald-200"
                                     }`}>
                                         {selectedLoanType.requiresGuarantor ? "Guarantor Mandatory" : "No Guarantor Needed"}
                                     </span>
                                 </div>
-                                <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 pt-1 text-slate-400">
+                                <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 pt-1 text-zinc-500">
                                     <p>
-                                        Amount: <strong className="text-white block">PKR {Number(selectedLoanType.minAmount).toLocaleString()} - {Number(selectedLoanType.maxAmount).toLocaleString()}</strong>
+                                        Amount: <strong className="text-zinc-900 block">PKR {Number(selectedLoanType.minAmount).toLocaleString()} - {Number(selectedLoanType.maxAmount).toLocaleString()}</strong>
                                     </p>
                                     <p>
-                                        Term: <strong className="text-white block">{selectedLoanType.minTermMonths} - {selectedLoanType.maxTermMonths} mos</strong>
+                                        Term: <strong className="text-zinc-900 block">{selectedLoanType.minTermMonths} - {selectedLoanType.maxTermMonths} mos</strong>
                                     </p>
                                     <p>
                                         Interest Rate: <strong className="text-pink-400 block">{selectedLoanType.interestRate}% Fixed APR</strong>
@@ -224,7 +224,7 @@ export default function LoanApplicationModal({
                                 <div className="flex items-start gap-2.5 text-pink-300 border-b border-pink-500/20 pb-3">
                                     <ShieldAlert size={18} className="mt-0.5 shrink-0 text-pink-400" />
                                     <div>
-                                        <h4 className="font-semibold text-sm text-white">
+                                        <h4 className="font-semibold text-sm text-zinc-900">
                                             Guarantor Particulars Required
                                         </h4>
                                         <p className="text-xs text-pink-200/80 mt-0.5">
@@ -332,7 +332,7 @@ export default function LoanApplicationModal({
                         type="submit"
                         loading={loading}
                         loadingText="Submitting..."
-                        className="bg-pink-600 hover:bg-pink-500 text-white shadow-lg shadow-pink-600/20"
+                        className="bg-pink-600 hover:bg-pink-500 text-zinc-900 shadow-lg shadow-pink-600/20"
                     >
                         {mode === "create" ? "Submit Application" : "Submit Review"}
                     </Button>

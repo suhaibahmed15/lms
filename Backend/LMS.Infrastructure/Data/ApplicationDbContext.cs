@@ -37,9 +37,12 @@ public class ApplicationDbContext : DbContext
     public DbSet<RolePermission> RolePermissions => Set<RolePermission>();
     public DbSet<UserPermission> UserPermissions => Set<UserPermission>();
     public DbSet<UserMenu> UserMenus => Set<UserMenu>();
+    public DbSet<AIPrompt> AIPrompts => Set<AIPrompt>();
 
     public DbSet<LoanApplicationAssignment> LoanApplicationAssignments
     => Set<LoanApplicationAssignment>();
+
+    public DbSet<AIAnalysisResult> AIAnalysisResults => Set<AIAnalysisResult>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

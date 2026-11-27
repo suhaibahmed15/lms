@@ -1,4 +1,3 @@
-
 import {
     createElement,
     forwardRef,
@@ -9,17 +8,17 @@ import { Loader2 } from "lucide-react";
 
 const variants = {
     primary:
-        "bg-gradient-to-r from-pink-600 via-pink-500 to-rose-400 text-white shadow-lg shadow-pink-500/25 hover:from-pink-500 hover:to-rose-300 border border-pink-400/40 active:scale-[0.98]",
+        "bg-gradient-to-r from-pink-500 via-rose-500 to-pink-600 text-white shadow-lg shadow-pink-500/25 hover:from-pink-600 hover:to-rose-600 border border-pink-400/30 active:scale-[0.98]",
     secondary:
-        "border border-white/15 bg-white/[0.06] text-white hover:bg-white/[0.12] hover:border-pink-500/30 active:scale-[0.98]",
+        "border border-pink-200 bg-white text-zinc-700 hover:bg-pink-50 hover:text-pink-700 hover:border-pink-300 shadow-sm active:scale-[0.98]",
     danger:
-        "border border-red-500/30 bg-red-500/15 text-red-400 hover:bg-red-500/25 hover:text-red-300 active:scale-[0.98]",
+        "border border-red-200 bg-red-50 text-red-600 hover:bg-red-100 hover:text-red-700 active:scale-[0.98]",
     outline:
-        "border border-pink-500/50 text-pink-400 hover:bg-pink-500/15 hover:border-pink-400 active:scale-[0.98]",
+        "border border-pink-400 text-pink-600 hover:bg-pink-50 hover:border-pink-500 active:scale-[0.98]",
     ghost:
-        "text-white/80 hover:bg-white/10 hover:text-white active:scale-[0.98]",
+        "text-zinc-600 hover:bg-pink-50 hover:text-pink-600 active:scale-[0.98]",
     success:
-        "border border-pink-500/30 bg-pink-500/15 text-pink-300 hover:bg-pink-500/25 hover:text-white active:scale-[0.98]"
+        "border border-pink-200 bg-pink-50 text-pink-700 hover:bg-pink-100 active:scale-[0.98]"
 };
 
 const sizes = {
@@ -81,11 +80,9 @@ const Button = forwardRef(function Button(
                 </>
             ) : (
                 <>
-                    {renderIcon(Icon, iconSize)}
-
+                    {Icon && renderIcon(Icon, iconSize)}
                     {children}
-
-                    {renderIcon(IconRight, iconSize)}
+                    {IconRight && renderIcon(IconRight, iconSize)}
                 </>
             )}
         </button>
@@ -93,4 +90,3 @@ const Button = forwardRef(function Button(
 });
 
 export default Button;
-    

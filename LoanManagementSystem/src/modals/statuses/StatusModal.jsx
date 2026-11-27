@@ -121,13 +121,13 @@ export default function StatusModal({
                             name="isActive"
                             checked={formData.isActive}
                             onChange={handleChange}
-                            className="h-4 w-4 rounded border-zinc-700 bg-zinc-900 text-pink-500 focus:ring-pink-500/20"
+                            className="h-4 w-4 rounded border-zinc-700 bg-pink-50/50 text-pink-500 focus:ring-pink-500/20"
                         />
-                        <span className="text-sm font-medium text-white">Active Status</span>
+                        <span className="text-sm font-medium text-zinc-900">Active Status</span>
                     </label>
                 </div>
 
-                <div className="flex justify-end gap-3 pt-4 border-t border-white/10">
+                <div className="flex justify-end gap-3 pt-4 border-t border-pink-100">
                     <Button
                         type="button"
                         variant="secondary"

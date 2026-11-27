@@ -46,10 +46,10 @@ export default function VerifyRejectPaymentModal({
             <Form onSubmit={handleSubmit} error={error}>
                 <div className={`p-4 rounded-xl border text-sm space-y-1 ${
                     isVerify
-                        ? "border-emerald-500/20 bg-emerald-500/10 text-emerald-300"
-                        : "border-red-500/20 bg-red-500/10 text-red-300"
+                        ? "border-emerald-200 bg-emerald-500/10 text-emerald-300"
+                        : "border-red-200 bg-red-500/10 text-red-300"
                 }`}>
-                    <p className="font-semibold text-white">
+                    <p className="font-semibold text-zinc-900">
                         {isVerify
                             ? "Confirm payment verification and ledger update?"
                             : "Are you sure you want to reject this payment submission?"}
@@ -73,7 +73,7 @@ export default function VerifyRejectPaymentModal({
                     required={!isVerify}
                 />
 
-                <div className="flex justify-end gap-3 pt-4 border-t border-white/10">
+                <div className="flex justify-end gap-3 pt-4 border-t border-pink-100">
                     <Button
                         type="button"
                         variant="secondary"

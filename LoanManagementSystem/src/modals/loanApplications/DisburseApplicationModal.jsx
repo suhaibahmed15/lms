@@ -38,8 +38,8 @@ export default function DisburseApplicationModal({
             maxWidth="md"
         >
             <Form onSubmit={handleSubmit} error={error}>
-                <div className="p-4 rounded-xl border border-blue-500/20 bg-blue-500/10 text-sm text-blue-300 space-y-1">
-                    <p className="font-semibold text-white">Disbursement Summary</p>
+                <div className="p-4 rounded-xl border border-pink-200 bg-blue-500/10 text-sm text-blue-300 space-y-1">
+                    <p className="font-semibold text-zinc-900">Disbursement Summary</p>
                     <p>Borrower: {application?.applicantName}</p>
                     <p>Amount: PKR {Number(application?.requestedAmount || 0).toLocaleString()}</p>
                     <p>Term: {application?.requestedTermMonths} months</p>
@@ -58,7 +58,7 @@ export default function DisburseApplicationModal({
                     helperText="This rate will calculate the amortization schedule and monthly installments."
                 />
 
-                <div className="flex justify-end gap-3 pt-4 border-t border-white/10">
+                <div className="flex justify-end gap-3 pt-4 border-t border-pink-100">
                     <Button
                         type="button"
                         variant="secondary"

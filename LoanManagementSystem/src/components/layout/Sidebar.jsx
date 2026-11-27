@@ -155,18 +155,18 @@ function Sidebar({ menus = [], onClose }) {
     };
 
     return (
-        <aside className="flex h-screen w-64 flex-col border-r border-pink-500/20 bg-black text-zinc-100 shadow-2xl shadow-pink-950/20">
+        <aside className="flex h-screen w-64 flex-col border-r border-pink-100 bg-white/95 text-zinc-800 shadow-xl shadow-pink-500/5 backdrop-blur-xl">
             {/* Brand Header */}
-            <div className="flex h-20 shrink-0 items-center justify-between border-b border-white/10 px-4">
+            <div className="flex h-20 shrink-0 items-center justify-between border-b border-pink-100 px-4 bg-white">
                 <div className="flex items-center gap-2.5">
-                    <img src="/logo.png" alt="LMS Logo" className="h-10 w-auto max-w-[170px] object-contain drop-shadow" />
+                    <img src="/logo.png" alt="LMS Logo" className="h-10 w-auto max-w-[170px] object-contain drop-shadow-sm" />
                 </div>
 
                 {onClose && (
                     <button
                         type="button"
                         onClick={onClose}
-                        className="rounded-lg p-1.5 text-zinc-400 transition hover:bg-white/10 hover:text-white lg:hidden"
+                        className="rounded-lg p-1.5 text-zinc-400 transition hover:bg-pink-50 hover:text-pink-600 lg:hidden"
                         aria-label="Close sidebar"
                     >
                         <X size={18} />
@@ -175,8 +175,8 @@ function Sidebar({ menus = [], onClose }) {
             </div>
 
             {/* Scrollable Navigation */}
-            <nav className="flex-1 space-y-2 overflow-y-auto px-3 py-5">
-                <p className="mb-3 px-3 text-[11px] font-semibold uppercase tracking-[2px] text-zinc-500">
+            <nav className="flex-1 space-y-2 overflow-y-auto px-3 py-5 custom-scrollbar">
+                <p className="mb-3 px-3 text-[11px] font-bold uppercase tracking-[2px] text-pink-900/60">
                     Navigation
                 </p>
 
@@ -198,15 +198,15 @@ function Sidebar({ menus = [], onClose }) {
                                 type="button"
                                 onClick={() => handleNavigation(parent.route)}
                                 className={`flex w-full items-center gap-3 rounded-xl px-3.5 py-3 text-left text-sm font-medium transition ${isParentDirectlyActive
-                                    ? "bg-gradient-to-r from-pink-600 via-pink-500 to-rose-400 text-white shadow-lg shadow-pink-500/25"
-                                    : "text-zinc-300 hover:bg-white/[0.06] hover:text-white"
+                                    ? "bg-gradient-to-r from-pink-500 to-rose-500 text-white shadow-md shadow-pink-500/25 font-semibold"
+                                    : "text-zinc-600 hover:bg-pink-50 hover:text-pink-600"
                                     }`}
                             >
                                 <span
                                     className={
                                         isParentDirectlyActive
                                             ? "text-white"
-                                            : "text-pink-400/80"
+                                            : "text-pink-500"
                                     }
                                 >
                                     {getMenuIcon(parent.icon)}
@@ -225,15 +225,15 @@ function Sidebar({ menus = [], onClose }) {
                                 onClick={() => toggleParent(parent.id)}
                                 aria-expanded={isExpanded}
                                 className={`flex w-full items-center justify-between gap-2 rounded-xl px-3.5 py-3 text-left text-sm font-semibold transition ${hasActiveChild
-                                    ? "border border-pink-500/30 bg-pink-500/10 text-pink-300"
-                                    : "text-zinc-200 hover:bg-white/[0.06] hover:text-white"
+                                    ? "border border-pink-200 bg-pink-50/70 text-pink-700"
+                                    : "text-zinc-700 hover:bg-pink-50 hover:text-pink-600"
                                     }`}
                             >
                                 <span className="flex min-w-0 items-center gap-3">
                                     <span
                                         className={
                                             hasActiveChild
-                                                ? "text-pink-400"
+                                                ? "text-pink-600"
                                                 : "text-zinc-400"
                                         }
                                     >
@@ -244,7 +244,7 @@ function Sidebar({ menus = [], onClose }) {
                                 </span>
 
                                 <span
-                                    className={`shrink-0 transition-transform duration-200 ${hasActiveChild ? "text-pink-400" : "text-zinc-500"
+                                    className={`shrink-0 transition-transform duration-200 ${hasActiveChild ? "text-pink-600" : "text-zinc-400"
                                         }`}
                                 >
                                     {isExpanded ? (
@@ -256,7 +256,7 @@ function Sidebar({ menus = [], onClose }) {
                             </button>
 
                             {isExpanded && (
-                                <div className="ml-3 space-y-1 border-l border-white/10 pl-3 pt-0.5">
+                                <div className="ml-3 space-y-1 border-l border-pink-200/60 pl-3 pt-0.5">
                                     {childMenus.map((child) => {
                                         const isActive =
                                             location.pathname === child.route;
@@ -269,15 +269,15 @@ function Sidebar({ menus = [], onClose }) {
                                                     handleNavigation(child.route)
                                                 }
                                                 className={`flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-left text-sm font-medium transition ${isActive
-                                                    ? "bg-gradient-to-r from-pink-600 via-pink-500 to-rose-400 text-white shadow-md shadow-pink-500/20"
-                                                    : "text-zinc-400 hover:bg-white/[0.06] hover:text-zinc-100"
+                                                    ? "bg-gradient-to-r from-pink-500 to-rose-500 text-white shadow-sm shadow-pink-500/20 font-semibold"
+                                                    : "text-zinc-600 hover:bg-pink-50 hover:text-pink-600"
                                                     }`}
                                             >
                                                 <span
                                                     className={
                                                         isActive
                                                             ? "text-white"
-                                                            : "text-zinc-500"
+                                                            : "text-zinc-400"
                                                     }
                                                 >
                                                     {getMenuIcon(child.icon)}
@@ -298,7 +298,7 @@ function Sidebar({ menus = [], onClose }) {
                 {/* Individually assigned menus without their parent */}
                 {orphanMenus.length > 0 && (
                     <div className="pt-3">
-                        <p className="mb-2 px-3 text-[11px] font-semibold uppercase tracking-[2px] text-zinc-500">
+                        <p className="mb-2 px-3 text-[11px] font-bold uppercase tracking-[2px] text-pink-900/60">
                             Additional Menus
                         </p>
 
@@ -314,15 +314,15 @@ function Sidebar({ menus = [], onClose }) {
                                             handleNavigation(menu.route)
                                         }
                                         className={`flex w-full items-center gap-3 rounded-xl px-3.5 py-2.5 text-left text-sm font-medium transition ${isActive
-                                            ? "bg-gradient-to-r from-pink-600 via-pink-500 to-rose-400 text-white shadow-md shadow-pink-500/20"
-                                            : "text-zinc-300 hover:bg-white/[0.06] hover:text-white"
+                                            ? "bg-gradient-to-r from-pink-500 to-rose-500 text-white shadow-sm shadow-pink-500/20 font-semibold"
+                                            : "text-zinc-600 hover:bg-pink-50 hover:text-pink-600"
                                             }`}
                                     >
                                         <span
                                             className={
                                                 isActive
                                                     ? "text-white"
-                                                    : "text-pink-400/80"
+                                                    : "text-pink-500"
                                             }
                                         >
                                             {getMenuIcon(menu.icon)}
@@ -338,15 +338,15 @@ function Sidebar({ menus = [], onClose }) {
                 )}
 
                 {parentMenus.length === 0 && orphanMenus.length === 0 && (
-                    <p className="px-3 py-4 text-sm text-zinc-500">
+                    <p className="px-3 py-4 text-sm text-zinc-400">
                         No menus assigned.
                     </p>
                 )}
             </nav>
 
             {/* Footer */}
-            <div className="shrink-0 border-t border-white/10 p-4">
-                <p className="text-center text-xs text-zinc-500">
+            <div className="shrink-0 border-t border-pink-100 bg-pink-50/40 p-4">
+                <p className="text-center text-xs text-zinc-500 font-medium">
                     © {new Date().getFullYear()} LMS Capital
                 </p>
             </div>

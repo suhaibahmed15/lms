@@ -31,7 +31,7 @@ export default function LandingPage() {
     };
 
     return (
-        <div className="min-h-screen bg-[#080d1a] text-slate-100 flex flex-col font-sans selection:bg-amber-500 selection:text-slate-950">
+        <div className="min-h-screen bg-gradient-to-b from-[#fff7f9] via-[#ffffff] to-[#fff0f5] text-zinc-900 flex flex-col font-sans selection:bg-pink-500 selection:text-white">
             {/* Top Navigation */}
             <LandingNavbar onOpenApplyModal={() => handleOpenApplyModal()} />
 

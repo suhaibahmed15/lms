@@ -1,4 +1,5 @@
 
+using LMS.Application.DTO.AI;
 using LMS.Application.Repositories.Interfaces;
 using LMS.Domain.Entities;
 using LMS.Infrastructure.Data;
@@ -216,4 +217,37 @@ public class LoanApplicationRepository : ILoanApplicationRepository
                 a.Id == applicationId &&
                 !a.IsDeleted);
     }
+
+
+    // Get limited loan application data for AI analysis
+    public async Task<LoanApplicationAIDataDto?> GetApplicationAIDataAsync(
+        int applicationId)
+    {
+        return await _context.LoanApplications
+            .AsNoTracking()
+            .Where(a =>
+                a.Id == applicationId &&
+                !a.IsDeleted &&
+                !a.LoanType.IsDeleted &&
+                !a.Status.IsDeleted)
+            .Select(a => new LoanApplicationAIDataDto
+            {
+                LoanApplicationId = a.Id,
+                RequestedAmount = a.RequestedAmount,
+                RequestedTermMonths = a.RequestedTermMonths,
+                Purpose = a.Purpose,
+
+                LoanTypeName = a.LoanType.Name,
+                MinimumLoanAmount = a.LoanType.MinAmount,
+                MaximumLoanAmount = a.LoanType.MaxAmount,
+                InterestRate = a.LoanType.InterestRate,
+                MinimumTermMonths = a.LoanType.MinTermMonths,
+                MaximumTermMonths = a.LoanType.MaxTermMonths,
+                RequiresGuarantor = a.LoanType.RequiresGuarantor,
+
+                ApplicationStatus = a.Status.Name
+            })
+            .FirstOrDefaultAsync();
+    }
+
 }

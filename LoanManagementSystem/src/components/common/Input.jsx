@@ -1,4 +1,3 @@
-
 import {
     createElement,
     forwardRef,
@@ -45,18 +44,18 @@ const Input = forwardRef(function Input(
             {label && (
                 <label
                     htmlFor={inputId}
-                    className="mb-1.5 block text-sm font-medium text-zinc-300"
+                    className="mb-1.5 block text-sm font-medium text-zinc-700"
                 >
                     {label}
                     {required && (
-                        <span className="ml-1 text-pink-400">*</span>
+                        <span className="ml-1 text-pink-500">*</span>
                     )}
                 </label>
             )}
 
             <div className="relative">
                 {Icon && (
-                    <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3.5 text-pink-400/80">
+                    <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3.5 text-pink-500">
                         {renderIcon(Icon)}
                     </div>
                 )}
@@ -71,23 +70,23 @@ const Input = forwardRef(function Input(
                     placeholder={placeholder}
                     required={required}
                     disabled={disabled}
-                    className={`w-full rounded-xl border bg-black/70 px-4 py-2.5 text-sm text-white placeholder:text-zinc-500 outline-none transition duration-150 focus:bg-black/90 focus:ring-4 disabled:cursor-not-allowed disabled:opacity-50 ${Icon ? "pl-10" : ""
+                    className={`w-full rounded-xl border bg-white px-4 py-2.5 text-sm text-zinc-900 placeholder:text-zinc-400 outline-none transition duration-150 focus:border-pink-500 focus:ring-4 focus:ring-pink-500/15 disabled:bg-zinc-50 disabled:cursor-not-allowed disabled:opacity-60 ${Icon ? "pl-10" : ""
                         } ${IconRight ? "pr-10" : ""} ${error
-                            ? "border-red-500/70 focus:border-red-500 focus:ring-red-500/15"
-                            : "border-white/15 focus:border-pink-500 focus:ring-pink-500/20"
+                            ? "border-red-500 focus:border-red-500 focus:ring-red-500/15"
+                            : "border-zinc-200 hover:border-pink-300 focus:border-pink-500"
                         } ${inputClassName}`}
                     {...props}
                 />
 
                 {IconRight && (
-                    <div className="absolute inset-y-0 right-0 flex items-center pr-3.5 text-zinc-500">
+                    <div className="absolute inset-y-0 right-0 flex items-center pr-3.5 text-zinc-400">
                         {renderIcon(IconRight)}
                     </div>
                 )}
             </div>
 
             {error && (
-                <p className="mt-1.5 text-xs text-red-400">
+                <p className="mt-1.5 text-xs text-red-500">
                     {error}
                 </p>
             )}

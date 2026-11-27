@@ -303,7 +303,7 @@ export default function UserMenus() {
     });
 
     const controlClass =
-        "rounded-xl border border-white/10 bg-white/[0.07] px-3.5 py-2 text-sm text-white placeholder:text-zinc-500 outline-none transition focus:border-pink-500/70 focus:bg-white/[0.10] focus:ring-4 focus:ring-pink-500/10";
+        "rounded-xl border border-pink-100 bg-white px-3.5 py-2 text-sm text-zinc-900 placeholder:text-zinc-400 outline-none transition focus:border-pink-500/70 focus:bg-pink-100/60 focus:ring-4 focus:ring-pink-500/10";
 
     return (
         <MainLayout user={user}>
@@ -311,10 +311,10 @@ export default function UserMenus() {
                 {/* Page Header */}
                 <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
                     <div>
-                        <h1 className="text-2xl font-bold tracking-tight text-white">
+                        <h1 className="text-2xl font-bold tracking-tight text-zinc-900">
                             User Menu Assignments
                         </h1>
-                        <p className="mt-1 text-sm text-zinc-400">
+                        <p className="mt-1 text-sm text-zinc-500">
                             Manage additional menu access for individual users.
                         </p>
                     </div>
@@ -333,28 +333,28 @@ export default function UserMenus() {
 
                 {/* Messages */}
                 {error && (
-                    <div className="rounded-xl border border-red-500/25 bg-red-500/10 px-4 py-3 text-sm text-red-400">
+                    <div className="rounded-xl border border-red-200 bg-red-500/10 px-4 py-3 text-sm text-red-400">
                         {error}
                     </div>
                 )}
 
                 {success && (
-                    <div className="rounded-xl border border-emerald-500/25 bg-emerald-500/10 px-4 py-3 text-sm text-emerald-400">
+                    <div className="rounded-xl border border-emerald-200 bg-emerald-500/10 px-4 py-3 text-sm text-emerald-400">
                         {success}
                     </div>
                 )}
 
                 {loading ? (
-                    <div className="rounded-2xl border border-white/10 bg-[#111111] p-10 text-center text-zinc-400">
+                    <div className="rounded-2xl border border-pink-100 bg-white p-10 text-center text-zinc-500">
                         Loading users and menus...
                     </div>
                 ) : (
                     <>
                         {/* User Selection */}
-                        <div className="rounded-2xl border border-white/10 bg-[#111111] p-5 shadow-xl shadow-black/40">
+                        <div className="rounded-2xl border border-pink-100 bg-white p-5 shadow-xl shadow-pink-500/5">
                             <div className="mb-4 flex items-center gap-2">
                                 <UserRound size={20} className="text-pink-400" />
-                                <h2 className="font-semibold text-white">Select User</h2>
+                                <h2 className="font-semibold text-zinc-900">Select User</h2>
                             </div>
 
                             <select
@@ -375,11 +375,11 @@ export default function UserMenus() {
                             </select>
 
                             {selectedUser && (
-                                <div className="mt-4 rounded-xl border border-white/10 bg-white/[0.04] p-4">
-                                    <p className="font-semibold text-white">
+                                <div className="mt-4 rounded-xl border border-pink-100 bg-pink-50/50 p-4">
+                                    <p className="font-semibold text-zinc-900">
                                         {selectedUser.fullName}
                                     </p>
-                                    <p className="mt-1 text-sm text-zinc-400">
+                                    <p className="mt-1 text-sm text-zinc-500">
                                         {selectedUser.email}
                                     </p>
                                     <p className="mt-1 text-xs text-zinc-500">
@@ -433,7 +433,7 @@ export default function UserMenus() {
                         )}
 
                         {!selectedUser && (
-                            <div className="rounded-2xl border border-white/10 bg-[#111111] p-10 text-center text-zinc-400">
+                            <div className="rounded-2xl border border-pink-100 bg-white p-10 text-center text-zinc-500">
                                 No active users found. Please create a user first.
                             </div>
                         )}

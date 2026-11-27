@@ -105,7 +105,7 @@ export default function MenuModal({
         >
             <form onSubmit={handleSubmit} className="space-y-4">
                 {error && (
-                    <div className="rounded-xl border border-red-500/25 bg-red-500/10 px-4 py-3 text-sm text-red-400">
+                    <div className="rounded-xl border border-red-200 bg-red-500/10 px-4 py-3 text-sm text-red-400">
                         {error}
                     </div>
                 )}
@@ -178,13 +178,13 @@ export default function MenuModal({
                     />
                     <label
                         htmlFor="isActive"
-                        className="cursor-pointer text-sm font-medium text-zinc-300"
+                        className="cursor-pointer text-sm font-medium text-zinc-700"
                     >
                         Active Menu
                     </label>
                 </div>
 
-                <div className="flex justify-end gap-3 border-t border-white/10 pt-5">
+                <div className="flex justify-end gap-3 border-t border-pink-100 pt-5">
                     <Button
                         variant="secondary"
                         onClick={onClose}

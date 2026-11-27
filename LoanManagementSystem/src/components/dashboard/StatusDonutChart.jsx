@@ -20,7 +20,7 @@ export default function StatusDonutChart({ data = [], total = 0 }) {
                         cy="100"
                         r={radius}
                         fill="transparent"
-                        stroke="#222"
+                        stroke="#fce7f3"
                         strokeWidth={strokeWidth}
                     />
 
@@ -53,17 +53,17 @@ export default function StatusDonutChart({ data = [], total = 0 }) {
 
                 {/* Center text */}
                 <div className="absolute inset-0 flex flex-col items-center justify-center text-center pointer-events-none">
-                    <span className="text-2xl font-extrabold text-white font-mono">
+                    <span className="text-2xl font-black text-zinc-900 font-mono">
                         {hoveredIndex !== null ? data[hoveredIndex].value : validTotal}
                     </span>
-                    <span className="text-xs text-zinc-400 font-medium">
+                    <span className="text-xs text-zinc-500 font-semibold">
                         {hoveredIndex !== null ? data[hoveredIndex].label : "Applications"}
                     </span>
                 </div>
             </div>
 
             {/* Legend */}
-            <div className="flex-1 w-full space-y-2.5">
+            <div className="flex-1 w-full space-y-2">
                 {data.map((item, idx) => {
                     const percentage = validTotal > 0 ? ((item.value / validTotal) * 100).toFixed(1) : "0.0";
                     const isHovered = hoveredIndex === idx;
@@ -73,8 +73,8 @@ export default function StatusDonutChart({ data = [], total = 0 }) {
                             key={item.label}
                             onMouseEnter={() => setHoveredIndex(idx)}
                             onMouseLeave={() => setHoveredIndex(null)}
-                            className={`flex items-center justify-between p-2 rounded-xl transition cursor-pointer ${
-                                isHovered ? "bg-white/[0.06]" : "hover:bg-white/[0.03]"
+                            className={`flex items-center justify-between p-2.5 rounded-2xl transition cursor-pointer ${
+                                isHovered ? "bg-pink-100/60" : "hover:bg-pink-50"
                             }`}
                         >
                             <div className="flex items-center gap-2.5">
@@ -82,12 +82,12 @@ export default function StatusDonutChart({ data = [], total = 0 }) {
                                     className="w-3 h-3 rounded-full shrink-0"
                                     style={{ backgroundColor: item.color }}
                                 />
-                                <span className="text-sm font-medium text-zinc-300">{item.label}</span>
+                                <span className="text-sm font-semibold text-zinc-700">{item.label}</span>
                             </div>
 
                             <div className="flex items-center gap-3">
-                                <span className="text-sm font-semibold text-white font-mono">{item.value}</span>
-                                <span className="text-xs text-zinc-500 font-mono w-12 text-right">{percentage}%</span>
+                                <span className="text-sm font-bold text-zinc-900 font-mono">{item.value}</span>
+                                <span className="text-xs text-zinc-500 font-mono font-medium w-12 text-right">{percentage}%</span>
                             </div>
                         </div>
                     );

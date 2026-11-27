@@ -242,18 +242,18 @@ export default function LoanTypeModal({
                     />
                 </div>
 
-                <div className="flex flex-col gap-3 rounded-xl border border-white/10 bg-white/[0.02] p-4 sm:flex-row sm:items-center sm:justify-between">
+                <div className="flex flex-col gap-3 rounded-xl border border-pink-100 bg-pink-50/30 p-4 sm:flex-row sm:items-center sm:justify-between">
                     <label className="flex items-center gap-3 cursor-pointer">
                         <input
                             type="checkbox"
                             name="requiresGuarantor"
                             checked={formData.requiresGuarantor}
                             onChange={handleChange}
-                            className="h-4 w-4 rounded border-zinc-700 bg-zinc-900 text-pink-500 focus:ring-pink-500/20"
+                            className="h-4 w-4 rounded border-zinc-700 bg-pink-50/50 text-pink-500 focus:ring-pink-500/20"
                         />
                         <div>
-                            <span className="text-sm font-medium text-white">Requires Guarantor</span>
-                            <p className="text-xs text-zinc-400">Applications must include guarantor details</p>
+                            <span className="text-sm font-medium text-zinc-900">Requires Guarantor</span>
+                            <p className="text-xs text-zinc-500">Applications must include guarantor details</p>
                         </div>
                     </label>
 
@@ -263,16 +263,16 @@ export default function LoanTypeModal({
                             name="isActive"
                             checked={formData.isActive}
                             onChange={handleChange}
-                            className="h-4 w-4 rounded border-zinc-700 bg-zinc-900 text-pink-500 focus:ring-pink-500/20"
+                            className="h-4 w-4 rounded border-zinc-700 bg-pink-50/50 text-pink-500 focus:ring-pink-500/20"
                         />
                         <div>
-                            <span className="text-sm font-medium text-white">Active Status</span>
-                            <p className="text-xs text-zinc-400">Visible for new customer applications</p>
+                            <span className="text-sm font-medium text-zinc-900">Active Status</span>
+                            <p className="text-xs text-zinc-500">Visible for new customer applications</p>
                         </div>
                     </label>
                 </div>
 
-                <div className="flex justify-end gap-3 pt-4 border-t border-white/10">
+                <div className="flex justify-end gap-3 pt-4 border-t border-pink-100">
                     <Button
                         type="button"
                         variant="secondary"

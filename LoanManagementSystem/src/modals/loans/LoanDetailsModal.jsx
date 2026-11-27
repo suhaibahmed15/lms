@@ -29,38 +29,38 @@ export default function LoanDetailsModal({
             <div className="space-y-6">
                 <div className="grid grid-cols-2 gap-4 rounded-xl border border-slate-700/80 bg-slate-900/60 p-4 text-sm">
                     <div>
-                        <span className="text-xs text-slate-400">Loan Status</span>
-                        <p className="font-semibold text-white">{loan.statusName || loan.statusKey}</p>
+                        <span className="text-xs text-zinc-500">Loan Status</span>
+                        <p className="font-semibold text-zinc-900">{loan.statusName || loan.statusKey}</p>
                     </div>
                     <div>
-                        <span className="text-xs text-slate-400">Disbursed Date</span>
-                        <p className="font-semibold text-white">
+                        <span className="text-xs text-zinc-500">Disbursed Date</span>
+                        <p className="font-semibold text-zinc-900">
                             {loan.disbursedAt ? new Date(loan.disbursedAt).toLocaleDateString() : "—"}
                         </p>
                     </div>
                     <div>
-                        <span className="text-xs text-slate-400">Principal Amount</span>
-                        <p className="font-bold text-lg text-white">PKR {formatAmount(loan.principalAmount)}</p>
+                        <span className="text-xs text-zinc-500">Principal Amount</span>
+                        <p className="font-bold text-lg text-zinc-900">PKR {formatAmount(loan.principalAmount)}</p>
                     </div>
                     <div>
-                        <span className="text-xs text-slate-400">Outstanding Balance</span>
+                        <span className="text-xs text-zinc-500">Outstanding Balance</span>
                         <p className="font-bold text-lg text-pink-400">PKR {formatAmount(loan.outstandingBalance)}</p>
                     </div>
                     <div>
-                        <span className="text-xs text-slate-400">Interest Rate</span>
-                        <p className="font-semibold text-white">{loan.interestRate}% Annual</p>
+                        <span className="text-xs text-zinc-500">Interest Rate</span>
+                        <p className="font-semibold text-zinc-900">{loan.interestRate}% Annual</p>
                     </div>
                     <div>
-                        <span className="text-xs text-slate-400">Loan Term</span>
-                        <p className="font-semibold text-white">{loan.termMonths} Months</p>
+                        <span className="text-xs text-zinc-500">Loan Term</span>
+                        <p className="font-semibold text-zinc-900">{loan.termMonths} Months</p>
                     </div>
                     <div>
-                        <span className="text-xs text-slate-400">Total Payable</span>
-                        <p className="font-semibold text-white">PKR {formatAmount(loan.totalPayableAmount)}</p>
+                        <span className="text-xs text-zinc-500">Total Payable</span>
+                        <p className="font-semibold text-zinc-900">PKR {formatAmount(loan.totalPayableAmount)}</p>
                     </div>
                     <div>
-                        <span className="text-xs text-slate-400">Loan Scheme</span>
-                        <p className="font-semibold text-white">{loan.loanTypeName || "Consumer Credit"}</p>
+                        <span className="text-xs text-zinc-500">Loan Scheme</span>
+                        <p className="font-semibold text-zinc-900">{loan.loanTypeName || "Consumer Credit"}</p>
                     </div>
                 </div>
 
@@ -70,7 +70,7 @@ export default function LoanDetailsModal({
                         variant="primary"
                         icon={FileText}
                         onClick={() => setIsAgreementOpen(true)}
-                        className="bg-pink-600 hover:bg-pink-500 text-white"
+                        className="bg-pink-600 hover:bg-pink-500 text-zinc-900"
                     >
                         View & Download Agreement
                     </Button>

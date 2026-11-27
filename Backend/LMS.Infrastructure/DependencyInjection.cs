@@ -75,6 +75,18 @@ public static class DependencyInjection
     IRepaymentScheduleRepository,
     RepaymentScheduleRepository>();
 
+        services.AddScoped<IAIAnalysisResultService, AIAnalysisResultService>();
+        services.AddScoped<IAIAnalysisResultRepository, AIAnalysisResultRepository>();
+        // Groq AI Integration
+        services.AddHttpClient(); 
+        services.AddScoped<IGroqAIService, GroqAIService>();
+
+
+
+
+        // AI Prompt Management
+        services.AddScoped<IAIPromptRepository, AIPromptRepository>();
+        services.AddScoped<IAIPromptService, AIPromptService>();
         services.AddScoped<IRepaymentScheduleService,RepaymentScheduleService>();
 
         services.AddScoped<IRepaymentRepository, RepaymentRepository>();

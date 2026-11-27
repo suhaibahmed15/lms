@@ -13,13 +13,13 @@ const getStatusStyle = (statusKey) => {
             return "bg-green-500/10 text-green-400 border-green-500/20";
 
         case "DOCUMENT_REJECTED":
-            return "bg-red-500/10 text-red-400 border-red-500/20";
+            return "bg-red-50 text-red-600 border-red-200";
 
         case "DOCUMENT_PENDING":
-            return "bg-yellow-500/10 text-yellow-400 border-yellow-500/20";
+            return "bg-amber-50 text-amber-700 border-amber-200";
 
         default:
-            return "bg-zinc-500/10 text-zinc-400 border-zinc-500/20";
+            return "bg-zinc-500/10 text-zinc-500 border-zinc-500/20";
     }
 };
 
@@ -51,15 +51,15 @@ export default function LoanDocumentTable({
     onRefresh
 }) {
     return (
-        <div className="overflow-hidden rounded-2xl border border-white/10 bg-[#151515]">
+        <div className="overflow-hidden rounded-3xl border border-pink-200/80 bg-white shadow-xl shadow-pink-500/5">
 
-            <div className="flex flex-col justify-between gap-4 border-b border-white/10 p-5 sm:flex-row sm:items-center">
+            <div className="flex flex-col justify-between gap-4 border-b border-pink-100 p-5 sm:flex-row sm:items-center">
                 <div>
-                    <h2 className="text-lg font-bold text-white">
+                    <h2 className="text-lg font-bold text-zinc-900">
                         Loan Documents
                     </h2>
 
-                    <p className="mt-1 text-sm text-zinc-400">
+                    <p className="mt-1 text-sm text-zinc-500">
                         {selectedApplication
                             ? `Application: ${selectedApplication.applicationNumber || `#${selectedApplication.id}`}`
                             : "Select a loan application to view documents."}
@@ -71,7 +71,7 @@ export default function LoanDocumentTable({
                         type="button"
                         onClick={onRefresh}
                         disabled={!selectedApplication || loading}
-                        className="flex items-center gap-2 rounded-xl border border-white/10 px-4 py-2.5 text-sm text-zinc-300 hover:bg-white/5 disabled:opacity-40"
+                        className="flex items-center gap-2 rounded-xl border border-pink-100 px-4 py-2.5 text-sm text-zinc-700 hover:bg-pink-50/40 disabled:opacity-40"
                     >
                         <RefreshCw size={16} />
                         Refresh
@@ -82,7 +82,7 @@ export default function LoanDocumentTable({
                             type="button"
                             onClick={onUpload}
                             disabled={!selectedApplication}
-                            className="rounded-xl bg-pink-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-pink-500 disabled:opacity-40"
+                            className="rounded-xl bg-pink-600 px-4 py-2.5 text-sm font-semibold text-zinc-900 hover:bg-pink-500 disabled:opacity-40"
                         >
                             Upload Document
                         </button>
@@ -91,7 +91,7 @@ export default function LoanDocumentTable({
             </div>
 
             {error && (
-                <div className="m-5 rounded-lg border border-red-500/20 bg-red-500/10 p-3 text-sm text-red-400">
+                <div className="m-5 rounded-lg border border-red-200 bg-red-500/10 p-3 text-sm text-red-400">
                     {error}
                 </div>
             )}
@@ -105,25 +105,25 @@ export default function LoanDocumentTable({
             {!selectedApplication ? (
                 <div className="px-5 py-16 text-center">
                     <FileText size={36} className="mx-auto mb-3 text-zinc-600" />
-                    <p className="text-sm text-zinc-400">
+                    <p className="text-sm text-zinc-500">
                         Select an application to view its documents.
                     </p>
                 </div>
             ) : loading ? (
-                <div className="px-5 py-16 text-center text-sm text-zinc-400">
+                <div className="px-5 py-16 text-center text-sm text-zinc-500">
                     Loading documents...
                 </div>
             ) : documents.length === 0 ? (
                 <div className="px-5 py-16 text-center">
                     <FileText size={36} className="mx-auto mb-3 text-zinc-600" />
-                    <p className="text-sm text-zinc-400">
+                    <p className="text-sm text-zinc-500">
                         No documents uploaded for this application yet.
                     </p>
                 </div>
             ) : (
                 <div className="overflow-x-auto">
                     <table className="w-full min-w-[900px] text-left">
-                        <thead className="bg-white/[0.03]">
+                        <thead className="bg-pink-50/40">
                             <tr className="text-xs uppercase tracking-wider text-zinc-500">
                                 <th className="px-5 py-4">Document</th>
                                 <th className="px-5 py-4">Type</th>
@@ -135,7 +135,7 @@ export default function LoanDocumentTable({
                             </tr>
                         </thead>
 
-                        <tbody className="divide-y divide-white/5">
+                        <tbody className="divide-y divide-pink-50">
                             {documents.map((document) => {
                                 const isPending =
                                     document.statusKey?.toUpperCase() === "DOCUMENT_PENDING";
@@ -148,7 +148,7 @@ export default function LoanDocumentTable({
                                 return (
                                     <tr
                                         key={document.id}
-                                        className="text-sm transition hover:bg-white/[0.02]"
+                                        className="text-sm transition hover:bg-pink-50/30"
                                     >
                                         <td className="px-5 py-4">
                                             <div className="flex max-w-[220px] items-center gap-3">
@@ -157,21 +157,21 @@ export default function LoanDocumentTable({
                                                     className="shrink-0 text-pink-400"
                                                 />
 
-                                                <span className="truncate font-medium text-white">
+                                                <span className="truncate font-medium text-zinc-900">
                                                     {document.fileName}
                                                 </span>
                                             </div>
                                         </td>
 
-                                        <td className="px-5 py-4 text-zinc-300">
+                                        <td className="px-5 py-4 text-zinc-700">
                                             {document.documentType}
                                         </td>
 
-                                        <td className="px-5 py-4 text-zinc-400">
+                                        <td className="px-5 py-4 text-zinc-500">
                                             {formatFileSize(document.fileSizeBytes)}
                                         </td>
 
-                                        <td className="px-5 py-4 text-zinc-400">
+                                        <td className="px-5 py-4 text-zinc-500">
                                             {formatDate(document.createdAt)}
                                         </td>
 
@@ -184,7 +184,7 @@ export default function LoanDocumentTable({
                                         <td className="max-w-[180px] px-5 py-4">
                                             <span
                                                 title={remarks}
-                                                className="block truncate text-xs text-zinc-400"
+                                                className="block truncate text-xs text-zinc-500"
                                             >
                                                 {remarks}
                                             </span>
@@ -197,7 +197,7 @@ export default function LoanDocumentTable({
                                                     type="button"
                                                     onClick={() => onDownload(document)}
                                                     title="Download document"
-                                                    className="rounded-lg border border-white/10 p-2 text-zinc-300 hover:border-pink-500/40 hover:text-pink-400"
+                                                    className="rounded-lg border border-pink-100 p-2 text-zinc-700 hover:border-pink-500/40 hover:text-pink-400"
                                                 >
                                                     <Download size={16} />
                                                 </button>
@@ -217,7 +217,7 @@ export default function LoanDocumentTable({
                                                             type="button"
                                                             onClick={() => onReject(document)}
                                                             title="Reject document"
-                                                            className="rounded-lg border border-red-500/20 p-2 text-red-400 hover:bg-red-500/10"
+                                                            className="rounded-lg border border-red-200 p-2 text-red-400 hover:bg-red-500/10"
                                                         >
                                                             <XCircle size={16} />
                                                         </button>

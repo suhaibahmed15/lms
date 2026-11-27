@@ -1,4 +1,3 @@
-
 import { useCallback, useEffect, useState } from "react";
 import Sidebar from "./Sidebar";
 import Header from "./Header";
@@ -101,10 +100,10 @@ function MainLayout({ children, user, onLogout }) {
     }
 
     return (
-        <div className="relative min-h-screen bg-[#080808] text-zinc-100">
+        <div className="relative min-h-screen bg-gradient-to-br from-[#fff7f9] via-[#ffffff] to-[#fff0f5] text-zinc-900">
 
-            {/* Background */}
-            <div className="pointer-events-none fixed inset-0 -z-10 bg-[radial-gradient(circle_at_top_right,rgba(255,94,0,0.09),transparent_45%)]" />
+            {/* Background glowing gradients */}
+            <div className="pointer-events-none fixed inset-0 -z-10 bg-[radial-gradient(ellipse_at_top_right,rgba(244,114,182,0.15),transparent_50%),radial-gradient(ellipse_at_bottom_left,rgba(251,113,133,0.12),transparent_50%)]" />
 
             {/* Desktop Sidebar */}
             <div className="fixed inset-y-0 left-0 z-30 hidden w-64 lg:block">
@@ -116,7 +115,7 @@ function MainLayout({ children, user, onLogout }) {
                 <div className="fixed inset-0 z-50 flex lg:hidden">
 
                     <div
-                        className="absolute inset-0 bg-black/70 backdrop-blur-sm"
+                        className="absolute inset-0 bg-pink-950/25 backdrop-blur-sm"
                         onClick={() => setSidebarOpen(false)}
                     />
 
@@ -143,7 +142,7 @@ function MainLayout({ children, user, onLogout }) {
                     {loading ? (
                         <Loading message="Loading navigation..." />
                     ) : error ? (
-                        <div className="rounded-xl border border-red-500/25 bg-red-500/10 p-4 text-sm text-red-400">
+                        <div className="rounded-xl border border-red-500/25 bg-red-500/10 p-4 text-sm text-red-600">
                             {error}
                         </div>
                     ) : (

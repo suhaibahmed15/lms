@@ -18,12 +18,12 @@ const formatAmount = (amount) =>
 const getRepaymentStatusBadge = (statusKey) => {
     switch (statusKey) {
         case "REPAYMENT_VERIFIED":
-            return "bg-emerald-500/10 text-emerald-400 border border-emerald-500/20";
+            return "bg-emerald-50 text-emerald-700 border border-emerald-200";
         case "REPAYMENT_REJECTED":
-            return "bg-red-500/10 text-red-400 border border-red-500/20";
+            return "bg-red-50 text-red-600 border border-red-200";
         case "REPAYMENT_PENDING":
         default:
-            return "bg-yellow-500/10 text-yellow-400 border border-yellow-500/20";
+            return "bg-amber-50 text-amber-700 border border-amber-200";
     }
 };
 
@@ -59,8 +59,8 @@ export default function RepaymentTable({
         <div className="space-y-6">
             <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-center">
                 <div>
-                    <h1 className="text-2xl font-bold text-white">Loan Repayments</h1>
-                    <p className="mt-1 text-sm text-zinc-400">
+                    <h1 className="text-2xl font-bold text-zinc-900">Loan Repayments</h1>
+                    <p className="mt-1 text-sm text-zinc-500">
                         Track borrower payments, verify transaction receipts, and view payment allocations.
                     </p>
                 </div>
@@ -84,27 +84,27 @@ export default function RepaymentTable({
             </div>
 
             {error && (
-                <div className="rounded-xl border border-red-500/20 bg-red-500/10 px-4 py-3 text-sm text-red-400">
+                <div className="rounded-xl border border-red-200 bg-red-500/10 px-4 py-3 text-sm text-red-400">
                     {error}
                 </div>
             )}
 
             {success && (
-                <div className="rounded-xl border border-emerald-500/20 bg-emerald-500/10 px-4 py-3 text-sm text-emerald-400">
+                <div className="rounded-xl border border-emerald-200 bg-emerald-500/10 px-4 py-3 text-sm text-emerald-400">
                     {success}
                 </div>
             )}
 
             {/* Navigation Tabs */}
             {canVerify && (
-                <div className="flex gap-2 border-b border-white/10 pb-3">
+                <div className="flex gap-2 border-b border-pink-100 pb-3">
                     <button
                         type="button"
                         onClick={() => onTabChange("all")}
                         className={`rounded-xl px-4 py-2 text-sm font-semibold transition ${
                             activeTab === "all"
-                                ? "bg-pink-500 text-white"
-                                : "text-zinc-400 hover:bg-white/5 hover:text-white"
+                                ? "bg-pink-500 text-zinc-900"
+                                : "text-zinc-500 hover:bg-pink-50/40 hover:text-zinc-900"
                         }`}
                     >
                         All Repayments
@@ -114,13 +114,13 @@ export default function RepaymentTable({
                         onClick={() => onTabChange("pending")}
                         className={`relative rounded-xl px-4 py-2 text-sm font-semibold transition ${
                             activeTab === "pending"
-                                ? "bg-pink-500 text-white"
-                                : "text-zinc-400 hover:bg-white/5 hover:text-white"
+                                ? "bg-pink-500 text-zinc-900"
+                                : "text-zinc-500 hover:bg-pink-50/40 hover:text-zinc-900"
                         }`}
                     >
                         Pending Verification
                         {pendingPayments.length > 0 && (
-                            <span className="ml-2 rounded-full bg-red-500 px-2 py-0.5 text-xs text-white font-bold">
+                            <span className="ml-2 rounded-full bg-red-500 px-2 py-0.5 text-xs text-zinc-900 font-bold">
                                 {pendingPayments.length}
                             </span>
                         )}
@@ -128,9 +128,9 @@ export default function RepaymentTable({
                 </div>
             )}
 
-            <div className="overflow-hidden rounded-2xl border border-white/10 bg-[#111111]">
+            <div className="overflow-hidden rounded-2xl border border-pink-100 bg-white">
                 {!isPendingTab && (
-                    <div className="flex flex-col gap-3 border-b border-white/10 p-4 sm:flex-row sm:items-center sm:justify-between">
+                    <div className="flex flex-col gap-3 border-b border-pink-100 p-4 sm:flex-row sm:items-center sm:justify-between">
                         <div className="flex flex-1 flex-col sm:flex-row gap-3">
                             <div className="relative w-full sm:max-w-sm">
                                 <Search
@@ -142,14 +142,14 @@ export default function RepaymentTable({
                                     value={search}
                                     onChange={(e) => onSearchChange(e.target.value)}
                                     placeholder="Search by ref # or borrower..."
-                                    className="w-full rounded-xl border border-white/10 bg-[#181818] py-2.5 pl-10 pr-4 text-sm text-white placeholder:text-zinc-500 outline-none focus:border-pink-500/70"
+                                    className="w-full rounded-xl border border-pink-100 bg-white py-2.5 pl-10 pr-4 text-sm text-zinc-900 placeholder:text-zinc-400 outline-none focus:border-pink-500/70"
                                 />
                             </div>
 
                             <select
                                 value={statusFilter}
                                 onChange={(e) => onStatusFilterChange(e.target.value)}
-                                className="rounded-xl border border-white/10 bg-[#181818] px-3 py-2 text-sm text-white outline-none"
+                                className="rounded-xl border border-pink-100 bg-white px-3 py-2 text-sm text-zinc-900 outline-none"
                             >
                                 <option value="">All Statuses</option>
                                 <option value="REPAYMENT_PENDING">Pending</option>
@@ -162,7 +162,7 @@ export default function RepaymentTable({
                             <select
                                 value={pageSize}
                                 onChange={(e) => onPageSizeChange(Number(e.target.value))}
-                                className="rounded-xl border border-white/10 bg-[#181818] px-3 py-2 text-sm text-white outline-none"
+                                className="rounded-xl border border-pink-100 bg-white px-3 py-2 text-sm text-zinc-900 outline-none"
                             >
                                 <option value={5}>5 per page</option>
                                 <option value={10}>10 per page</option>
@@ -175,7 +175,7 @@ export default function RepaymentTable({
                 <div className="overflow-x-auto">
                     <table className="w-full text-left">
                         <thead>
-                            <tr className="border-b border-white/10 bg-white/[0.02] text-xs font-semibold uppercase tracking-wider text-zinc-400">
+                            <tr className="border-b border-pink-100 bg-pink-50/30 text-xs font-semibold uppercase tracking-wider text-zinc-500">
                                 <th className="px-5 py-4">Reference #</th>
                                 <th className="px-5 py-4">Borrower</th>
                                 <th className="px-5 py-4">Amount (PKR)</th>
@@ -187,7 +187,7 @@ export default function RepaymentTable({
                             </tr>
                         </thead>
 
-                        <tbody className="divide-y divide-white/5 text-sm">
+                        <tbody className="divide-y divide-pink-50 text-sm">
                             {loading ? (
                                 <tr>
                                     <td colSpan={8} className="py-12 text-center text-zinc-500">
@@ -207,13 +207,13 @@ export default function RepaymentTable({
                                     return (
                                         <tr
                                             key={payment.id}
-                                            className="transition hover:bg-white/[0.025]"
+                                            className="transition hover:bg-pink-50/30"
                                         >
-                                            <td className="px-5 py-4 font-mono font-medium text-white">
+                                            <td className="px-5 py-4 font-mono font-medium text-zinc-900">
                                                 {payment.paymentReference}
                                             </td>
 
-                                            <td className="px-5 py-4 text-sm text-zinc-300 font-medium">
+                                            <td className="px-5 py-4 text-sm text-zinc-700 font-medium">
                                                 {payment.borrowerName || "—"}
                                             </td>
 
@@ -221,11 +221,11 @@ export default function RepaymentTable({
                                                 {formatAmount(payment.amount)}
                                             </td>
 
-                                            <td className="px-5 py-4 text-sm text-zinc-300">
+                                            <td className="px-5 py-4 text-sm text-zinc-700">
                                                 {payment.paymentMethod || "Bank Transfer"}
                                             </td>
 
-                                            <td className="px-5 py-4 text-sm text-zinc-400">
+                                            <td className="px-5 py-4 text-sm text-zinc-500">
                                                 {payment.paidAt || payment.paymentDate
                                                     ? new Date(payment.paidAt || payment.paymentDate).toLocaleDateString()
                                                     : "—"}
@@ -237,7 +237,7 @@ export default function RepaymentTable({
                                                 </span>
                                             </td>
 
-                                            <td className="px-5 py-4 text-xs text-zinc-400">
+                                            <td className="px-5 py-4 text-xs text-zinc-500">
                                                 {payment.principalAmount != null || payment.interestAmount != null ? (
                                                     <span>
                                                         Int: {formatAmount(payment.interestAmount || 0)} | Prin: {formatAmount(payment.principalAmount || 0)}
@@ -284,10 +284,10 @@ export default function RepaymentTable({
                 </div>
 
                 {!isPendingTab && (
-                    <div className="flex flex-col gap-3 border-t border-white/10 px-5 py-4 sm:flex-row sm:items-center sm:justify-between">
+                    <div className="flex flex-col gap-3 border-t border-pink-100 px-5 py-4 sm:flex-row sm:items-center sm:justify-between">
                         <p className="text-sm text-zinc-500">
                             Total repayments:{" "}
-                            <span className="font-semibold text-white">
+                            <span className="font-semibold text-zinc-900">
                                 {totalRecords}
                             </span>
                         </p>
@@ -303,7 +303,7 @@ export default function RepaymentTable({
                                 Prev
                             </Button>
 
-                            <span className="px-2 text-sm text-zinc-400">
+                            <span className="px-2 text-sm text-zinc-500">
                                 Page {pageNumber} of {totalPages || 1}
                             </span>
 

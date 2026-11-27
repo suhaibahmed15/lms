@@ -1,4 +1,3 @@
-
 import React from "react";
 import {
     ShieldCheck,
@@ -7,8 +6,6 @@ import {
     ChartNoAxesCombined
 } from "lucide-react";
 
-const VIDEO_URL = "/videos/login_bg.mp4";
-
 function UIAuthLayout({
     eyebrow,
     heading,
@@ -16,99 +13,82 @@ function UIAuthLayout({
     children
 }) {
     return (
-        <div className="relative isolate flex min-h-screen w-full items-center justify-center overflow-x-hidden bg-[#080808] px-4 py-8 sm:px-6 lg:px-10">
+        <div className="relative isolate flex min-h-screen w-full items-center justify-center overflow-x-hidden bg-gradient-to-br from-pink-50 via-white to-rose-50 px-4 py-8 sm:px-6 lg:px-10 text-zinc-900">
 
-            {/* Video Background */}
-            <div className="pointer-events-none absolute inset-0 -z-20 overflow-hidden">
-                <video
-                    autoPlay
-                    muted
-                    loop
-                    playsInline
-                    preload="auto"
-                    src={VIDEO_URL}
-                    className="absolute inset-0 h-full w-full object-cover"
-                />
-            </div>
-
-            {/* Background Overlays */}
-            <div className="pointer-events-none absolute inset-0 -z-10 bg-black/75" />
-
-            <div className="pointer-events-none absolute inset-0 -z-10 bg-gradient-to-br from-pink-950/40 via-black/60 to-black" />
-
-            <div className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(circle_at_50%_50%,rgba(236,72,153,0.18),transparent_65%)]" />
+            {/* Aesthetic Light Glowing Ambient Highlights */}
+            <div className="pointer-events-none fixed inset-0 -z-10 bg-[radial-gradient(ellipse_at_top_right,rgba(244,114,182,0.18),transparent_60%),radial-gradient(ellipse_at_bottom_left,rgba(251,113,133,0.14),transparent_60%)]" />
 
             {/* Main Layout */}
             <div className="relative z-10 mx-auto grid w-full max-w-6xl items-center gap-8 lg:grid-cols-2 lg:gap-16">
 
-                {/* LEFT CONTENT - SAME POSITION */}
+                {/* LEFT CONTENT */}
                 <div className="mx-auto flex w-full max-w-xl flex-col justify-center text-center lg:mx-0 lg:min-h-[580px] lg:text-left">
 
                     {/* Brand */}
                     <div className="mb-8 flex items-center justify-center lg:justify-start">
-                        <img src="/logo.png" alt="LMS Loan Management System" className="h-14 w-auto max-w-[230px] object-contain drop-shadow-md" />
+                        <img src="/logo.png" alt="LMS Loan Management System" className="h-14 w-auto max-w-[230px] object-contain drop-shadow-sm" />
                     </div>
 
-                    {/* Heading - FIXED HEIGHT */}
+                    {/* Heading */}
                     <div className="min-h-[190px] sm:min-h-[205px]">
 
-                        <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-pink-500/30 bg-pink-500/15 px-4 py-2">
-                            <Sparkles size={14} className="text-pink-400" />
-                            <span className="text-[10px] font-semibold uppercase tracking-[2px] text-pink-300">
+                        <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-pink-200 bg-pink-100/70 px-4 py-2">
+                            <Sparkles size={14} className="text-pink-600" />
+                            <span className="text-[10px] font-bold uppercase tracking-[2px] text-pink-700">
                                 {eyebrow}
                             </span>
                         </div>
 
-                        <h1 className="min-h-[100px] text-4xl font-extrabold leading-tight tracking-tight text-white sm:text-5xl">
+                        <h1 className="min-h-[100px] text-4xl font-extrabold leading-tight tracking-tight text-zinc-900 sm:text-5xl">
                             {heading}
                         </h1>
 
-                        <p className="mx-auto mt-3 max-w-lg text-sm leading-7 text-zinc-300 sm:text-base lg:mx-0">
+                        <p className="mx-auto mt-3 max-w-lg text-sm leading-7 text-zinc-600 sm:text-base lg:mx-0">
                             {description}
                         </p>
 
                     </div>
 
-                    {/* Features - SAME POSITION */}
+                    {/* Features */}
                     <div className="mt-8 grid grid-cols-1 gap-4 text-left sm:grid-cols-3 lg:grid-cols-1">
 
-                        <div className="flex items-center gap-3 rounded-xl border border-pink-500/20 bg-black/60 p-3 backdrop-blur-md">
-                            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-pink-500/15 text-pink-400">
-                                <ChartNoAxesCombined size={20} />
+                        <div className="flex items-center gap-3.5 rounded-2xl border border-pink-200/80 bg-white/90 p-4 shadow-sm shadow-pink-500/5 backdrop-blur-md">
+                            <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-pink-100/80 text-pink-600">
+                                <ChartNoAxesCombined size={22} />
                             </div>
                             <div>
-                                <p className="text-sm font-semibold text-white">
+                                <p className="text-sm font-semibold text-zinc-900">
                                     Smart Loan Management
                                 </p>
-                                <p className="text-xs text-zinc-400">
+                                <p className="text-xs text-zinc-500">
                                     Manage your loan activities easily.
                                 </p>
                             </div>
                         </div>
 
-                        <div className="flex items-center gap-3 rounded-xl border border-pink-500/20 bg-black/60 p-3 backdrop-blur-md">
-                            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-pink-500/15 text-pink-400">
-                                <LockKeyhole size={20} />
+                        <div className="flex items-center gap-3.5 rounded-2xl border border-pink-200/80 bg-white/90 p-4 shadow-sm shadow-pink-500/5 backdrop-blur-md">
+                            <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-pink-100/80 text-pink-600">
+                                <LockKeyhole size={22} />
                             </div>
                             <div>
-                                <p className="text-sm font-semibold text-white">
+                                <p className="text-sm font-semibold text-zinc-900">
                                     Secure Account Access
                                 </p>
-                                <p className="text-xs text-zinc-400">
+                                <p className="text-xs text-zinc-500">
                                     Your account access stays protected.
                                 </p>
                             </div>
                         </div>
 
-                        <div className="flex items-center gap-3 rounded-xl border border-pink-500/20 bg-black/60 p-3 backdrop-blur-md">
-                            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-pink-500/15 text-pink-400">
-                                <ShieldCheck size={20} />
+                        <div className="flex items-center gap-3.5 rounded-2xl border border-pink-200/80 bg-white/90 p-4 shadow-sm shadow-pink-500/5 backdrop-blur-md">
+                            <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-pink-100/80 text-pink-600">
+                                <ShieldCheck size={22} />
                             </div>
                             <div>
-                                <p className="text-sm font-semibold text-white">
+                                <p className="text-sm font-semibold text-zinc-900">
                                     Transparent Experience
                                 </p>
-                                <p className="text-xs text-zinc-400">
+                                <p className="text-xs text-zinc-500">
                                     Keep track of your applications.
                                 </p>
                             </div>
@@ -117,17 +97,16 @@ function UIAuthLayout({
                     </div>
                 </div>
 
-                {/* RIGHT FORM CARD - SAME POSITION */}
+                {/* RIGHT FORM CARD */}
                 <div className="relative mx-auto flex w-full max-w-xl items-center">
 
-                    <div className="pointer-events-none absolute -inset-1 rounded-[2rem] bg-gradient-to-br from-pink-500/20 via-transparent to-pink-500/10 blur-xl" />
+                    <div className="pointer-events-none absolute -inset-1 rounded-[2.5rem] bg-gradient-to-br from-pink-400/20 via-pink-300/10 to-rose-400/20 blur-xl" />
 
-                    <div className="relative w-full overflow-hidden rounded-3xl border border-pink-500/30 bg-black/85 shadow-2xl shadow-pink-950/40 backdrop-blur-2xl">
+                    <div className="relative w-full overflow-hidden rounded-3xl border border-pink-200/90 bg-white/95 shadow-2xl shadow-pink-500/10 backdrop-blur-2xl">
 
-                        <div className="pointer-events-none absolute -right-24 -top-24 h-64 w-64 rounded-full bg-pink-500/15 blur-[90px]" />
+                        <div className="pointer-events-none absolute -right-24 -top-24 h-64 w-64 rounded-full bg-pink-200/30 blur-[90px]" />
 
-                        {/* Same top padding and heading position */}
-                        <div className="relative z-10 p-5 sm:p-8 lg:p-9">
+                        <div className="relative z-10 p-6 sm:p-9 lg:p-10">
                             {children}
                         </div>
 
@@ -137,7 +116,7 @@ function UIAuthLayout({
             </div>
 
             {/* Footer */}
-            <footer className="relative z-10 mt-8 w-full text-center text-xs text-zinc-500 lg:absolute lg:bottom-3 lg:left-0 lg:mt-0">
+            <footer className="relative z-10 mt-8 w-full text-center text-xs text-zinc-500 lg:absolute lg:bottom-4 lg:left-0 lg:mt-0 font-medium">
                 © {new Date().getFullYear()} LMS Capital. All rights reserved.
             </footer>
 

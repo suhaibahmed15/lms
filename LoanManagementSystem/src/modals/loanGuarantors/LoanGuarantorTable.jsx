@@ -14,16 +14,16 @@ function LoanGuarantorTable({
                 return "bg-green-500/10 text-green-400 border-green-500/20";
 
             case "GUARANTOR_REJECTED":
-                return "bg-red-500/10 text-red-400 border-red-500/20";
+                return "bg-red-50 text-red-600 border-red-200";
 
             default:
-                return "bg-yellow-500/10 text-yellow-400 border-yellow-500/20";
+                return "bg-amber-50 text-amber-700 border-amber-200";
         }
     };
 
     if (loading) {
         return (
-            <div className="rounded-xl border border-slate-800 bg-slate-950 p-10 text-center text-slate-400">
+            <div className="rounded-xl border border-slate-800 bg-slate-950 p-10 text-center text-zinc-500">
                 Loading guarantors...
             </div>
         );
@@ -32,8 +32,8 @@ function LoanGuarantorTable({
     if (!guarantors.length) {
         return (
             <div className="rounded-xl border border-slate-800 bg-slate-950 p-10 text-center">
-                <p className="font-medium text-white">No guarantors found</p>
-                <p className="mt-1 text-sm text-slate-400">
+                <p className="font-medium text-zinc-900">No guarantors found</p>
+                <p className="mt-1 text-sm text-zinc-500">
                     No guarantors have been added to this application yet.
                 </p>
             </div>
@@ -45,7 +45,7 @@ function LoanGuarantorTable({
             <div className="overflow-x-auto">
                 <table className="w-full min-w-[1000px] text-left text-sm">
                     <thead className="border-b border-slate-800 bg-slate-900">
-                        <tr className="text-xs uppercase tracking-wider text-slate-400">
+                        <tr className="text-xs uppercase tracking-wider text-zinc-500">
                             <th className="px-5 py-4">Guarantor</th>
                             <th className="px-5 py-4">Contact</th>
                             <th className="px-5 py-4">National ID</th>
@@ -64,10 +64,10 @@ function LoanGuarantorTable({
                             return (
                                 <tr
                                     key={guarantor.id}
-                                    className="text-slate-300 transition hover:bg-slate-900/70"
+                                    className="text-zinc-700 transition hover:bg-slate-900/70"
                                 >
                                     <td className="px-5 py-4">
-                                        <p className="font-medium text-white">
+                                        <p className="font-medium text-zinc-900">
                                             {guarantor.fullName}
                                         </p>
                                         <p className="mt-1 text-xs text-slate-500">
@@ -97,7 +97,7 @@ function LoanGuarantorTable({
                                         </span>
                                     </td>
 
-                                    <td className="px-5 py-4 text-xs text-slate-400">
+                                    <td className="px-5 py-4 text-xs text-zinc-500">
                                         {guarantor.createdAt
                                             ? new Date(
                                                 guarantor.createdAt
@@ -111,7 +111,7 @@ function LoanGuarantorTable({
                                                 <>
                                                     <button
                                                         onClick={() => onEdit(guarantor)}
-                                                        className="rounded-md border border-slate-700 px-3 py-1.5 text-xs text-slate-300 hover:border-pink-500 hover:text-pink-400"
+                                                        className="rounded-md border border-slate-700 px-3 py-1.5 text-xs text-zinc-700 hover:border-pink-500 hover:text-pink-400"
                                                     >
                                                         Edit
                                                     </button>

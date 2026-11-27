@@ -1,5 +1,6 @@
 
 using LMS.Domain.Entities;
+using LMS.Application.DTO.AI;
 
 namespace LMS.Application.Repositories.Interfaces;
 
@@ -27,6 +28,10 @@ public interface ILoanApplicationRepository
     Task AddAsync(LoanApplication application);
 
     Task<LoanApplication?> GetApplicationByIdAsync(int applicationId);
+
+    // Get limited loan application data for AI analysis
+    Task<LoanApplicationAIDataDto?> GetApplicationAIDataAsync(
+        int applicationId);
 
     Task SaveChangesAsync();
 }

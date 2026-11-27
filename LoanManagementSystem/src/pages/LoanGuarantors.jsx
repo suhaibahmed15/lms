@@ -317,7 +317,7 @@ function LoanGuarantors() {
     if (loading) {
         return (
             <MainLayout>
-                <div className="p-6 text-center text-slate-400">
+                <div className="p-6 text-center text-zinc-500">
                     Loading loan guarantors...
                 </div>
             </MainLayout>
@@ -330,10 +330,10 @@ function LoanGuarantors() {
                 {/* Page Header */}
                 <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-center">
                     <div>
-                        <h1 className="text-2xl font-bold text-white">
+                        <h1 className="text-2xl font-bold text-zinc-900">
                             Loan Guarantors
                         </h1>
-                        <p className="mt-1 text-sm text-slate-400">
+                        <p className="mt-1 text-sm text-zinc-500">
                             Manage and review guarantors linked to loan applications.
                         </p>
                     </div>
@@ -341,7 +341,7 @@ function LoanGuarantors() {
                     {canManage && selectedApplicationId && (
                         <button
                             onClick={openAddModal}
-                            className="rounded-lg bg-gradient-to-r from-pink-600 via-pink-500 to-rose-400 px-5 py-2.5 text-sm font-semibold text-white shadow-md shadow-pink-500/25 transition hover:opacity-95"
+                            className="rounded-lg bg-gradient-to-r from-pink-600 via-pink-500 to-rose-400 px-5 py-2.5 text-sm font-semibold text-zinc-900 shadow-md shadow-pink-500/25 transition hover:opacity-95"
                         >
                             + Add Guarantor
                         </button>
@@ -375,7 +375,7 @@ function LoanGuarantors() {
 
                 {/* Application Selection */}
                 <div className="rounded-xl border border-slate-800 bg-slate-950 p-5">
-                    <label className="mb-2 block text-sm font-medium text-slate-300">
+                    <label className="mb-2 block text-sm font-medium text-zinc-700">
                         Select Loan Application
                     </label>
 
@@ -384,7 +384,7 @@ function LoanGuarantors() {
                         onChange={(e) =>
                             setSelectedApplicationId(e.target.value)
                         }
-                        className="w-full max-w-xl rounded-lg border border-slate-700 bg-slate-900 px-3 py-3 text-sm text-white outline-none focus:border-pink-500"
+                        className="w-full max-w-xl rounded-lg border border-slate-700 bg-slate-900 px-3 py-3 text-sm text-zinc-900 outline-none focus:border-pink-500"
                     >
                         <option value="">Select an application</option>
 
@@ -406,7 +406,7 @@ function LoanGuarantors() {
                                 <p className="text-xs text-slate-500">
                                     Applicant
                                 </p>
-                                <p className="mt-1 text-sm font-medium text-white">
+                                <p className="mt-1 text-sm font-medium text-zinc-900">
                                     {selectedApplication.applicantName || "—"}
                                 </p>
                             </div>
@@ -415,7 +415,7 @@ function LoanGuarantors() {
                                 <p className="text-xs text-slate-500">
                                     Application Number
                                 </p>
-                                <p className="mt-1 text-sm font-medium text-white">
+                                <p className="mt-1 text-sm font-medium text-zinc-900">
                                     {selectedApplication.applicationNumber || "—"}
                                 </p>
                             </div>
@@ -424,7 +424,7 @@ function LoanGuarantors() {
                                 <p className="text-xs text-slate-500">
                                     Application Status
                                 </p>
-                                <p className="mt-1 text-sm font-medium text-white">
+                                <p className="mt-1 text-sm font-medium text-zinc-900">
                                     {selectedApplication.statusName || "—"}
                                 </p>
                             </div>
@@ -437,10 +437,10 @@ function LoanGuarantors() {
                     <>
                         <div className="flex items-center justify-between">
                             <div>
-                                <h2 className="text-lg font-semibold text-white">
+                                <h2 className="text-lg font-semibold text-zinc-900">
                                     Guarantor Records
                                 </h2>
-                                <p className="mt-1 text-xs text-slate-400">
+                                <p className="mt-1 text-xs text-zinc-500">
                                     {guarantors.length} guarantor(s) found
                                 </p>
                             </div>
@@ -459,10 +459,10 @@ function LoanGuarantors() {
                     </>
                 ) : (
                     <div className="rounded-xl border border-slate-800 bg-slate-950 p-10 text-center">
-                        <p className="font-medium text-white">
+                        <p className="font-medium text-zinc-900">
                             No loan application available
                         </p>
-                        <p className="mt-1 text-sm text-slate-400">
+                        <p className="mt-1 text-sm text-zinc-500">
                             Select an application to view its guarantors.
                         </p>
                     </div>

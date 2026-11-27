@@ -293,17 +293,17 @@ export default function LoanDocuments() {
         <MainLayout user={user}>
             <div className="space-y-6">
 
-                <div className="rounded-2xl border border-white/10 bg-[#151515] p-5">
-                    <h1 className="text-xl font-bold text-white">
+                <div className="rounded-3xl border border-pink-200/80 bg-white p-5 shadow-xl shadow-pink-500/5">
+                    <h1 className="text-xl font-bold text-zinc-900">
                         Loan Documents
                     </h1>
 
-                    <p className="mt-1 text-sm text-zinc-400">
+                    <p className="mt-1 text-sm text-zinc-500">
                         Manage, upload and review loan application documents.
                     </p>
 
                     <div className="mt-5 max-w-xl">
-                        <label className="mb-2 block text-sm font-medium text-zinc-300">
+                        <label className="mb-2 block text-sm font-medium text-zinc-700">
                             Select Loan Application
                         </label>
 
@@ -315,7 +315,7 @@ export default function LoanDocuments() {
                                 setError("");
                                 setSuccess("");
                             }}
-                            className="w-full rounded-xl border border-white/10 bg-[#0d0d0d] px-4 py-3 text-sm text-white outline-none focus:border-pink-500"
+                            className="w-full rounded-xl border border-zinc-200 bg-white px-4 py-3 text-sm text-zinc-900 outline-none focus:border-pink-500"
                         >
                             <option value="">
                                 Select an application
@@ -325,7 +325,7 @@ export default function LoanDocuments() {
                                 <option
                                     key={application.id}
                                     value={application.id}
-                                    className="bg-[#151515]"
+                                    className="bg-white text-zinc-900"
                                 >
                                     {application.applicationNumber}
                                     {" — "}
@@ -366,7 +366,7 @@ export default function LoanDocuments() {
                         onRefresh={fetchDocuments}
                     />
                 ) : (
-                    <div className="rounded-xl border border-yellow-500/20 bg-yellow-500/10 p-5 text-sm text-yellow-400">
+                    <div className="rounded-xl border border-amber-200 bg-yellow-500/10 p-5 text-sm text-yellow-400">
                         You do not have permission to view loan documents.
                     </div>
                 )}

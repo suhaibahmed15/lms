@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ChevronDown, HelpCircle, Sparkles } from "lucide-react";
+import { ChevronDown, HelpCircle } from "lucide-react";
 
 export default function FaqSection() {
     const [openIndex, setOpenIndex] = useState(0);
@@ -36,19 +36,19 @@ export default function FaqSection() {
     };
 
     return (
-        <section id="faq" className="relative py-24 bg-black border-t border-pink-500/20">
+        <section id="faq" className="relative py-24 bg-gradient-to-b from-[#fff7f9] via-[#ffffff] to-[#fff0f5] border-t border-pink-100 text-zinc-900">
             <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
                 
                 {/* Header */}
                 <div className="text-center mb-16 space-y-3">
-                    <div className="inline-flex items-center gap-1.5 rounded-full border border-pink-500/30 bg-pink-500/10 px-3.5 py-1 text-xs font-semibold text-pink-300">
-                        <HelpCircle size={13} />
+                    <div className="inline-flex items-center gap-1.5 rounded-full border border-pink-200 bg-pink-100/70 px-3.5 py-1 text-xs font-bold text-pink-700 shadow-sm">
+                        <HelpCircle size={13} className="text-pink-600" />
                         <span>Common Borrower Inquiries</span>
                     </div>
-                    <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
+                    <h2 className="text-3xl sm:text-4xl font-extrabold text-zinc-900 tracking-tight">
                         Frequently Asked Questions
                     </h2>
-                    <p className="text-sm sm:text-base text-zinc-300">
+                    <p className="text-sm sm:text-base text-zinc-600">
                         Everything you need to know about our lending facilities, installment formulas, and application workflows.
                     </p>
                 </div>
@@ -62,25 +62,23 @@ export default function FaqSection() {
                                 key={idx}
                                 className={`rounded-2xl border transition-all duration-200 overflow-hidden ${
                                     isOpen
-                                        ? "border-pink-500/40 bg-black/95 shadow-lg shadow-pink-950/20"
-                                        : "border-white/10 bg-black/60 hover:border-pink-500/30 hover:bg-black"
+                                        ? "border-pink-300 bg-white shadow-lg shadow-pink-500/5"
+                                        : "border-pink-100 bg-white hover:border-pink-200 shadow-sm"
                                 }`}
                             >
                                 <button
                                     onClick={() => toggleFaq(idx)}
-                                    className="w-full flex items-center justify-between p-5 sm:p-6 text-left cursor-pointer focus:outline-none"
-                                    aria-expanded={isOpen}
+                                    className="w-full flex items-center justify-between p-5 text-left transition-colors cursor-pointer"
                                 >
-                                    <span className="text-sm sm:text-base font-semibold text-white pr-4">
+                                    <span className="text-sm font-bold text-zinc-900 pr-4">
                                         {faq.q}
                                     </span>
-                                    <div className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-white/10 bg-zinc-950 transition-transform duration-200 ${isOpen ? "rotate-180 border-pink-500/40 text-pink-400" : "text-zinc-400"}`}>
+                                    <span className={`shrink-0 rounded-full p-1 border border-pink-200 transition-transform duration-200 ${isOpen ? "rotate-180 bg-pink-50 text-pink-600" : "text-zinc-400"}`}>
                                         <ChevronDown size={16} />
-                                    </div>
+                                    </span>
                                 </button>
-
                                 {isOpen && (
-                                    <div className="px-5 pb-5 sm:px-6 sm:pb-6 text-xs sm:text-sm text-zinc-300 leading-relaxed border-t border-white/10 pt-4 animate-in fade-in duration-200">
+                                    <div className="px-5 pb-5 pt-1 border-t border-pink-50 text-xs text-zinc-600 leading-relaxed">
                                         {faq.a}
                                     </div>
                                 )}

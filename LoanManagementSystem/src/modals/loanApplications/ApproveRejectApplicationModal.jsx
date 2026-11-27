@@ -49,19 +49,19 @@ export default function ApproveRejectApplicationModal({
                 {/* Facility Summary Badge */}
                 <div className={`p-4 rounded-xl border text-xs space-y-1.5 ${
                     isApprove
-                        ? "border-emerald-500/20 bg-emerald-500/10 text-emerald-300"
-                        : "border-red-500/20 bg-red-500/10 text-red-300"
+                        ? "border-emerald-200 bg-emerald-500/10 text-emerald-300"
+                        : "border-red-200 bg-red-500/10 text-red-300"
                 }`}>
-                    <p className="font-semibold text-sm text-white">
+                    <p className="font-semibold text-sm text-zinc-900">
                         {isApprove
                             ? "Confirm Credit Facility Sanction"
                             : "Confirm Application Underwriting Rejection"}
                     </p>
-                    <p className="text-slate-300">
-                        Requested: <strong className="text-white">PKR {Number(application?.requestedAmount || 0).toLocaleString()}</strong> | Term: <strong className="text-white">{application?.requestedTermMonths} Months</strong>
+                    <p className="text-zinc-700">
+                        Requested: <strong className="text-zinc-900">PKR {Number(application?.requestedAmount || 0).toLocaleString()}</strong> | Term: <strong className="text-zinc-900">{application?.requestedTermMonths} Months</strong>
                     </p>
-                    <p className="text-slate-300">
-                        Scheme: <strong className="text-white">{application?.loanTypeName || "—"}</strong>
+                    <p className="text-zinc-700">
+                        Scheme: <strong className="text-zinc-900">{application?.loanTypeName || "—"}</strong>
                     </p>
                 </div>
 
@@ -72,7 +72,7 @@ export default function ApproveRejectApplicationModal({
                             ? "border-emerald-500/30 bg-emerald-500/10 text-emerald-300"
                             : "border-red-500/30 bg-red-500/10 text-red-300"
                     }`}>
-                        <div className="flex items-center gap-1.5 font-semibold text-white">
+                        <div className="flex items-center gap-1.5 font-semibold text-zinc-900">
                             {hasVerifiedGuarantor ? (
                                 <>
                                     <CheckCircle2 size={16} className="text-emerald-400" />
@@ -119,7 +119,7 @@ export default function ApproveRejectApplicationModal({
                         loading={loading}
                         loadingText={isApprove ? "Approving..." : "Rejecting..."}
                         disabled={isApprovalBlocked}
-                        className={isApprove ? "bg-emerald-600 hover:bg-emerald-500 text-white shadow-lg shadow-emerald-600/20" : ""}
+                        className={isApprove ? "bg-emerald-600 hover:bg-emerald-500 text-zinc-900 shadow-lg shadow-emerald-600/20" : ""}
                     >
                         {isApprove ? "Sanction & Approve Facility" : "Reject Application"}
                     </Button>

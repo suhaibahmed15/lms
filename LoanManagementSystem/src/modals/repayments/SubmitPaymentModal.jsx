@@ -207,8 +207,8 @@ export default function SubmitPaymentModal({
                 {/* Selected Loan Particulars Card */}
                 {selectedLoan && (
                     <div className="rounded-xl border border-slate-700/80 bg-slate-900/60 p-4 text-xs space-y-2">
-                        <div className="flex items-center justify-between text-slate-300">
-                            <span className="font-semibold text-white flex items-center gap-1.5">
+                        <div className="flex items-center justify-between text-zinc-700">
+                            <span className="font-semibold text-zinc-900 flex items-center gap-1.5">
                                 <Wallet size={14} className="text-pink-400" />
                                 Account: {selectedLoan.loanNumber}
                             </span>
@@ -216,7 +216,7 @@ export default function SubmitPaymentModal({
                                 Active Facility
                             </span>
                         </div>
-                        <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 pt-1 border-t border-slate-800 text-slate-400">
+                        <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 pt-1 border-t border-slate-800 text-zinc-500">
                             <div>
                                 <span>Borrower:</span>
                                 <strong className="block text-slate-200">{selectedLoan.borrowerName || "Me"}</strong>
@@ -254,7 +254,7 @@ export default function SubmitPaymentModal({
                                 loading={generatingSchedule}
                                 loadingText="Generating..."
                                 onClick={handleInitializeSchedule}
-                                className="bg-pink-600 hover:bg-pink-500 text-white"
+                                className="bg-pink-600 hover:bg-pink-500 text-zinc-900"
                             >
                                 Initialize Installment Schedule
                             </Button>
@@ -351,7 +351,7 @@ export default function SubmitPaymentModal({
                         loading={loading}
                         loadingText="Submitting..."
                         disabled={!repaymentScheduleId || schedules.length === 0}
-                        className="bg-pink-600 hover:bg-pink-500 text-white shadow-lg shadow-pink-600/20"
+                        className="bg-pink-600 hover:bg-pink-500 text-zinc-900 shadow-lg shadow-pink-600/20"
                     >
                         Submit Payment for Verification
                     </Button>

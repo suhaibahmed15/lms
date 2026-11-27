@@ -14,21 +14,21 @@ export default function ConfirmDialog({
     if (!isOpen) return null;
 
     return (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 p-4 backdrop-blur-sm">
-            <div className="w-full max-w-md rounded-2xl border border-pink-500/20 bg-neutral-950 p-6 shadow-2xl shadow-pink-500/5">
+        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-pink-950/25 p-4 backdrop-blur-sm">
+            <div className="w-full max-w-md rounded-2xl border border-pink-200 bg-white p-6 shadow-2xl shadow-pink-500/10">
                 {/* Header */}
                 <div className="mb-4 flex items-center gap-3">
-                    <div className="flex h-12 w-12 items-center justify-center rounded-2xl border border-red-500/25 bg-red-500/15 text-red-400">
+                    <div className="flex h-12 w-12 items-center justify-center rounded-2xl border border-red-200 bg-red-50 text-red-500">
                         <AlertTriangle size={24} />
                     </div>
 
-                    <h2 className="text-lg font-bold text-white">
+                    <h2 className="text-lg font-bold text-zinc-900">
                         {title}
                     </h2>
                 </div>
 
                 {/* Message */}
-                <p className="mb-6 text-sm leading-6 text-zinc-400">
+                <p className="mb-6 text-sm leading-6 text-zinc-600">
                     {message}
                 </p>
 

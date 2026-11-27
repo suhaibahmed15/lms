@@ -46,7 +46,7 @@ export default function UserMenuTable({
     };
 
     const controlClass =
-        "rounded-xl border border-white/10 bg-white/[0.07] px-3.5 py-2 text-sm text-white placeholder:text-zinc-500 outline-none transition focus:border-pink-500/70 focus:bg-white/[0.10] focus:ring-4 focus:ring-pink-500/10";
+        "rounded-xl border border-pink-100 bg-white px-3.5 py-2 text-sm text-zinc-900 placeholder:text-zinc-400 outline-none transition focus:border-pink-500/70 focus:bg-pink-100/60 focus:ring-4 focus:ring-pink-500/10";
 
     const startRecord =
         assignedTotalRecords === 0
@@ -60,16 +60,16 @@ export default function UserMenuTable({
     return (
         <div className="space-y-6">
             {/* Role Menus */}
-            <div className="rounded-2xl border border-white/10 bg-[#111111] p-5 shadow-xl shadow-black/40">
+            <div className="rounded-2xl border border-pink-100 bg-white p-5 shadow-xl shadow-pink-500/5">
                 <div className="mb-4 flex items-center justify-between">
                     <div>
                         <div className="flex items-center gap-2">
                             <ShieldCheck size={20} className="text-pink-400" />
-                            <h2 className="font-semibold text-white">
+                            <h2 className="font-semibold text-zinc-900">
                                 Inherited Role Menus
                             </h2>
                         </div>
-                        <p className="mt-1 text-sm text-zinc-400">
+                        <p className="mt-1 text-sm text-zinc-500">
                             Menus available automatically through user's role:{" "}
                             <span className="font-medium text-pink-400">
                                 {selectedUser.roleName || selectedUser.roleKey}
@@ -106,16 +106,16 @@ export default function UserMenuTable({
             </div>
 
             {/* Individual Menu Assignments Table */}
-            <div className="overflow-hidden rounded-2xl border border-white/10 bg-[#111111] shadow-xl shadow-black/40">
-                <div className="flex flex-col gap-3 border-b border-white/10 p-5 sm:flex-row sm:items-center sm:justify-between">
+            <div className="overflow-hidden rounded-2xl border border-pink-100 bg-white shadow-xl shadow-pink-500/5">
+                <div className="flex flex-col gap-3 border-b border-pink-100 p-5 sm:flex-row sm:items-center sm:justify-between">
                     <div>
                         <div className="flex items-center gap-2">
                             <UserRound size={20} className="text-pink-400" />
-                            <h2 className="font-semibold text-white">
+                            <h2 className="font-semibold text-zinc-900">
                                 Individual Menu Assignments
                             </h2>
                         </div>
-                        <p className="mt-1 text-sm text-zinc-400">
+                        <p className="mt-1 text-sm text-zinc-500">
                             Additional menus assigned directly to this user.
                         </p>
                     </div>
@@ -149,7 +149,7 @@ export default function UserMenuTable({
 
                 <div className="overflow-x-auto">
                     <table className="w-full text-left text-sm">
-                        <thead className="border-b border-white/10 bg-white/[0.04] text-xs uppercase tracking-wider text-zinc-400">
+                        <thead className="border-b border-pink-100 bg-pink-50/50 text-xs uppercase tracking-wider text-zinc-500">
                             <tr>
                                 <th className="px-5 py-3.5">
                                     <button
@@ -184,10 +184,10 @@ export default function UserMenuTable({
                             </tr>
                         </thead>
 
-                        <tbody className="divide-y divide-white/[0.07]">
+                        <tbody className="divide-y divide-pink-50">
                             {loading ? (
                                 <tr>
-                                    <td colSpan="4" className="px-5 py-8 text-center text-zinc-400">
+                                    <td colSpan="4" className="px-5 py-8 text-center text-zinc-500">
                                         Loading user menus...
                                     </td>
                                 </tr>
@@ -199,16 +199,16 @@ export default function UserMenuTable({
                                 </tr>
                             ) : (
                                 userMenus.map((item) => (
-                                    <tr key={item.id} className="transition hover:bg-white/[0.04]">
-                                        <td className="px-5 py-3.5 font-medium text-white">
+                                    <tr key={item.id} className="transition hover:bg-pink-50/50">
+                                        <td className="px-5 py-3.5 font-medium text-zinc-900">
                                             {item.menuName}
                                         </td>
                                         <td className="px-5 py-3.5">
-                                            <span className="rounded-lg border border-white/10 bg-white/[0.06] px-2.5 py-1 text-xs font-semibold text-pink-300">
+                                            <span className="rounded-lg border border-pink-100 bg-pink-50/60 px-2.5 py-1 text-xs font-semibold text-pink-300">
                                                 {item.menuKey}
                                             </span>
                                         </td>
-                                        <td className="px-5 py-3.5 text-zinc-400">
+                                        <td className="px-5 py-3.5 text-zinc-500">
                                             {item.route}
                                         </td>
                                         <td className="px-5 py-3.5 text-center">
@@ -218,7 +218,7 @@ export default function UserMenuTable({
                                                     onClick={() => onRemove(item.id)}
                                                     disabled={removingId === item.id}
                                                     title="Remove menu"
-                                                    className="inline-flex items-center gap-1.5 rounded-lg border border-red-500/25 bg-red-500/10 px-3 py-1.5 text-xs font-medium text-red-400 transition hover:bg-red-500/20 hover:text-red-300 disabled:opacity-50"
+                                                    className="inline-flex items-center gap-1.5 rounded-lg border border-red-200 bg-red-500/10 px-3 py-1.5 text-xs font-medium text-red-400 transition hover:bg-red-500/20 hover:text-red-300 disabled:opacity-50"
                                                 >
                                                     <Trash2 size={14} />
                                                     {removingId === item.id ? "Removing..." : "Remove"}
@@ -233,8 +233,8 @@ export default function UserMenuTable({
                 </div>
 
                 {/* Pagination */}
-                <div className="flex flex-col items-center justify-between gap-3 border-t border-white/10 px-5 py-3.5 sm:flex-row">
-                    <p className="text-xs text-zinc-400">
+                <div className="flex flex-col items-center justify-between gap-3 border-t border-pink-100 px-5 py-3.5 sm:flex-row">
+                    <p className="text-xs text-zinc-500">
                         Showing {startRecord}–{endRecord} of {assignedTotalRecords} assignments
                     </p>
 
@@ -249,7 +249,7 @@ export default function UserMenuTable({
                             Previous
                         </Button>
 
-                        <span className="px-2 text-xs font-medium text-zinc-300">
+                        <span className="px-2 text-xs font-medium text-zinc-700">
                             Page {assignedTotalPages === 0 ? 0 : assignedPageNumber} of {assignedTotalPages}
                         </span>
 

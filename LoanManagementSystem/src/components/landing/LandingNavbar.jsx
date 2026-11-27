@@ -65,8 +65,8 @@ export default function LandingNavbar({ onOpenApplyModal }) {
         <header
             className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${
                 scrolled
-                    ? "bg-black/90 backdrop-blur-md border-b border-pink-500/25 shadow-lg shadow-pink-950/20 py-3.5"
-                    : "bg-black/50 backdrop-blur-sm border-b border-white/10 py-5"
+                    ? "bg-white/90 backdrop-blur-md border-b border-pink-100 shadow-md shadow-pink-500/5 py-3.5"
+                    : "bg-white/70 backdrop-blur-sm border-b border-pink-100/60 py-5"
             }`}
         >
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -80,7 +80,7 @@ export default function LandingNavbar({ onOpenApplyModal }) {
                         <img
                             src="/logo.png"
                             alt="LMS Loan Management System"
-                            className="h-11 w-auto max-w-[180px] object-contain drop-shadow transition-transform group-hover:scale-105"
+                            className="h-11 w-auto max-w-[180px] object-contain drop-shadow-sm transition-transform group-hover:scale-105"
                         />
                     </a>
 
@@ -91,7 +91,7 @@ export default function LandingNavbar({ onOpenApplyModal }) {
                                 key={link.label}
                                 href={link.href}
                                 onClick={(e) => handleNavClick(e, link.href)}
-                                className="px-3 py-1.5 text-xs font-medium text-slate-300 hover:text-pink-400 hover:bg-white/[0.06] rounded-lg transition-all"
+                                className="px-3 py-1.5 text-xs font-semibold text-zinc-600 hover:text-pink-600 hover:bg-pink-50 rounded-lg transition-all"
                             >
                                 {link.label}
                             </a>
@@ -104,14 +104,14 @@ export default function LandingNavbar({ onOpenApplyModal }) {
                             <>
                                 <Link
                                     to="/dashboard"
-                                    className="inline-flex items-center gap-2 rounded-xl border border-white/15 bg-white/[0.05] px-4 py-2 text-xs font-semibold text-slate-200 hover:border-pink-500/40 hover:text-white transition-all shadow-sm"
+                                    className="inline-flex items-center gap-2 rounded-xl border border-pink-200 bg-pink-50/60 px-4 py-2 text-xs font-semibold text-pink-700 hover:bg-pink-100 transition-all shadow-sm"
                                 >
-                                    <LayoutDashboard size={14} className="text-pink-400" />
+                                    <LayoutDashboard size={14} className="text-pink-600" />
                                     <span>Portal Dashboard</span>
                                 </Link>
                                 <button
                                     onClick={() => onOpenApplyModal()}
-                                    className="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-pink-600 via-pink-500 to-rose-400 px-4 py-2 text-xs font-bold text-white shadow-md shadow-pink-500/25 hover:from-pink-500 hover:to-rose-300 transition-all cursor-pointer"
+                                    className="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-pink-500 via-rose-500 to-pink-600 px-4 py-2 text-xs font-bold text-white shadow-md shadow-pink-500/25 hover:from-pink-600 hover:to-rose-600 transition-all cursor-pointer"
                                 >
                                     <span>Apply Now</span>
                                     <ArrowRight size={14} />
@@ -121,14 +121,14 @@ export default function LandingNavbar({ onOpenApplyModal }) {
                             <>
                                 <Link
                                     to="/login"
-                                    className="inline-flex items-center gap-2 rounded-xl border border-white/15 bg-black/60 px-4 py-2 text-xs font-semibold text-slate-200 hover:border-pink-500/40 hover:text-white transition-all shadow-sm"
+                                    className="inline-flex items-center gap-2 rounded-xl border border-pink-200 bg-white px-4 py-2 text-xs font-semibold text-zinc-700 hover:border-pink-300 hover:text-pink-600 hover:bg-pink-50/60 transition-all shadow-sm"
                                 >
-                                    <LogIn size={14} className="text-slate-400" />
+                                    <LogIn size={14} className="text-pink-500" />
                                     <span>Login</span>
                                 </Link>
                                 <button
                                     onClick={() => onOpenApplyModal()}
-                                    className="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-pink-600 via-pink-500 to-rose-400 px-4.5 py-2 text-xs font-bold text-white shadow-md shadow-pink-500/25 hover:from-pink-500 hover:to-rose-300 hover:shadow-pink-500/40 transition-all cursor-pointer"
+                                    className="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-pink-500 via-rose-500 to-pink-600 px-4.5 py-2 text-xs font-bold text-white shadow-md shadow-pink-500/25 hover:from-pink-600 hover:to-rose-600 hover:shadow-pink-500/40 transition-all cursor-pointer"
                                 >
                                     <span>Apply Now</span>
                                     <ArrowRight size={14} />
@@ -147,7 +147,7 @@ export default function LandingNavbar({ onOpenApplyModal }) {
                         </button>
                         <button
                             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                            className="rounded-lg border border-white/15 bg-black p-2 text-slate-300 hover:text-white focus:outline-none"
+                            className="rounded-lg border border-pink-200 bg-white p-2 text-zinc-700 hover:text-pink-600 focus:outline-none"
                             aria-label="Toggle navigation menu"
                         >
                             {mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
@@ -158,28 +158,28 @@ export default function LandingNavbar({ onOpenApplyModal }) {
 
             {/* Mobile Drawer */}
             {mobileMenuOpen && (
-                <div className="md:hidden border-b border-pink-500/20 bg-black/95 backdrop-blur-xl animate-in slide-in-from-top-4 duration-200">
+                <div className="md:hidden border-b border-pink-100 bg-white/95 backdrop-blur-xl animate-in slide-in-from-top-4 duration-200 shadow-xl">
                     <div className="px-4 pt-3 pb-6 space-y-2">
                         {navLinks.map((link) => (
                             <a
                                 key={link.label}
                                 href={link.href}
                                 onClick={(e) => handleNavClick(e, link.href)}
-                                className="block rounded-lg px-3 py-2 text-sm font-medium text-slate-300 hover:bg-white/[0.06] hover:text-pink-400 transition-colors"
+                                className="block rounded-lg px-3 py-2 text-sm font-medium text-zinc-700 hover:bg-pink-50 hover:text-pink-600 transition-colors"
                             >
                                 {link.label}
                             </a>
                         ))}
 
-                        <div className="pt-4 mt-2 border-t border-white/10 space-y-2.5">
+                        <div className="pt-4 mt-2 border-t border-pink-100 space-y-2.5">
                             {isLoggedIn ? (
                                 <>
                                     <Link
                                         to="/dashboard"
                                         onClick={() => setMobileMenuOpen(false)}
-                                        className="flex w-full items-center justify-center gap-2 rounded-xl border border-white/15 bg-white/[0.05] px-4 py-2.5 text-sm font-semibold text-white shadow-sm"
+                                        className="flex w-full items-center justify-center gap-2 rounded-xl border border-pink-200 bg-pink-50/60 px-4 py-2.5 text-sm font-semibold text-pink-700 shadow-sm"
                                     >
-                                        <LayoutDashboard size={16} className="text-pink-400" />
+                                        <LayoutDashboard size={16} className="text-pink-600" />
                                         <span>Portal Dashboard</span>
                                     </Link>
                                     <button
@@ -187,7 +187,7 @@ export default function LandingNavbar({ onOpenApplyModal }) {
                                             setMobileMenuOpen(false);
                                             onOpenApplyModal();
                                         }}
-                                        className="flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-pink-600 via-pink-500 to-rose-400 px-4 py-2.5 text-sm font-bold text-white shadow-md shadow-pink-500/25"
+                                        className="flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-pink-500 via-rose-500 to-pink-600 px-4 py-2.5 text-sm font-bold text-white shadow-md shadow-pink-500/25"
                                     >
                                         <span>Apply for Loan</span>
                                         <ArrowRight size={16} />
@@ -198,9 +198,9 @@ export default function LandingNavbar({ onOpenApplyModal }) {
                                     <Link
                                         to="/login"
                                         onClick={() => setMobileMenuOpen(false)}
-                                        className="flex w-full items-center justify-center gap-2 rounded-xl border border-white/15 bg-black px-4 py-2.5 text-sm font-semibold text-white shadow-sm"
+                                        className="flex w-full items-center justify-center gap-2 rounded-xl border border-pink-200 bg-white px-4 py-2.5 text-sm font-semibold text-zinc-700 shadow-sm"
                                     >
-                                        <LogIn size={16} className="text-slate-400" />
+                                        <LogIn size={16} className="text-pink-500" />
                                         <span>Login to Account</span>
                                     </Link>
                                     <button
@@ -208,7 +208,7 @@ export default function LandingNavbar({ onOpenApplyModal }) {
                                             setMobileMenuOpen(false);
                                             onOpenApplyModal();
                                         }}
-                                        className="flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-pink-600 via-pink-500 to-rose-400 px-4 py-2.5 text-sm font-bold text-white shadow-md shadow-pink-500/25"
+                                        className="flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-pink-500 via-rose-500 to-pink-600 px-4 py-2.5 text-sm font-bold text-white shadow-md shadow-pink-500/25"
                                     >
                                         <span>Apply Now</span>
                                         <ArrowRight size={16} />

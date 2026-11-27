@@ -64,13 +64,13 @@ function Header({ user, onLogout, onMenuClick }) {
     const fullName = user?.fullName || user?.name || "User";
 
     return (
-        <header className="sticky top-0 z-20 flex h-20 shrink-0 items-center justify-between border-b border-pink-500/20 bg-black/95 px-4 backdrop-blur-xl sm:px-6">
+        <header className="sticky top-0 z-20 flex h-20 shrink-0 items-center justify-between border-b border-pink-100 bg-white/90 px-4 backdrop-blur-xl sm:px-6 shadow-sm">
             {/* Left Section */}
             <div className="flex items-center gap-4">
                 <button
                     type="button"
                     onClick={onMenuClick}
-                    className="rounded-xl border border-white/10 bg-white/[0.04] p-2 text-zinc-300 transition hover:bg-white/[0.10] hover:text-white lg:hidden"
+                    className="rounded-xl border border-pink-200/80 bg-pink-50/50 p-2 text-zinc-600 transition hover:bg-pink-100 hover:text-pink-700 lg:hidden"
                     aria-label="Open sidebar"
                 >
                     <svg
@@ -90,12 +90,12 @@ function Header({ user, onLogout, onMenuClick }) {
                 </button>
 
                 <div>
-                    <h1 className="text-lg font-bold tracking-tight text-white flex items-center gap-2">
+                    <h1 className="text-lg font-bold tracking-tight text-zinc-900 flex items-center gap-2">
                         <span>Welcome Back</span>
-                        <span className="text-pink-400">👋</span>
+                        <span className="text-pink-500">👋</span>
                     </h1>
 
-                    <p className="hidden text-xs text-zinc-400 sm:block">
+                    <p className="hidden text-xs text-zinc-500 sm:block">
                         Manage your loan operations securely and efficiently.
                     </p>
                 </div>
@@ -106,7 +106,7 @@ function Header({ user, onLogout, onMenuClick }) {
                 {/* Notifications */}
                 <button
                     type="button"
-                    className="relative rounded-xl border border-white/10 bg-white/[0.04] p-2.5 text-zinc-400 transition hover:border-pink-500/30 hover:bg-white/[0.08] hover:text-pink-400"
+                    className="relative rounded-xl border border-pink-200/80 bg-pink-50/50 p-2.5 text-zinc-500 transition hover:border-pink-300 hover:bg-pink-100 hover:text-pink-600"
                     aria-label="Notifications"
                 >
                     <svg
@@ -132,18 +132,18 @@ function Header({ user, onLogout, onMenuClick }) {
                     <button
                         type="button"
                         onClick={() => setShowProfile((prev) => !prev)}
-                        className="flex items-center gap-3 rounded-xl border border-white/10 bg-white/[0.04] px-2.5 py-1.5 transition hover:border-pink-500/40 hover:bg-white/[0.08]"
+                        className="flex items-center gap-3 rounded-xl border border-pink-200/80 bg-pink-50/30 px-2.5 py-1.5 transition hover:border-pink-300 hover:bg-pink-50"
                     >
-                        <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-gradient-to-br from-pink-600 via-pink-500 to-rose-400 text-sm font-bold text-white shadow-md shadow-pink-500/25">
+                        <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-gradient-to-br from-pink-500 to-rose-500 text-sm font-bold text-white shadow-md shadow-pink-500/25">
                             {fullName.charAt(0).toUpperCase()}
                         </div>
 
                         <div className="hidden text-left sm:block">
-                            <p className="text-sm font-semibold text-white">
+                            <p className="text-sm font-semibold text-zinc-900">
                                 {fullName}
                             </p>
 
-                            <p className="text-xs text-pink-400 font-medium">
+                            <p className="text-xs text-pink-600 font-medium">
                                 {roleName}
                             </p>
                         </div>
@@ -157,17 +157,17 @@ function Header({ user, onLogout, onMenuClick }) {
                     </button>
 
                     {showProfile && (
-                        <div className="absolute right-0 top-14 z-50 w-60 rounded-2xl border border-pink-500/30 bg-black/95 p-2 shadow-2xl shadow-pink-950/40 backdrop-blur-xl">
-                            <div className="border-b border-white/10 px-3 py-2.5">
-                                <p className="text-sm font-semibold text-white">
+                        <div className="absolute right-0 top-14 z-50 w-60 rounded-2xl border border-pink-200 bg-white p-2 shadow-2xl shadow-pink-500/10 backdrop-blur-xl">
+                            <div className="border-b border-pink-100 bg-pink-50/40 rounded-xl px-3 py-2.5">
+                                <p className="text-sm font-semibold text-zinc-900">
                                     {fullName}
                                 </p>
 
-                                <p className="truncate text-xs text-zinc-400">
+                                <p className="truncate text-xs text-zinc-500">
                                     {user?.email || ""}
                                 </p>
 
-                                <span className="mt-2 inline-block rounded-full border border-pink-500/30 bg-pink-500/15 px-2.5 py-0.5 text-[11px] font-semibold text-pink-300">
+                                <span className="mt-2 inline-block rounded-full border border-pink-200 bg-pink-100/70 px-2.5 py-0.5 text-[11px] font-semibold text-pink-700">
                                     {roleName}
                                 </span>
                             </div>
@@ -175,7 +175,7 @@ function Header({ user, onLogout, onMenuClick }) {
                             <button
                                 type="button"
                                 onClick={handleLogout}
-                                className="mt-2 flex w-full items-center gap-2 rounded-xl px-3 py-2.5 text-left text-sm font-medium text-pink-400 transition hover:bg-pink-500/10 hover:text-pink-300"
+                                className="mt-2 flex w-full items-center gap-2 rounded-xl px-3 py-2.5 text-left text-sm font-medium text-pink-600 transition hover:bg-pink-50 hover:text-pink-700"
                             >
                                 <LogOut size={16} />
                                 Sign Out

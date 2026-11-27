@@ -14,15 +14,15 @@ const formatAmount = (amount) =>
 const getScheduleStatusBadge = (statusKey) => {
     const key = (statusKey || "").toUpperCase();
     if (key.includes("PAID") && !key.includes("PARTIAL")) {
-        return "bg-emerald-500/10 text-emerald-400 border border-emerald-500/20";
+        return "bg-emerald-50 text-emerald-700 border border-emerald-200";
     }
     if (key.includes("PARTIAL")) {
-        return "bg-yellow-500/10 text-yellow-400 border border-yellow-500/20";
+        return "bg-amber-50 text-amber-700 border border-amber-200";
     }
     if (key.includes("OVERDUE") || key.includes("DEFAULT")) {
-        return "bg-red-500/10 text-red-400 border border-red-500/20";
+        return "bg-red-50 text-red-600 border border-red-200";
     }
-    return "bg-blue-500/10 text-blue-400 border border-blue-500/20";
+    return "bg-pink-50 text-pink-700 border border-pink-200";
 };
 
 export default function LoanScheduleModal({
@@ -95,14 +95,14 @@ export default function LoanScheduleModal({
         >
             <div className="space-y-4">
                 {error && (
-                    <div className="rounded-xl border border-red-500/20 bg-red-500/10 p-3 text-sm text-red-400">
+                    <div className="rounded-xl border border-red-200 bg-red-500/10 p-3 text-sm text-red-400">
                         {error}
                     </div>
                 )}
 
-                <div className="max-h-[60vh] overflow-y-auto overflow-x-auto rounded-xl border border-white/10">
+                <div className="max-h-[60vh] overflow-y-auto overflow-x-auto rounded-xl border border-pink-100">
                     <table className="w-full text-left text-sm">
-                        <thead className="sticky top-0 bg-[#181818] text-xs uppercase tracking-wider text-zinc-400 border-b border-white/10">
+                        <thead className="sticky top-0 bg-white text-xs uppercase tracking-wider text-zinc-500 border-b border-pink-100">
                             <tr>
                                 <th className="px-4 py-3">#</th>
                                 <th className="px-4 py-3">Due Date</th>
@@ -113,7 +113,7 @@ export default function LoanScheduleModal({
                                 <th className="px-4 py-3">Status</th>
                             </tr>
                         </thead>
-                        <tbody className="divide-y divide-white/5">
+                        <tbody className="divide-y divide-pink-50">
                             {loading ? (
                                 <tr>
                                     <td colSpan={7} className="py-8 text-center text-zinc-500">
@@ -122,8 +122,8 @@ export default function LoanScheduleModal({
                                 </tr>
                             ) : schedule.length === 0 ? (
                                 <tr>
-                                    <td colSpan={7} className="py-8 text-center text-zinc-400">
-                                        <p className="mb-3 text-zinc-400">No schedule installments found for this loan.</p>
+                                    <td colSpan={7} className="py-8 text-center text-zinc-500">
+                                        <p className="mb-3 text-zinc-500">No schedule installments found for this loan.</p>
                                         <Button
                                             size="sm"
                                             onClick={handleGenerate}
@@ -141,20 +141,20 @@ export default function LoanScheduleModal({
                                     const total = item.totalDue ?? item.totalAmount ?? (principal + interest);
 
                                     return (
-                                        <tr key={item.id} className="transition hover:bg-white/[0.02]">
-                                            <td className="px-4 py-3 font-medium text-white">
+                                        <tr key={item.id} className="transition hover:bg-pink-50/30">
+                                            <td className="px-4 py-3 font-medium text-zinc-900">
                                                 {item.installmentNumber}
                                             </td>
-                                            <td className="px-4 py-3 text-zinc-300">
+                                            <td className="px-4 py-3 text-zinc-700">
                                                 {item.dueDate ? new Date(item.dueDate).toLocaleDateString() : "—"}
                                             </td>
-                                            <td className="px-4 py-3 text-zinc-300">
+                                            <td className="px-4 py-3 text-zinc-700">
                                                 {formatAmount(principal)}
                                             </td>
-                                            <td className="px-4 py-3 text-zinc-300">
+                                            <td className="px-4 py-3 text-zinc-700">
                                                 {formatAmount(interest)}
                                             </td>
-                                            <td className="px-4 py-3 font-semibold text-white">
+                                            <td className="px-4 py-3 font-semibold text-zinc-900">
                                                 {formatAmount(total)}
                                             </td>
                                             <td className="px-4 py-3 text-emerald-400 font-medium">
@@ -173,12 +173,12 @@ export default function LoanScheduleModal({
                     </table>
                 </div>
 
-                <div className="flex flex-wrap items-center justify-between gap-3 pt-4 border-t border-white/10">
+                <div className="flex flex-wrap items-center justify-between gap-3 pt-4 border-t border-pink-100">
                     <Button
                         type="button"
                         variant="primary"
                         onClick={() => setShowPreview(true)}
-                        className="bg-pink-600 hover:bg-pink-500 text-white flex items-center gap-2"
+                        className="bg-pink-600 hover:bg-pink-500 text-zinc-900 flex items-center gap-2"
                     >
                         <Eye size={16} />
                         View & Download Loan Agreement

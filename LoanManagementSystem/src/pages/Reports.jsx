@@ -172,11 +172,11 @@ export default function Reports() {
             <div className="space-y-6">
                 <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-center">
                     <div>
-                        <h1 className="text-2xl font-bold text-white flex items-center gap-2">
+                        <h1 className="text-2xl font-bold text-zinc-900 flex items-center gap-2">
                             <PieChart className="text-pink-500" size={24} />
                             Financial & Portfolio Reports
                         </h1>
-                        <p className="mt-1 text-sm text-zinc-400">
+                        <p className="mt-1 text-sm text-zinc-500">
                             Disbursement metrics, repayment collection rates, and formal PDF/CSV exports across operational categories.
                         </p>
                     </div>
@@ -187,7 +187,7 @@ export default function Reports() {
                             icon={FileText}
                             onClick={handleExportPdf}
                             disabled={loading || reportData.length === 0}
-                            className="bg-gradient-to-r from-pink-600 via-pink-500 to-rose-400 text-white shadow-lg shadow-pink-500/25"
+                            className="bg-gradient-to-r from-pink-600 via-pink-500 to-rose-400 text-zinc-900 shadow-lg shadow-pink-500/25"
                         >
                             Export PDF
                         </Button>
@@ -213,13 +213,13 @@ export default function Reports() {
                 </div>
 
                 {error && (
-                    <div className="rounded-xl border border-red-500/20 bg-red-500/10 px-4 py-3 text-sm text-red-400">
+                    <div className="rounded-xl border border-red-200 bg-red-500/10 px-4 py-3 text-sm text-red-400">
                         {error}
                     </div>
                 )}
 
                 {/* Report Type Tabs */}
-                <div className="flex flex-wrap gap-2 border-b border-white/10 pb-3">
+                <div className="flex flex-wrap gap-2 border-b border-pink-100 pb-3">
                     {[
                         { id: "loans", label: "Loans Portfolio", icon: Landmark },
                         { id: "repayments", label: "Repayments Collection", icon: CreditCard },
@@ -236,8 +236,8 @@ export default function Reports() {
                                 onClick={() => { setActiveTab(tab.id); setReportData([]); }}
                                 className={`flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-semibold transition ${
                                     isCurrent
-                                        ? "bg-gradient-to-r from-pink-600 via-pink-500 to-rose-400 text-white shadow-lg shadow-pink-500/25"
-                                        : "text-zinc-400 hover:bg-white/5 hover:text-white"
+                                        ? "bg-gradient-to-r from-pink-600 via-pink-500 to-rose-400 text-zinc-900 shadow-lg shadow-pink-500/25"
+                                        : "text-zinc-500 hover:bg-pink-50/40 hover:text-zinc-900"
                                 }`}
                             >
                                 <Icon size={16} />
@@ -249,19 +249,19 @@ export default function Reports() {
 
                 {/* Summary Cards */}
                 <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
-                    <div className="rounded-2xl border border-white/10 bg-[#111111] p-5">
-                        <div className="flex items-center justify-between text-zinc-400 text-sm">
+                    <div className="rounded-2xl border border-pink-100 bg-white p-5">
+                        <div className="flex items-center justify-between text-zinc-500 text-sm">
                             <span>Total Volume ({activeTab})</span>
                             <Wallet size={18} className="text-pink-400" />
                         </div>
-                        <p className="mt-2 text-2xl font-bold text-white font-mono">
+                        <p className="mt-2 text-2xl font-bold text-zinc-900 font-mono">
                             PKR {formatAmount(totalVolume)}
                         </p>
                         <p className="mt-1 text-xs text-zinc-500">{reportData.length} records in this view</p>
                     </div>
 
-                    <div className="rounded-2xl border border-white/10 bg-[#111111] p-5">
-                        <div className="flex items-center justify-between text-zinc-400 text-sm">
+                    <div className="rounded-2xl border border-pink-100 bg-white p-5">
+                        <div className="flex items-center justify-between text-zinc-500 text-sm">
                             <span>Outstanding Balance</span>
                             <TrendingUp size={18} className="text-pink-400" />
                         </div>
@@ -271,12 +271,12 @@ export default function Reports() {
                         <p className="mt-1 text-xs text-zinc-500">Unpaid portfolio exposure</p>
                     </div>
 
-                    <div className="rounded-2xl border border-white/10 bg-[#111111] p-5">
-                        <div className="flex items-center justify-between text-zinc-400 text-sm">
+                    <div className="rounded-2xl border border-pink-100 bg-white p-5">
+                        <div className="flex items-center justify-between text-zinc-500 text-sm">
                             <span>Count</span>
-                            <Calendar size={18} className="text-white" />
+                            <Calendar size={18} className="text-zinc-900" />
                         </div>
-                        <p className="mt-2 text-2xl font-bold text-white font-mono">
+                        <p className="mt-2 text-2xl font-bold text-zinc-900 font-mono">
                             {reportData.length}
                         </p>
                         <p className="mt-1 text-xs text-zinc-500">Filtered data rows</p>
@@ -284,34 +284,34 @@ export default function Reports() {
                 </div>
 
                 {/* Filter Bar */}
-                <div className="rounded-2xl border border-white/10 bg-[#111111] p-4 flex flex-col sm:flex-row items-center gap-4">
+                <div className="rounded-2xl border border-pink-100 bg-white p-4 flex flex-col sm:flex-row items-center gap-4">
                     <div className="w-full sm:w-auto">
-                        <label className="block text-xs font-medium text-zinc-400 mb-1">From Date</label>
+                        <label className="block text-xs font-medium text-zinc-500 mb-1">From Date</label>
                         <input
                             type="date"
                             value={fromDate}
                             onChange={(e) => setFromDate(e.target.value)}
-                            className="w-full rounded-xl border border-white/10 bg-[#181818] px-3 py-2 text-sm text-white outline-none"
+                            className="w-full rounded-xl border border-pink-100 bg-white px-3 py-2 text-sm text-zinc-900 outline-none"
                         />
                     </div>
 
                     <div className="w-full sm:w-auto">
-                        <label className="block text-xs font-medium text-zinc-400 mb-1">To Date</label>
+                        <label className="block text-xs font-medium text-zinc-500 mb-1">To Date</label>
                         <input
                             type="date"
                             value={toDate}
                             onChange={(e) => setToDate(e.target.value)}
-                            className="w-full rounded-xl border border-white/10 bg-[#181818] px-3 py-2 text-sm text-white outline-none"
+                            className="w-full rounded-xl border border-pink-100 bg-white px-3 py-2 text-sm text-zinc-900 outline-none"
                         />
                     </div>
                 </div>
 
                 {/* Dynamic Table */}
-                <div className="overflow-hidden rounded-2xl border border-white/10 bg-[#111111]">
+                <div className="overflow-hidden rounded-2xl border border-pink-100 bg-white">
                     <div className="overflow-x-auto">
                         <table className="w-full text-left">
                             <thead>
-                                <tr className="border-b border-white/10 bg-white/[0.02] text-xs font-semibold uppercase tracking-wider text-zinc-400">
+                                <tr className="border-b border-pink-100 bg-pink-50/30 text-xs font-semibold uppercase tracking-wider text-zinc-500">
                                     <th className="px-5 py-4">Reference / ID</th>
                                     <th className="px-5 py-4">Customer / Borrower</th>
                                     <th className="px-5 py-4">Date</th>
@@ -319,7 +319,7 @@ export default function Reports() {
                                     <th className="px-5 py-4">Balance / Status</th>
                                 </tr>
                             </thead>
-                            <tbody className="divide-y divide-white/5 text-sm">
+                            <tbody className="divide-y divide-pink-50 text-sm">
                                 {loading ? (
                                     <tr>
                                         <td colSpan={5} className="py-12 text-center text-zinc-500">
@@ -334,23 +334,23 @@ export default function Reports() {
                                     </tr>
                                 ) : (
                                     reportData.map((row, idx) => (
-                                        <tr key={row.id || idx} className="transition hover:bg-white/[0.02]">
-                                            <td className="px-5 py-4 font-mono font-medium text-white">
+                                        <tr key={row.id || idx} className="transition hover:bg-pink-50/30">
+                                            <td className="px-5 py-4 font-mono font-medium text-zinc-900">
                                                 {row.loanNumber || row.paymentReference || `#${row.id || idx + 1}`}
                                             </td>
-                                            <td className="px-5 py-4 text-zinc-300 font-medium">
+                                            <td className="px-5 py-4 text-zinc-700 font-medium">
                                                 {row.borrowerName || row.customerName || "—"}
                                             </td>
-                                            <td className="px-5 py-4 text-xs text-zinc-400">
+                                            <td className="px-5 py-4 text-xs text-zinc-500">
                                                 {row.disbursedAt || row.paidAt || row.dueDate
                                                     ? new Date(row.disbursedAt || row.paidAt || row.dueDate).toLocaleDateString()
                                                     : "—"}
                                             </td>
-                                            <td className="px-5 py-4 font-semibold text-white">
+                                            <td className="px-5 py-4 font-semibold text-zinc-900">
                                                 PKR {formatAmount(row.principalAmount || row.amount || row.totalDue || 0)}
                                             </td>
                                             <td className="px-5 py-4">
-                                                <span className="inline-flex rounded-full px-2.5 py-0.5 text-xs font-medium bg-zinc-500/10 text-zinc-300 border border-zinc-500/20">
+                                                <span className="inline-flex rounded-full px-2.5 py-0.5 text-xs font-medium bg-zinc-500/10 text-zinc-700 border border-zinc-500/20">
                                                     {row.statusName || row.statusKey || row.status || (row.outstandingBalance != null ? `Bal: PKR ${formatAmount(row.outstandingBalance)}` : "Recorded")}
                                                 </span>
                                             </td>

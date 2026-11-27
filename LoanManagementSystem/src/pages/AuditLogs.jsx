@@ -15,15 +15,15 @@ import { getCurrentUser } from "../utils/auth";
 const getActionBadge = (action) => {
     const act = (action || "").toUpperCase();
     if (act.includes("CREATE") || act.includes("APPROVE") || act.includes("DISBURSE") || act.includes("VERIFY")) {
-        return "bg-emerald-500/10 text-emerald-400 border border-emerald-500/20";
+        return "bg-emerald-50 text-emerald-700 border border-emerald-200";
     }
     if (act.includes("REJECT") || act.includes("DELETE") || act.includes("REVOKE")) {
-        return "bg-red-500/10 text-red-400 border border-red-500/20";
+        return "bg-red-50 text-red-600 border border-red-200";
     }
     if (act.includes("UPDATE") || act.includes("ASSIGN") || act.includes("REVIEW")) {
-        return "bg-pink-500/10 text-pink-400 border border-pink-500/20";
+        return "bg-pink-100/70 text-pink-700 border border-pink-200";
     }
-    return "bg-white/10 text-white border border-white/20";
+    return "bg-pink-50 text-pink-700 border border-pink-200";
 };
 
 export default function AuditLogs() {
@@ -83,11 +83,11 @@ export default function AuditLogs() {
             <div className="space-y-6">
                 <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-center">
                     <div>
-                        <h1 className="text-2xl font-bold text-white flex items-center gap-2">
+                        <h1 className="text-2xl font-bold text-zinc-900 flex items-center gap-2">
                             <ShieldAlert className="text-pink-500" size={24} />
                             System Audit Logs
                         </h1>
-                        <p className="mt-1 text-sm text-zinc-400">
+                        <p className="mt-1 text-sm text-zinc-500">
                             Immutable administrative audit trail tracking entity state changes and user operations.
                         </p>
                     </div>
@@ -104,13 +104,13 @@ export default function AuditLogs() {
                 </div>
 
                 {error && (
-                    <div className="rounded-xl border border-red-500/20 bg-red-500/10 px-4 py-3 text-sm text-red-400">
+                    <div className="rounded-xl border border-red-200 bg-red-500/10 px-4 py-3 text-sm text-red-400">
                         {error}
                     </div>
                 )}
 
-                <div className="overflow-hidden rounded-2xl border border-white/10 bg-[#111111]">
-                    <div className="flex flex-col gap-3 border-b border-white/10 p-4 sm:flex-row sm:items-center sm:justify-between">
+                <div className="overflow-hidden rounded-2xl border border-pink-100 bg-white">
+                    <div className="flex flex-col gap-3 border-b border-pink-100 p-4 sm:flex-row sm:items-center sm:justify-between">
                         <div className="flex flex-1 flex-col sm:flex-row gap-3">
                             <div className="relative w-full sm:max-w-sm">
                                 <Search
@@ -122,14 +122,14 @@ export default function AuditLogs() {
                                     value={search}
                                     onChange={(e) => { setSearch(e.target.value); setPageNumber(1); }}
                                     placeholder="Search logs by keyword..."
-                                    className="w-full rounded-xl border border-white/10 bg-[#181818] py-2.5 pl-10 pr-4 text-sm text-white placeholder:text-zinc-500 outline-none focus:border-pink-500/70"
+                                    className="w-full rounded-xl border border-pink-100 bg-white py-2.5 pl-10 pr-4 text-sm text-zinc-900 placeholder:text-zinc-400 outline-none focus:border-pink-500/70"
                                 />
                             </div>
 
                             <select
                                 value={actionFilter}
                                 onChange={(e) => { setActionFilter(e.target.value); setPageNumber(1); }}
-                                className="rounded-xl border border-white/10 bg-[#181818] px-3 py-2 text-sm text-white outline-none"
+                                className="rounded-xl border border-pink-100 bg-white px-3 py-2 text-sm text-zinc-900 outline-none"
                             >
                                 <option value="">All Actions</option>
                                 <option value="CREATE">Create</option>
@@ -145,7 +145,7 @@ export default function AuditLogs() {
                             <select
                                 value={entityFilter}
                                 onChange={(e) => { setEntityFilter(e.target.value); setPageNumber(1); }}
-                                className="rounded-xl border border-white/10 bg-[#181818] px-3 py-2 text-sm text-white outline-none"
+                                className="rounded-xl border border-pink-100 bg-white px-3 py-2 text-sm text-zinc-900 outline-none"
                             >
                                 <option value="">All Entities</option>
                                 <option value="LoanApplication">LoanApplication</option>
@@ -163,7 +163,7 @@ export default function AuditLogs() {
                             <select
                                 value={pageSize}
                                 onChange={(e) => { setPageSize(Number(e.target.value)); setPageNumber(1); }}
-                                className="rounded-xl border border-white/10 bg-[#181818] px-3 py-2 text-sm text-white outline-none"
+                                className="rounded-xl border border-pink-100 bg-white px-3 py-2 text-sm text-zinc-900 outline-none"
                             >
                                 <option value={10}>10 per page</option>
                                 <option value={15}>15 per page</option>
@@ -176,7 +176,7 @@ export default function AuditLogs() {
                     <div className="overflow-x-auto">
                         <table className="w-full text-left">
                             <thead>
-                                <tr className="border-b border-white/10 bg-white/[0.02] text-xs font-semibold uppercase tracking-wider text-zinc-400">
+                                <tr className="border-b border-pink-100 bg-pink-50/30 text-xs font-semibold uppercase tracking-wider text-zinc-500">
                                     <th className="px-5 py-4">Timestamp</th>
                                     <th className="px-5 py-4">Actor</th>
                                     <th className="px-5 py-4">Action</th>
@@ -187,7 +187,7 @@ export default function AuditLogs() {
                                 </tr>
                             </thead>
 
-                            <tbody className="divide-y divide-white/5 text-sm">
+                            <tbody className="divide-y divide-pink-50 text-sm">
                                 {loading ? (
                                     <tr>
                                         <td colSpan={7} className="py-12 text-center text-zinc-500">
@@ -204,15 +204,15 @@ export default function AuditLogs() {
                                     logs.map((log) => (
                                         <tr
                                             key={log.id}
-                                            className="transition hover:bg-white/[0.025]"
+                                            className="transition hover:bg-pink-50/30"
                                         >
-                                            <td className="px-5 py-4 text-xs text-zinc-400 font-mono whitespace-nowrap">
+                                            <td className="px-5 py-4 text-xs text-zinc-500 font-mono whitespace-nowrap">
                                                 {log.timestamp || log.createdAt
                                                     ? new Date(log.timestamp || log.createdAt).toLocaleString()
                                                     : "—"}
                                             </td>
 
-                                            <td className="px-5 py-4 text-sm font-medium text-white">
+                                            <td className="px-5 py-4 text-sm font-medium text-zinc-900">
                                                 {log.userName || log.userEmail || `User #${log.userId || "System"}`}
                                             </td>
 
@@ -222,15 +222,15 @@ export default function AuditLogs() {
                                                 </span>
                                             </td>
 
-                                            <td className="px-5 py-4 text-sm text-zinc-300 font-mono">
+                                            <td className="px-5 py-4 text-sm text-zinc-700 font-mono">
                                                 {log.entityName}
                                             </td>
 
-                                            <td className="px-5 py-4 text-sm text-zinc-400 font-mono">
+                                            <td className="px-5 py-4 text-sm text-zinc-500 font-mono">
                                                 {log.entityId ? `#${log.entityId}` : "—"}
                                             </td>
 
-                                            <td className="px-5 py-4 text-xs text-zinc-300 max-w-xs truncate" title={log.details || log.description}>
+                                            <td className="px-5 py-4 text-xs text-zinc-700 max-w-xs truncate" title={log.details || log.description}>
                                                 {log.details || log.description || "—"}
                                             </td>
 
@@ -244,10 +244,10 @@ export default function AuditLogs() {
                         </table>
                     </div>
 
-                    <div className="flex flex-col gap-3 border-t border-white/10 px-5 py-4 sm:flex-row sm:items-center sm:justify-between">
+                    <div className="flex flex-col gap-3 border-t border-pink-100 px-5 py-4 sm:flex-row sm:items-center sm:justify-between">
                         <p className="text-sm text-zinc-500">
                             Total records:{" "}
-                            <span className="font-semibold text-white">
+                            <span className="font-semibold text-zinc-900">
                                 {totalRecords}
                             </span>
                         </p>
@@ -263,7 +263,7 @@ export default function AuditLogs() {
                                 Prev
                             </Button>
 
-                            <span className="px-2 text-sm text-zinc-400">
+                            <span className="px-2 text-sm text-zinc-500">
                                 Page {pageNumber} of {totalPages || 1}
                             </span>
 

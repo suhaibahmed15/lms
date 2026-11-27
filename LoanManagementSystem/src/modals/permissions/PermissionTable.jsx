@@ -53,7 +53,7 @@ function PermissionTable({
     };
 
     const controlClass =
-        "rounded-xl border border-white/10 bg-white/[0.07] px-3.5 py-2 text-sm text-white placeholder:text-zinc-500 outline-none transition focus:border-pink-500/70 focus:bg-white/[0.10] focus:ring-4 focus:ring-pink-500/10";
+        "rounded-xl border border-pink-100 bg-white px-3.5 py-2 text-sm text-zinc-900 placeholder:text-zinc-400 outline-none transition focus:border-pink-500/70 focus:bg-pink-100/60 focus:ring-4 focus:ring-pink-500/10";
 
     const startRecord = totalRecords === 0 ? 0 : (pageNumber - 1) * pageSize + 1;
     const endRecord = Math.min(pageNumber * pageSize, totalRecords);
@@ -66,11 +66,11 @@ function PermissionTable({
             {/* Page Header */}
             <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-center">
                 <div>
-                    <h1 className="text-2xl font-bold tracking-tight text-white">
+                    <h1 className="text-2xl font-bold tracking-tight text-zinc-900">
                         Permission Management
                     </h1>
 
-                    <p className="mt-1 text-sm text-zinc-400">
+                    <p className="mt-1 text-sm text-zinc-500">
                         Create and manage system permissions.
                     </p>
                 </div>
@@ -84,24 +84,24 @@ function PermissionTable({
 
             {/* Messages */}
             {error && (
-                <div className="rounded-xl border border-red-500/25 bg-red-500/10 px-4 py-3 text-sm text-red-400">
+                <div className="rounded-xl border border-red-200 bg-red-500/10 px-4 py-3 text-sm text-red-400">
                     {error}
                 </div>
             )}
 
             {success && (
-                <div className="rounded-xl border border-emerald-500/25 bg-emerald-500/10 px-4 py-3 text-sm text-emerald-400">
+                <div className="rounded-xl border border-emerald-200 bg-emerald-500/10 px-4 py-3 text-sm text-emerald-400">
                     {success}
                 </div>
             )}
 
             {/* Summary Cards */}
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
-                <div className="rounded-2xl border border-white/10 bg-[#111111] p-5 shadow-xl shadow-black/40">
+                <div className="rounded-2xl border border-pink-100 bg-white p-5 shadow-xl shadow-pink-500/5">
                     <div className="flex items-center justify-between">
                         <div>
-                            <p className="text-sm text-zinc-400">Total Permissions</p>
-                            <h2 className="mt-2 text-2xl font-bold text-white">
+                            <p className="text-sm text-zinc-500">Total Permissions</p>
+                            <h2 className="mt-2 text-2xl font-bold text-zinc-900">
                                 {totalRecords}
                             </h2>
                         </div>
@@ -112,15 +112,15 @@ function PermissionTable({
                     </div>
                 </div>
 
-                <div className="rounded-2xl border border-white/10 bg-[#111111] p-5 shadow-xl shadow-black/40">
-                    <p className="text-sm text-zinc-400">Active (Current Page)</p>
+                <div className="rounded-2xl border border-pink-100 bg-white p-5 shadow-xl shadow-pink-500/5">
+                    <p className="text-sm text-zinc-500">Active (Current Page)</p>
                     <h2 className="mt-2 text-2xl font-bold text-emerald-400">
                         {activeOnPage}
                     </h2>
                 </div>
 
-                <div className="rounded-2xl border border-white/10 bg-[#111111] p-5 shadow-xl shadow-black/40">
-                    <p className="text-sm text-zinc-400">Inactive (Current Page)</p>
+                <div className="rounded-2xl border border-pink-100 bg-white p-5 shadow-xl shadow-pink-500/5">
+                    <p className="text-sm text-zinc-500">Inactive (Current Page)</p>
                     <h2 className="mt-2 text-2xl font-bold text-red-400">
                         {inactiveOnPage}
                     </h2>
@@ -128,9 +128,9 @@ function PermissionTable({
             </div>
 
             {/* Permissions Table */}
-            <div className="overflow-hidden rounded-2xl border border-white/10 bg-[#111111] shadow-xl shadow-black/40">
+            <div className="overflow-hidden rounded-2xl border border-pink-100 bg-white shadow-xl shadow-pink-500/5">
                 {/* Search, Filter & Refresh */}
-                <div className="flex flex-col gap-3 border-b border-white/10 p-4 lg:flex-row lg:items-center lg:justify-between">
+                <div className="flex flex-col gap-3 border-b border-pink-100 p-4 lg:flex-row lg:items-center lg:justify-between">
                     <div className="flex flex-1 flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
                         <div className="relative w-full sm:max-w-xs">
                             <Search
@@ -174,7 +174,7 @@ function PermissionTable({
                         <button
                             type="button"
                             onClick={onRefresh}
-                            className="flex items-center justify-center gap-2 rounded-xl border border-white/10 bg-white/[0.05] px-4 py-2 text-sm text-zinc-300 transition hover:bg-white/[0.10] hover:text-white"
+                            className="flex items-center justify-center gap-2 rounded-xl border border-pink-100 bg-pink-50/50 px-4 py-2 text-sm text-zinc-700 transition hover:bg-pink-100/60 hover:text-zinc-900"
                         >
                             <RefreshCw size={15} className={loading ? "animate-spin" : ""} />
                             Refresh
@@ -185,7 +185,7 @@ function PermissionTable({
                 {/* Table */}
                 <div className="overflow-x-auto">
                     <table className="w-full text-left text-sm">
-                        <thead className="border-b border-white/10 bg-white/[0.04] text-xs uppercase tracking-wider text-zinc-400">
+                        <thead className="border-b border-pink-100 bg-pink-50/50 text-xs uppercase tracking-wider text-zinc-500">
                             <tr>
                                 <th className="px-5 py-4">
                                     <button
@@ -232,12 +232,12 @@ function PermissionTable({
                             </tr>
                         </thead>
 
-                        <tbody className="divide-y divide-white/[0.07]">
+                        <tbody className="divide-y divide-pink-50">
                             {loading ? (
                                 <tr>
                                     <td
                                         colSpan={canManage ? 6 : 5}
-                                        className="px-5 py-10 text-center text-zinc-400"
+                                        className="px-5 py-10 text-center text-zinc-500"
                                     >
                                         Loading permissions...
                                     </td>
@@ -255,7 +255,7 @@ function PermissionTable({
                                 permissions.map((item) => (
                                     <tr
                                         key={item.id}
-                                        className="transition hover:bg-white/[0.04]"
+                                        className="transition hover:bg-pink-50/50"
                                     >
                                         <td className="px-5 py-4">
                                             <div className="flex items-center gap-3">
@@ -263,19 +263,19 @@ function PermissionTable({
                                                     <KeyRound size={16} />
                                                 </div>
 
-                                                <span className="font-semibold text-white">
+                                                <span className="font-semibold text-zinc-900">
                                                     {item.name}
                                                 </span>
                                             </div>
                                         </td>
 
                                         <td className="px-5 py-4">
-                                            <span className="rounded-lg border border-white/10 bg-white/[0.06] px-2.5 py-1 text-xs font-medium text-pink-300">
+                                            <span className="rounded-lg border border-pink-100 bg-pink-50/60 px-2.5 py-1 text-xs font-medium text-pink-300">
                                                 {item.key}
                                             </span>
                                         </td>
 
-                                        <td className="max-w-xs px-5 py-4 text-zinc-400">
+                                        <td className="max-w-xs px-5 py-4 text-zinc-500">
                                             {item.description || "No description"}
                                         </td>
 
@@ -283,15 +283,15 @@ function PermissionTable({
                                             <span
                                                 className={`rounded-full border px-3 py-1 text-xs font-medium ${
                                                     item.isActive
-                                                        ? "border-emerald-500/25 bg-emerald-500/10 text-emerald-400"
-                                                        : "border-red-500/25 bg-red-500/10 text-red-400"
+                                                        ? "border-emerald-200 bg-emerald-50 text-emerald-700"
+                                                        : "border-red-200 bg-red-50 text-red-600"
                                                 }`}
                                             >
                                                 {item.isActive ? "Active" : "Inactive"}
                                             </span>
                                         </td>
 
-                                        <td className="whitespace-nowrap px-5 py-4 text-zinc-400">
+                                        <td className="whitespace-nowrap px-5 py-4 text-zinc-500">
                                             {item.createdAt
                                                 ? new Date(item.createdAt).toLocaleDateString()
                                                 : "-"}
@@ -330,8 +330,8 @@ function PermissionTable({
                 </div>
 
                 {/* Pagination Footer */}
-                <div className="flex flex-col items-center justify-between gap-3 border-t border-white/10 px-5 py-4 sm:flex-row">
-                    <p className="text-xs text-zinc-400">
+                <div className="flex flex-col items-center justify-between gap-3 border-t border-pink-100 px-5 py-4 sm:flex-row">
+                    <p className="text-xs text-zinc-500">
                         Showing {startRecord}–{endRecord} of {totalRecords} permissions
                     </p>
 
@@ -346,7 +346,7 @@ function PermissionTable({
                             Previous
                         </Button>
 
-                        <span className="px-2 text-xs font-medium text-zinc-300">
+                        <span className="px-2 text-xs font-medium text-zinc-700">
                             Page {totalPages === 0 ? 0 : pageNumber} of {totalPages}
                         </span>
 

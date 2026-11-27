@@ -82,10 +82,10 @@ export default function LoanAgreementPreviewModal({
         >
             <div className="space-y-6">
                 {/* Action Bar */}
-                <div className="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-neutral-800 bg-neutral-900/80 p-3.5 backdrop-blur-md">
-                    <div className="flex items-center gap-2 text-xs text-neutral-300">
-                        <span className="flex h-2 w-2 rounded-full bg-pink-500 shadow-sm shadow-pink-500"></span>
-                        <span className="font-medium">Sanctioned Legal Document Ready for Review & Execution</span>
+                <div className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-pink-200 bg-pink-50/60 p-3.5 backdrop-blur-md">
+                    <div className="flex items-center gap-2 text-xs text-zinc-700">
+                        <span className="flex h-2.5 w-2.5 rounded-full bg-pink-500 shadow-sm shadow-pink-500"></span>
+                        <span className="font-semibold">Sanctioned Legal Document Ready for Review & Execution</span>
                     </div>
                     <div className="flex items-center gap-2">
                         <Button
@@ -110,95 +110,96 @@ export default function LoanAgreementPreviewModal({
                 </div>
 
                 {/* Printable / Previewable Document Body */}
-                <div className="printable-document rounded-2xl border border-pink-500/20 bg-gradient-to-b from-neutral-950 via-neutral-900 to-neutral-950 p-6 sm:p-8 text-neutral-100 shadow-2xl space-y-6">
+                <div className="printable-document rounded-3xl border border-pink-200 bg-white p-6 sm:p-8 text-zinc-900 shadow-xl space-y-6">
                     {/* Bank Letterhead */}
-                    <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b border-neutral-800 pb-6">
+                    <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b border-pink-100 pb-6">
                         <div className="flex items-center gap-3.5">
                             <img
                                 src="/logo.png"
                                 alt="LMS Bank"
-                                className="h-12 w-auto object-contain rounded-lg p-1 bg-white/5 border border-pink-500/20"
+                                className="h-12 w-auto object-contain rounded-xl p-1 bg-pink-50 border border-pink-200"
                             />
                             <div>
-                                <h2 className="text-xl font-bold tracking-tight text-white flex items-center gap-2">
+                                <h2 className="text-xl font-bold tracking-tight text-zinc-900 flex items-center gap-2">
                                     LMS CAPITAL BANKING CORP
-                                    <ShieldCheck size={18} className="text-pink-400" />
+                                    <ShieldCheck size={18} className="text-pink-600" />
                                 </h2>
-                                <p className="text-xs text-neutral-400">
+                                <p className="text-xs text-zinc-500">
                                     Division of Consumer Credit, Underwriting & Risk Management
                                 </p>
                             </div>
                         </div>
 
                         <div className="text-left sm:text-right text-xs space-y-1">
-                            <p className="font-mono text-pink-400 font-semibold tracking-wide">
+                            <p className="font-mono text-pink-600 font-bold tracking-wide">
                                 DOC REF: SANCTION-{loan.loanNumber}
                             </p>
-                            <p className="text-neutral-400">
-                                Issue Date: <span className="text-neutral-200 font-medium">{sanctionDate}</span>
+                            <p className="text-zinc-500">
+                                Issue Date: <span className="text-zinc-800 font-semibold">{sanctionDate}</span>
                             </p>
-                            <p className="text-neutral-400">
-                                Classification: <span className="text-pink-300 font-semibold">Legally Binding & Executed</span>
+                            <p className="text-zinc-500">
+                                Classification: <span className="text-pink-600 font-bold">Legally Binding & Executed</span>
                             </p>
                         </div>
                     </div>
 
                     {/* Sanction Title Banner */}
-                    <div className="text-center py-2.5 border-b border-neutral-800/80">
-                        <h3 className="text-base sm:text-lg font-bold tracking-wider uppercase bg-gradient-to-r from-pink-400 via-white to-pink-300 bg-clip-text text-transparent">
+                    <div className="text-center py-2.5 border-b border-pink-100">
+                        <h3 className="text-base sm:text-lg font-extrabold tracking-wider uppercase bg-gradient-to-r from-pink-600 via-rose-500 to-pink-500 bg-clip-text text-transparent">
                             Formal Loan Sanction & Repayment Facility Agreement
                         </h3>
-                        <p className="text-xs text-neutral-400 mt-1">
+                        <p className="text-xs text-zinc-500 mt-1">
                             Executed under the State Consumer Credit & Banking Regulations
                         </p>
                     </div>
 
                     {/* Section 1: Facility & Borrower Summary Cards */}
                     <div>
-                        <h4 className="text-xs font-semibold uppercase tracking-wider text-pink-400 mb-3 flex items-center gap-1.5">
+                        <h4 className="text-xs font-bold uppercase tracking-wider text-pink-600 mb-3 flex items-center gap-1.5">
                             <User size={14} /> 1. Borrower & Loan Account Particulars
                         </h4>
+
                         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5">
-                            <div className="rounded-xl border border-neutral-800 bg-neutral-900/60 p-4">
-                                <span className="text-[11px] text-neutral-400 block font-medium">Borrower Full Name</span>
-                                <span className="text-sm font-semibold text-white mt-1 block truncate">{loan.borrowerName || "Me"}</span>
-                                <span className="text-xs text-neutral-500 block truncate mt-0.5">{loan.borrowerEmail || "—"}</span>
+                            <div className="rounded-2xl border border-pink-200/80 bg-pink-50/40 p-4">
+                                <span className="text-[11px] text-zinc-500 block font-medium">Borrower Full Name</span>
+                                <span className="text-sm font-bold text-zinc-900 mt-1 block truncate">{loan.borrowerName || "Me"}</span>
+                                <span className="text-xs text-zinc-500 block truncate mt-0.5">{loan.borrowerEmail || "—"}</span>
                             </div>
 
-                            <div className="rounded-xl border border-neutral-800 bg-neutral-900/60 p-4">
-                                <span className="text-[11px] text-neutral-400 block font-medium">Loan Scheme / Product</span>
-                                <span className="text-sm font-semibold text-white mt-1 block truncate">{loan.loanTypeName || "Consumer Credit"}</span>
-                                <span className="text-xs text-pink-400 font-medium block mt-0.5">Active & Sanctioned</span>
+                            <div className="rounded-2xl border border-pink-200/80 bg-pink-50/40 p-4">
+                                <span className="text-[11px] text-zinc-500 block font-medium">Loan Scheme / Product</span>
+                                <span className="text-sm font-bold text-zinc-900 mt-1 block truncate">{loan.loanTypeName || "Consumer Credit"}</span>
+                                <span className="text-xs text-pink-600 font-semibold block mt-0.5">Active & Sanctioned</span>
                             </div>
 
-                            <div className="rounded-xl border border-neutral-800 bg-neutral-900/60 p-4">
-                                <span className="text-[11px] text-neutral-400 block font-medium">Sanctioned Principal</span>
-                                <span className="text-sm font-bold text-pink-400 mt-1 block tabular-nums">PKR {formatCurrency(loan.principalAmount)}</span>
-                                <span className="text-xs text-neutral-400 block mt-0.5">APR: {loan.interestRate}% Fixed</span>
+                            <div className="rounded-2xl border border-pink-200/80 bg-pink-50/40 p-4">
+                                <span className="text-[11px] text-zinc-500 block font-medium">Sanctioned Principal</span>
+                                <span className="text-sm font-bold text-pink-600 mt-1 block tabular-nums">PKR {formatCurrency(loan.principalAmount)}</span>
+                                <span className="text-xs text-zinc-500 block mt-0.5">APR: {loan.interestRate}% Fixed</span>
                             </div>
 
-                            <div className="rounded-xl border border-neutral-800 bg-neutral-900/60 p-4">
-                                <span className="text-[11px] text-neutral-400 block font-medium">Total Repayment Obligation</span>
-                                <span className="text-sm font-bold text-white mt-1 block tabular-nums">PKR {formatCurrency(loan.totalPayableAmount)}</span>
-                                <span className="text-xs text-neutral-400 block mt-0.5">{loan.termMonths} Months (~PKR {formatCurrency(monthlyInstallment)}/mo)</span>
+                            <div className="rounded-2xl border border-pink-200/80 bg-pink-50/40 p-4">
+                                <span className="text-[11px] text-zinc-500 block font-medium">Total Repayment Obligation</span>
+                                <span className="text-sm font-bold text-zinc-900 mt-1 block tabular-nums">PKR {formatCurrency(loan.totalPayableAmount)}</span>
+                                <span className="text-xs text-zinc-500 block mt-0.5">{loan.termMonths} Months (~PKR {formatCurrency(monthlyInstallment)}/mo)</span>
                             </div>
                         </div>
                     </div>
 
                     {/* Section 2: Statutory Terms, Grace Period & Penalty Clause */}
-                    <div className="rounded-xl border border-pink-500/30 bg-pink-500/[0.04] p-5 space-y-3">
-                        <h4 className="text-xs font-semibold uppercase tracking-wider text-pink-300 flex items-center gap-1.5">
+                    <div className="rounded-2xl border border-pink-200 bg-pink-50/60 p-5 space-y-3">
+                        <h4 className="text-xs font-bold uppercase tracking-wider text-pink-700 flex items-center gap-1.5">
                             <Building2 size={14} /> 2. Statutory Repayment Terms & Overdue Surcharge Clause
                         </h4>
-                        <div className="text-xs leading-relaxed text-neutral-300 space-y-2.5">
+                        <div className="text-xs leading-relaxed text-zinc-700 space-y-2.5">
                             <p>
-                                <strong className="text-white">A. Amortization & Installment Due Dates:</strong> The Borrower agrees to repay the total sanctioned obligation in consecutive monthly installments as outlined in the Amortization Schedule below. Each installment must be remitted on or before the due date specified.
+                                <strong className="text-zinc-900">A. Amortization & Installment Due Dates:</strong> The Borrower agrees to repay the total sanctioned obligation in consecutive monthly installments as outlined in the Amortization Schedule below. Each installment must be remitted on or before the due date specified.
                             </p>
                             <p>
-                                <strong className="text-white">B. Grace Period & Late Penalty Surcharge:</strong> A mandatory grace period of seven (7) calendar days is granted from the installment due date. Any installment remaining unpaid past this 7-day grace period will automatically attract an overdue surcharge fee of <span className="text-pink-400 font-bold">2.0% per month</span> calculated on the outstanding installment balance until settled in full.
+                                <strong className="text-zinc-900">B. Grace Period & Late Penalty Surcharge:</strong> A mandatory grace period of seven (7) calendar days is granted from the installment due date. Any installment remaining unpaid past this 7-day grace period will automatically attract an overdue surcharge fee of <span className="text-pink-600 font-bold">2.0% per month</span> calculated on the outstanding installment balance until settled in full.
                             </p>
                             <p>
-                                <strong className="text-white">C. Acceleration & Default Recourse:</strong> Failure to service installments for two (2) consecutive billing cycles shall constitute an Event of Default, empowering LMS Capital Banking Corp to accelerate the full loan liability and proceed with recovery enforcement against the Borrower and any registered Guarantor(s).
+                                <strong className="text-zinc-900">C. Acceleration & Default Recourse:</strong> Failure to service installments for two (2) consecutive billing cycles shall constitute an Event of Default, empowering LMS Capital Banking Corp to accelerate the full loan liability and proceed with recovery enforcement against the Borrower and any registered Guarantor(s).
                             </p>
                         </div>
                     </div>
@@ -206,38 +207,38 @@ export default function LoanAgreementPreviewModal({
                     {/* Section 3: Complete Amortization Schedule Table */}
                     <div>
                         <div className="flex items-center justify-between mb-3">
-                            <h4 className="text-xs font-semibold uppercase tracking-wider text-pink-400 flex items-center gap-1.5">
+                            <h4 className="text-xs font-bold uppercase tracking-wider text-pink-600 flex items-center gap-1.5">
                                 <Calendar size={14} /> 3. Amortization & Repayment Schedule Table
                             </h4>
-                            <span className="text-xs font-medium text-neutral-400">
+                            <span className="text-xs font-medium text-zinc-500">
                                 {schedule.length} Installment Cycle(s)
                             </span>
                         </div>
 
                         {/* Contained, Scrollable Table with Sticky Header */}
-                        <div className="max-h-[380px] overflow-y-auto overflow-x-auto rounded-xl border border-neutral-800 bg-neutral-950 custom-scrollbar">
+                        <div className="max-h-[380px] overflow-y-auto overflow-x-auto rounded-2xl border border-pink-200 bg-white custom-scrollbar shadow-sm">
                             <table className="w-full min-w-[640px] text-left text-xs">
-                                <thead className="sticky top-0 bg-neutral-900 z-10 border-b border-neutral-800 text-[11px] uppercase tracking-wider text-neutral-400 shadow-sm">
+                                <thead className="sticky top-0 bg-pink-100/70 z-10 border-b border-pink-200 text-[11px] uppercase tracking-wider text-pink-900 shadow-sm font-bold">
                                     <tr>
-                                        <th className="px-4 py-3 font-semibold min-w-[70px]">Inst #</th>
-                                        <th className="px-4 py-3 font-semibold min-w-[110px]">Due Date</th>
-                                        <th className="px-4 py-3 font-semibold text-right min-w-[120px]">Principal</th>
-                                        <th className="px-4 py-3 font-semibold text-right min-w-[110px]">Interest</th>
-                                        <th className="px-4 py-3 font-semibold text-right min-w-[130px]">Total Due (PKR)</th>
-                                        <th className="px-4 py-3 font-semibold text-right min-w-[110px]">Paid</th>
-                                        <th className="px-4 py-3 font-semibold text-center min-w-[100px]">Status</th>
+                                        <th className="px-4 py-3 font-bold min-w-[70px]">Inst #</th>
+                                        <th className="px-4 py-3 font-bold min-w-[110px]">Due Date</th>
+                                        <th className="px-4 py-3 font-bold text-right min-w-[120px]">Principal</th>
+                                        <th className="px-4 py-3 font-bold text-right min-w-[110px]">Interest</th>
+                                        <th className="px-4 py-3 font-bold text-right min-w-[130px]">Total Due (PKR)</th>
+                                        <th className="px-4 py-3 font-bold text-right min-w-[110px]">Paid</th>
+                                        <th className="px-4 py-3 font-bold text-center min-w-[100px]">Status</th>
                                     </tr>
                                 </thead>
-                                <tbody className="divide-y divide-neutral-800/60 text-neutral-200 tabular-nums font-sans">
+                                <tbody className="divide-y divide-pink-100 text-zinc-700 tabular-nums font-sans">
                                     {loading ? (
                                         <tr>
-                                            <td colSpan={7} className="py-8 text-center text-neutral-400 font-sans">
+                                            <td colSpan={7} className="py-8 text-center text-zinc-400 font-sans">
                                                 Loading amortization schedule...
                                             </td>
                                         </tr>
                                     ) : schedule.length === 0 ? (
                                         <tr>
-                                            <td colSpan={7} className="py-6 text-center text-neutral-400 font-sans">
+                                            <td colSpan={7} className="py-6 text-center text-zinc-400 font-sans">
                                                 Schedule not yet initiated.
                                             </td>
                                         </tr>
@@ -253,20 +254,20 @@ export default function LoanAgreementPreviewModal({
                                             const isPaid = sk.includes("PAID") && !sk.includes("PARTIAL");
 
                                             return (
-                                                <tr key={item.id ?? idx} className="hover:bg-neutral-900/60 transition-colors">
-                                                    <td className="px-4 py-2.5 font-semibold text-white">#{instNum}</td>
-                                                    <td className="px-4 py-2.5 text-neutral-300">
+                                                <tr key={item.id ?? idx} className="hover:bg-pink-50/50 transition-colors">
+                                                    <td className="px-4 py-2.5 font-bold text-zinc-900">#{instNum}</td>
+                                                    <td className="px-4 py-2.5 text-zinc-600">
                                                         {due ? new Date(due).toLocaleDateString() : "—"}
                                                     </td>
-                                                    <td className="px-4 py-2.5 text-right text-neutral-300">{formatCurrency(prin)}</td>
-                                                    <td className="px-4 py-2.5 text-right text-neutral-400">{formatCurrency(intD)}</td>
-                                                    <td className="px-4 py-2.5 text-right font-bold text-white">{formatCurrency(tot)}</td>
-                                                    <td className="px-4 py-2.5 text-right text-pink-400 font-medium">{formatCurrency(paid)}</td>
+                                                    <td className="px-4 py-2.5 text-right text-zinc-700 font-medium">{formatCurrency(prin)}</td>
+                                                    <td className="px-4 py-2.5 text-right text-zinc-500">{formatCurrency(intD)}</td>
+                                                    <td className="px-4 py-2.5 text-right font-bold text-zinc-900">{formatCurrency(tot)}</td>
+                                                    <td className="px-4 py-2.5 text-right text-pink-600 font-bold">{formatCurrency(paid)}</td>
                                                     <td className="px-4 py-2.5 text-center">
-                                                        <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-semibold ${
+                                                        <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-bold ${
                                                             isPaid
-                                                                ? "bg-white/10 text-white border border-white/20"
-                                                                : "bg-pink-500/10 text-pink-300 border border-pink-500/20"
+                                                                ? "bg-emerald-50 text-emerald-700 border border-emerald-200"
+                                                                : "bg-pink-50 text-pink-700 border border-pink-200"
                                                         }`}>
                                                             {isPaid ? "Settled" : "Scheduled"}
                                                         </span>
@@ -281,22 +282,22 @@ export default function LoanAgreementPreviewModal({
                     </div>
 
                     {/* Section 4: Authorized Signatures & Seal */}
-                    <div className="pt-6 border-t border-neutral-800">
+                    <div className="pt-6 border-t border-pink-100">
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 items-end">
                             {/* Bank Officer Signatory */}
                             <div className="space-y-2">
-                                <span className="text-[11px] uppercase tracking-wider text-neutral-400 block font-medium">
+                                <span className="text-[11px] uppercase tracking-wider text-zinc-500 block font-bold">
                                     Authorized Bank Sanctioning Authority:
                                 </span>
-                                <div className="border border-neutral-800 rounded-xl bg-neutral-900/60 p-4 space-y-2">
+                                <div className="border border-pink-200 rounded-2xl bg-pink-50/40 p-4 space-y-2">
                                     {/* Stylized Signature */}
-                                    <div className="font-serif italic text-2xl text-pink-400 tracking-wider">
+                                    <div className="font-serif italic text-2xl text-pink-600 tracking-wider">
                                         Muhammad Ovais
                                     </div>
-                                    <div className="border-t border-neutral-800 pt-2 text-xs">
-                                        <p className="font-semibold text-white">Muhammad Ovais</p>
-                                        <p className="text-[11px] text-neutral-400">Senior Credit Underwriting & Risk Officer</p>
-                                        <p className="text-[10px] text-pink-400 flex items-center gap-1 mt-1 font-medium">
+                                    <div className="border-t border-pink-100 pt-2 text-xs">
+                                        <p className="font-bold text-zinc-900">Muhammad Ovais</p>
+                                        <p className="text-[11px] text-zinc-500">Senior Credit Underwriting & Risk Officer</p>
+                                        <p className="text-[10px] text-pink-600 flex items-center gap-1 mt-1 font-semibold">
                                             <CheckCircle size={12} /> Digitally Signed & Authenticated
                                         </p>
                                     </div>
@@ -305,17 +306,17 @@ export default function LoanAgreementPreviewModal({
 
                             {/* Borrower Acceptance */}
                             <div className="space-y-2">
-                                <span className="text-[11px] uppercase tracking-wider text-neutral-400 block font-medium">
+                                <span className="text-[11px] uppercase tracking-wider text-zinc-500 block font-bold">
                                     Borrower Acknowledgement & Acceptance:
                                 </span>
-                                <div className="border border-neutral-800 rounded-xl bg-neutral-900/60 p-4 space-y-2">
-                                    <div className="font-serif italic text-2xl text-neutral-300 tracking-wider">
+                                <div className="border border-pink-200 rounded-2xl bg-pink-50/40 p-4 space-y-2">
+                                    <div className="font-serif italic text-2xl text-zinc-700 tracking-wider">
                                         {loan.borrowerName || "Borrower"}
                                     </div>
-                                    <div className="border-t border-neutral-800 pt-2 text-xs">
-                                        <p className="font-semibold text-white">{loan.borrowerName || "Customer"}</p>
-                                        <p className="text-[11px] text-neutral-400">Accepted Terms & Penalty Conditions</p>
-                                        <p className="text-[10px] text-neutral-500 mt-1">
+                                    <div className="border-t border-pink-100 pt-2 text-xs">
+                                        <p className="font-bold text-zinc-900">{loan.borrowerName || "Customer"}</p>
+                                        <p className="text-[11px] text-zinc-500">Accepted Terms & Penalty Conditions</p>
+                                        <p className="text-[10px] text-zinc-400 mt-1">
                                             Execution Timestamp: {sanctionDate}
                                         </p>
                                     </div>

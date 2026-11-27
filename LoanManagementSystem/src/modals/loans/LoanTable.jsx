@@ -19,13 +19,13 @@ const formatAmount = (amount) =>
 const getLoanStatusBadge = (statusKey) => {
     switch (statusKey) {
         case "LOAN_ACTIVE":
-            return "bg-emerald-500/10 text-emerald-400 border border-emerald-500/20";
+            return "bg-emerald-50 text-emerald-700 border border-emerald-200";
         case "LOAN_CLOSED":
-            return "bg-blue-500/10 text-blue-400 border border-blue-500/20";
+            return "bg-pink-50 text-pink-700 border border-pink-200";
         case "LOAN_DEFAULTED":
-            return "bg-red-500/10 text-red-400 border border-red-500/20";
+            return "bg-red-50 text-red-600 border border-red-200";
         default:
-            return "bg-zinc-500/10 text-zinc-400 border border-zinc-500/20";
+            return "bg-zinc-500/10 text-zinc-500 border border-zinc-500/20";
     }
 };
 
@@ -53,8 +53,8 @@ export default function LoanTable({
         <div className="space-y-6">
             <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-center">
                 <div>
-                    <h1 className="text-2xl font-bold text-white">Disbursed Loans</h1>
-                    <p className="mt-1 text-sm text-zinc-400">
+                    <h1 className="text-2xl font-bold text-zinc-900">Disbursed Loans</h1>
+                    <p className="mt-1 text-sm text-zinc-500">
                         Monitor active loan portfolios, repayment schedules, and outstanding balances.
                     </p>
                 </div>
@@ -71,13 +71,13 @@ export default function LoanTable({
             </div>
 
             {error && (
-                <div className="rounded-xl border border-red-500/20 bg-red-500/10 px-4 py-3 text-sm text-red-400">
+                <div className="rounded-xl border border-red-200 bg-red-500/10 px-4 py-3 text-sm text-red-400">
                     {error}
                 </div>
             )}
 
-            <div className="overflow-hidden rounded-2xl border border-white/10 bg-[#111111]">
-                <div className="flex flex-col gap-3 border-b border-white/10 p-4 sm:flex-row sm:items-center sm:justify-between">
+            <div className="overflow-hidden rounded-2xl border border-pink-100 bg-white">
+                <div className="flex flex-col gap-3 border-b border-pink-100 p-4 sm:flex-row sm:items-center sm:justify-between">
                     <div className="flex flex-1 flex-col sm:flex-row gap-3">
                         <div className="relative w-full sm:max-w-sm">
                             <Search
@@ -89,14 +89,14 @@ export default function LoanTable({
                                 value={search}
                                 onChange={(e) => onSearchChange(e.target.value)}
                                 placeholder="Search by loan # or borrower..."
-                                className="w-full rounded-xl border border-white/10 bg-[#181818] py-2.5 pl-10 pr-4 text-sm text-white placeholder:text-zinc-500 outline-none focus:border-pink-500/70"
+                                className="w-full rounded-xl border border-pink-100 bg-white py-2.5 pl-10 pr-4 text-sm text-zinc-900 placeholder:text-zinc-400 outline-none focus:border-pink-500/70"
                             />
                         </div>
 
                         <select
                             value={statusFilter}
                             onChange={(e) => onStatusFilterChange(e.target.value)}
-                            className="rounded-xl border border-white/10 bg-[#181818] px-3 py-2 text-sm text-white outline-none"
+                            className="rounded-xl border border-pink-100 bg-white px-3 py-2 text-sm text-zinc-900 outline-none"
                         >
                             <option value="">All Statuses</option>
                             <option value="LOAN_ACTIVE">Active</option>
@@ -109,7 +109,7 @@ export default function LoanTable({
                         <select
                             value={pageSize}
                             onChange={(e) => onPageSizeChange(Number(e.target.value))}
-                            className="rounded-xl border border-white/10 bg-[#181818] px-3 py-2 text-sm text-white outline-none"
+                            className="rounded-xl border border-pink-100 bg-white px-3 py-2 text-sm text-zinc-900 outline-none"
                         >
                             <option value={5}>5 per page</option>
                             <option value={10}>10 per page</option>
@@ -121,7 +121,7 @@ export default function LoanTable({
                 <div className="overflow-x-auto">
                     <table className="w-full text-left">
                         <thead>
-                            <tr className="border-b border-white/10 bg-white/[0.02] text-xs font-semibold uppercase tracking-wider text-zinc-400">
+                            <tr className="border-b border-pink-100 bg-pink-50/30 text-xs font-semibold uppercase tracking-wider text-zinc-500">
                                 <th className="px-5 py-4">Loan #</th>
                                 <th className="px-5 py-4">Borrower</th>
                                 <th className="px-5 py-4">Principal (PKR)</th>
@@ -134,7 +134,7 @@ export default function LoanTable({
                             </tr>
                         </thead>
 
-                        <tbody className="divide-y divide-white/5 text-sm">
+                        <tbody className="divide-y divide-pink-50 text-sm">
                             {loading ? (
                                 <tr>
                                     <td colSpan={9} className="py-12 text-center text-zinc-500">
@@ -151,10 +151,10 @@ export default function LoanTable({
                                 loans.map((loan) => (
                                     <tr
                                         key={loan.id}
-                                        className="transition hover:bg-white/[0.025]"
+                                        className="transition hover:bg-pink-50/30"
                                     >
                                         <td className="px-5 py-4">
-                                            <p className="font-semibold text-white font-mono">
+                                            <p className="font-semibold text-zinc-900 font-mono">
                                                 {loan.loanNumber}
                                             </p>
                                             <p className="mt-1 text-xs text-zinc-500">
@@ -164,19 +164,19 @@ export default function LoanTable({
                                             </p>
                                         </td>
 
-                                        <td className="px-5 py-4 text-sm text-zinc-300 font-medium">
+                                        <td className="px-5 py-4 text-sm text-zinc-700 font-medium">
                                             {loan.borrowerName || "—"}
                                         </td>
 
-                                        <td className="px-5 py-4 text-sm font-semibold text-white">
+                                        <td className="px-5 py-4 text-sm font-semibold text-zinc-900">
                                             {formatAmount(loan.principalAmount)}
                                         </td>
 
-                                        <td className="px-5 py-4 text-sm text-zinc-300">
+                                        <td className="px-5 py-4 text-sm text-zinc-700">
                                             {loan.interestRate}%
                                         </td>
 
-                                        <td className="px-5 py-4 text-sm text-zinc-300">
+                                        <td className="px-5 py-4 text-sm text-zinc-700">
                                             {loan.termMonths} mos
                                         </td>
 
@@ -184,7 +184,7 @@ export default function LoanTable({
                                             {formatAmount(loan.outstandingBalance)}
                                         </td>
 
-                                        <td className="px-5 py-4 text-sm text-zinc-300">
+                                        <td className="px-5 py-4 text-sm text-zinc-700">
                                             {formatAmount(loan.monthlyInstallment)}
                                         </td>
 
@@ -234,10 +234,10 @@ export default function LoanTable({
                     </table>
                 </div>
 
-                <div className="flex flex-col gap-3 border-t border-white/10 px-5 py-4 sm:flex-row sm:items-center sm:justify-between">
+                <div className="flex flex-col gap-3 border-t border-pink-100 px-5 py-4 sm:flex-row sm:items-center sm:justify-between">
                     <p className="text-sm text-zinc-500">
                         Total loans:{" "}
-                        <span className="font-semibold text-white">
+                        <span className="font-semibold text-zinc-900">
                             {totalRecords}
                         </span>
                     </p>
@@ -253,7 +253,7 @@ export default function LoanTable({
                             Prev
                         </Button>
 
-                        <span className="px-2 text-sm text-zinc-400">
+                        <span className="px-2 text-sm text-zinc-500">
                             Page {pageNumber} of {totalPages || 1}
                         </span>
 

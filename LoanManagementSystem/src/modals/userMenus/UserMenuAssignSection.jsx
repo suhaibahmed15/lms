@@ -11,20 +11,20 @@ export default function UserMenuAssignSection({
     assigning
 }) {
     const controlClass =
-        "rounded-xl border border-white/10 bg-white/[0.07] px-3.5 py-2 text-sm text-white placeholder:text-zinc-500 outline-none transition focus:border-pink-500/70 focus:bg-white/[0.10] focus:ring-4 focus:ring-pink-500/10";
+        "rounded-xl border border-pink-100 bg-white px-3.5 py-2 text-sm text-zinc-900 placeholder:text-zinc-400 outline-none transition focus:border-pink-500/70 focus:bg-pink-100/60 focus:ring-4 focus:ring-pink-500/10";
 
     return (
-        <div className="rounded-2xl border border-white/10 bg-[#111111] shadow-xl shadow-black/40">
-            <div className="border-b border-white/10 p-5">
+        <div className="rounded-2xl border border-pink-100 bg-white shadow-xl shadow-pink-500/5">
+            <div className="border-b border-pink-100 p-5">
                 <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
                     <div>
                         <div className="flex items-center gap-2">
                             <Plus size={20} className="text-pink-400" />
-                            <h2 className="font-semibold text-white">
+                            <h2 className="font-semibold text-zinc-900">
                                 Assign Additional Menus
                             </h2>
                         </div>
-                        <p className="mt-1 text-sm text-zinc-400">
+                        <p className="mt-1 text-sm text-zinc-500">
                             Select menus that are not already available through the user's role or individual assignments.
                         </p>
                     </div>
@@ -64,7 +64,7 @@ export default function UserMenuAssignSection({
                                     className={`flex cursor-pointer items-center gap-3 rounded-xl border p-3.5 transition ${
                                         isChecked
                                             ? "border-pink-500/50 bg-pink-500/15"
-                                            : "border-white/10 bg-white/[0.03] hover:border-pink-500/30 hover:bg-white/[0.06]"
+                                            : "border-pink-100 bg-pink-50/40 hover:border-pink-500/30 hover:bg-pink-50/60"
                                     }`}
                                 >
                                     <input
@@ -75,10 +75,10 @@ export default function UserMenuAssignSection({
                                     />
 
                                     <div className="min-w-0">
-                                        <p className="truncate text-sm font-medium text-white">
+                                        <p className="truncate text-sm font-medium text-zinc-900">
                                             {menu.name}
                                         </p>
-                                        <p className="mt-1 truncate text-xs text-zinc-400">
+                                        <p className="mt-1 truncate text-xs text-zinc-500">
                                             {menu.key}
                                         </p>
                                     </div>

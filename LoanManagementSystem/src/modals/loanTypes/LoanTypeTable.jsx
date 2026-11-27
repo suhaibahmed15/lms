@@ -54,7 +54,7 @@ export default function LoanTypeTable({
     };
 
     const controlClass =
-        "rounded-xl border border-white/10 bg-white/[0.07] px-3.5 py-2 text-sm text-white placeholder:text-zinc-500 outline-none transition focus:border-pink-500/70 focus:bg-white/[0.10] focus:ring-4 focus:ring-pink-500/10";
+        "rounded-xl border border-pink-100 bg-white px-3.5 py-2 text-sm text-zinc-900 placeholder:text-zinc-400 outline-none transition focus:border-pink-500/70 focus:bg-pink-100/60 focus:ring-4 focus:ring-pink-500/10";
 
     const startRecord =
         totalRecords === 0 ? 0 : (pageNumber - 1) * pageSize + 1;
@@ -71,10 +71,10 @@ export default function LoanTypeTable({
             {/* Page Header */}
             <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-center">
                 <div>
-                    <h1 className="text-2xl font-bold tracking-tight text-white">
+                    <h1 className="text-2xl font-bold tracking-tight text-zinc-900">
                         Loan Type Management
                     </h1>
-                    <p className="mt-1 text-sm text-zinc-400">
+                    <p className="mt-1 text-sm text-zinc-500">
                         Create and manage available loan products.
                     </p>
                 </div>
@@ -88,26 +88,26 @@ export default function LoanTypeTable({
 
             {/* Messages */}
             {error && (
-                <div className="rounded-xl border border-red-500/25 bg-red-500/10 px-4 py-3 text-sm text-red-400">
+                <div className="rounded-xl border border-red-200 bg-red-500/10 px-4 py-3 text-sm text-red-400">
                     {error}
                 </div>
             )}
 
             {success && (
-                <div className="rounded-xl border border-emerald-500/25 bg-emerald-500/10 px-4 py-3 text-sm text-emerald-400">
+                <div className="rounded-xl border border-emerald-200 bg-emerald-500/10 px-4 py-3 text-sm text-emerald-400">
                     {success}
                 </div>
             )}
 
             {/* Loan Types Table */}
-            <div className="overflow-hidden rounded-2xl border border-white/10 bg-[#111111] shadow-xl shadow-black/40">
+            <div className="overflow-hidden rounded-2xl border border-pink-100 bg-white shadow-xl shadow-pink-500/5">
                 {/* Table Controls */}
-                <div className="flex flex-col gap-3 border-b border-white/10 p-5 lg:flex-row lg:items-center lg:justify-between">
+                <div className="flex flex-col gap-3 border-b border-pink-100 p-5 lg:flex-row lg:items-center lg:justify-between">
                     <div>
-                        <h2 className="font-semibold text-white">
+                        <h2 className="font-semibold text-zinc-900">
                             All Loan Types
                         </h2>
-                        <p className="mt-1 text-xs text-zinc-400">
+                        <p className="mt-1 text-xs text-zinc-500">
                             Manage loan amounts, terms and interest rates.
                         </p>
                     </div>
@@ -166,7 +166,7 @@ export default function LoanTypeTable({
                 {/* Table */}
                 <div className="overflow-x-auto">
                     <table className="w-full text-left text-sm">
-                        <thead className="border-b border-white/10 bg-white/[0.04] text-xs uppercase tracking-wider text-zinc-400">
+                        <thead className="border-b border-pink-100 bg-pink-50/50 text-xs uppercase tracking-wider text-zinc-500">
                             <tr>
                                 <th className="px-6 py-4">
                                     <button
@@ -226,12 +226,12 @@ export default function LoanTypeTable({
                             </tr>
                         </thead>
 
-                        <tbody className="divide-y divide-white/[0.07]">
+                        <tbody className="divide-y divide-pink-50">
                             {loading ? (
                                 <tr>
                                     <td
                                         colSpan="8"
-                                        className="px-6 py-12 text-center text-zinc-400"
+                                        className="px-6 py-12 text-center text-zinc-500"
                                     >
                                         Loading loan types...
                                     </td>
@@ -249,7 +249,7 @@ export default function LoanTypeTable({
                                 loanTypes.map((loanType) => (
                                     <tr
                                         key={loanType.id}
-                                        className="transition hover:bg-white/[0.04]"
+                                        className="transition hover:bg-pink-50/50"
                                     >
                                         <td className="px-6 py-4">
                                             <div className="flex items-center gap-3">
@@ -258,7 +258,7 @@ export default function LoanTypeTable({
                                                 </div>
 
                                                 <div>
-                                                    <p className="font-semibold text-white">
+                                                    <p className="font-semibold text-zinc-900">
                                                         {loanType.name}
                                                     </p>
                                                     <p className="mt-1 max-w-xs truncate text-xs text-zinc-500">
@@ -269,12 +269,12 @@ export default function LoanTypeTable({
                                         </td>
 
                                         <td className="px-6 py-4">
-                                            <span className="rounded-lg border border-white/10 bg-white/[0.06] px-3 py-1 text-xs font-semibold text-pink-300">
+                                            <span className="rounded-lg border border-pink-100 bg-pink-50/60 px-3 py-1 text-xs font-semibold text-pink-300">
                                                 {loanType.code}
                                             </span>
                                         </td>
 
-                                        <td className="px-6 py-4 whitespace-nowrap text-zinc-300">
+                                        <td className="px-6 py-4 whitespace-nowrap text-zinc-700">
                                             <div>
                                                 <span className="text-xs text-zinc-500">Min:</span>{" "}
                                                 {formatAmount(loanType.minAmount)}
@@ -285,11 +285,11 @@ export default function LoanTypeTable({
                                             </div>
                                         </td>
 
-                                        <td className="px-6 py-4 whitespace-nowrap font-medium text-white">
+                                        <td className="px-6 py-4 whitespace-nowrap font-medium text-zinc-900">
                                             {Number(loanType.interestRate).toLocaleString()}%
                                         </td>
 
-                                        <td className="px-6 py-4 whitespace-nowrap text-zinc-300">
+                                        <td className="px-6 py-4 whitespace-nowrap text-zinc-700">
                                             {loanType.minTermMonths}–{loanType.maxTermMonths} months
                                         </td>
 
@@ -307,8 +307,8 @@ export default function LoanTypeTable({
                                             <span
                                                 className={`rounded-full border px-3 py-1 text-xs font-semibold ${
                                                     loanType.isActive
-                                                        ? "border-emerald-500/25 bg-emerald-500/10 text-emerald-400"
-                                                        : "border-red-500/25 bg-red-500/10 text-red-400"
+                                                        ? "border-emerald-200 bg-emerald-50 text-emerald-700"
+                                                        : "border-red-200 bg-red-50 text-red-600"
                                                 }`}
                                             >
                                                 {loanType.isActive ? "Active" : "Inactive"}
@@ -361,8 +361,8 @@ export default function LoanTypeTable({
                 </div>
 
                 {/* Pagination */}
-                <div className="flex flex-col items-center justify-between gap-3 border-t border-white/10 px-6 py-4 sm:flex-row">
-                    <p className="text-xs text-zinc-400">
+                <div className="flex flex-col items-center justify-between gap-3 border-t border-pink-100 px-6 py-4 sm:flex-row">
+                    <p className="text-xs text-zinc-500">
                         Showing {startRecord}–{endRecord} of {totalRecords} loan types
                     </p>
 
@@ -377,7 +377,7 @@ export default function LoanTypeTable({
                             Previous
                         </Button>
 
-                        <span className="px-2 text-xs font-medium text-zinc-300">
+                        <span className="px-2 text-xs font-medium text-zinc-700">
                             Page {totalPages === 0 ? 0 : pageNumber} of {totalPages}
                         </span>
 
